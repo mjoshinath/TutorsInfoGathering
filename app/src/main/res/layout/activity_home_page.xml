@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="36dp"
+    tools:context="tutorsweb.ehc.com.tutorsinfogathering.HomePage">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Welcome"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/signup_tutor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Signup Tutor" />
+
+    <Button
+        android:id="@+id/signup_institute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Signup Institute" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reports" />
+
+    <Button
+        android:id="@+id/documentation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Documentation" />
+</LinearLayout>

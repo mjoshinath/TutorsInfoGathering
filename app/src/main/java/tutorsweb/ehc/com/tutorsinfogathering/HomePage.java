@@ -7,37 +7,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 
-public class SignInActivity extends Activity implements View.OnClickListener {
+public class HomePage extends Activity implements View.OnClickListener{
 
-    private EditText emailId;
-    private EditText password;
-    private Button signIn;
-    private String email;
-    private String passwordString;
+    private Button signUpTutorButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_home_page);
 
-        emailId = (EditText) findViewById(R.id.email_id);
-        password = (EditText) findViewById(R.id.password);
-        signIn = (Button) findViewById(R.id.sign_in);
-
-        email = emailId.getText().toString();
-        passwordString = password.getText().toString();
-
-        signIn.setOnClickListener(this);
+        signUpTutorButton = (Button) findViewById(R.id.signup_tutor);
+        signUpTutorButton.setOnClickListener(this);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.sign_in, menu);
+        getMenuInflater().inflate(R.menu.home_page, menu);
         return true;
     }
 
@@ -55,9 +44,9 @@ public class SignInActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.sign_in:
-                Intent intent = new Intent(this, HomePage.class);
+        switch (view.getId()){
+            case R.id.signup_tutor:
+                Intent intent = new Intent(this,PersonnelInfoActivity.class);
                 startActivity(intent);
         }
     }
