@@ -1,5 +1,6 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Button;
 public class HomePage extends Activity implements View.OnClickListener{
 
     private Button signUpTutorButton;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +22,15 @@ public class HomePage extends Activity implements View.OnClickListener{
 
         signUpTutorButton = (Button) findViewById(R.id.signup_tutor);
         signUpTutorButton.setOnClickListener(this);
+
+        setActionBarProperties();
     }
 
+    private void setActionBarProperties() {
+        actionBar = getActionBar();
+        actionBar.setTitle("Home");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

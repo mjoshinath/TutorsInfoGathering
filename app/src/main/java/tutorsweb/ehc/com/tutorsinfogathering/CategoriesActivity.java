@@ -1,9 +1,12 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
@@ -21,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class CategoriesActivity extends Activity {
+public class CategoriesActivity extends Activity implements View.OnClickListener {
 
     private ExpandableListView expListView;
     private HashMap<String, String[]> mainCategoriesAndChilds;
@@ -35,6 +39,9 @@ public class CategoriesActivity extends Activity {
     private String[] science;
     private String[] social_science;
     private String[] mainCategoryNames;
+    private Button next;
+    private Button previous;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,9 @@ public class CategoriesActivity extends Activity {
         ExpandableListViewAdapter adapter = new ExpandableListViewAdapter(getApplicationContext(), mainCategoryNames, mainCategoriesAndChilds);
         expListView.setAdapter(adapter);
 
+        /*expListView.setDivider(null);
+        expListView.setDividerHeight(0);*/
+
         expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
@@ -77,8 +87,24 @@ public class CategoriesActivity extends Activity {
                 return false;
             }
         });
+
+        View footer = getLayoutInflater().inflate(R.layout.navigation_footer, null);
+        expListView.addFooterView(footer);
+
+        next = (Button) footer.findViewById(R.id.next);
+        previous = (Button) footer.findViewById(R.id.previous);
+
+        previous.setOnClickListener(this);
+        next.setOnClickListener(this);
+
+        setActionBarProperties();
     }
 
+    private void setActionBarProperties() {
+        actionBar = getActionBar();
+        actionBar.setTitle("Categories");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,6 +123,24 @@ public class CategoriesActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.next:
+                Intent intent = new Intent(this, ProfessionalInfoActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.previous:
+                onBackPressed();
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private class ExpandableListViewAdapter extends BaseExpandableListAdapter {
@@ -161,7 +205,9 @@ public class CategoriesActivity extends Activity {
 
             lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
             lblListHeader.setTypeface(null, Typeface.BOLD);
-            lblListHeader.setText(headerTitle);
+            String headerTitleTemp = headerTitle.toString().replace("_", " ");
+            headerTitleTemp = headerTitleTemp.substring(0, 1).toUpperCase() + headerTitleTemp.substring(1);
+            lblListHeader.setText(headerTitleTemp);
 
             return convertView;
         }

@@ -1,5 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:scrollbars="none">
 
@@ -11,11 +11,24 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="tutorsweb.ehc.com.tutorsinfogathering.PersonnelInfoActivity">
+        tools:context="tutorsweb.ehc.com.tutorsinfogathering.WorkExpActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Most recent Education"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="4dp"
+            android:background="#000000" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             android:weightSum="5">
 
@@ -23,10 +36,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="First Name" />
+                android:text="Degree Name" />
 
             <EditText
-                android:id="@+id/first_name"
+                android:id="@+id/degree_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5" />
@@ -35,6 +48,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             android:weightSum="5">
 
@@ -42,10 +56,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Last Name" />
+                android:text="University/College/School Name" />
 
             <EditText
-                android:id="@+id/last_name"
+                android:id="@+id/university_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5" />
@@ -54,6 +68,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             android:weightSum="5">
 
@@ -61,10 +76,56 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Date of Birth" />
+                android:text="Start Date" />
 
             <EditText
-                android:id="@+id/date_of_birth"
+                android:id="@+id/start_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5"
+                android:focusable="false"
+                android:hint="dd / mm / yyyy" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="End Date" />
+
+            <EditText
+                android:id="@+id/end_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5"
+                android:focusable="false"
+                android:hint="dd / mm / yyyy" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Field of Study" />
+
+            <EditText
+                android:id="@+id/field_of_study"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5" />
@@ -73,6 +134,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             android:weightSum="5">
 
@@ -80,140 +142,171 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Address" />
+                android:text="Location" />
 
             <EditText
-                android:id="@+id/address"
+                android:id="@+id/location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Most recent Work Experience"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="4dp"
+            android:background="#000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Company Name" />
+
+            <EditText
+                android:id="@+id/company_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Job Title" />
+
+            <EditText
+                android:id="@+id/job_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Start Date" />
+
+            <EditText
+                android:id="@+id/start_date_work_exp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5"
+                android:focusable="false"
+                android:hint="dd / mm / yyyy" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="End Date" />
+
+            <EditText
+                android:id="@+id/end_date_work_exp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5"
+                android:focusable="false"
+                android:hint="dd / mm / yyyy" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Location" />
+
+            <EditText
+                android:id="@+id/location_work_exp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Job Description" />
+
+            <EditText
+                android:id="@+id/job_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
                 android:lines="3" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="5">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="City" />
-
-            <EditText
-                android:id="@+id/city"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="5">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="State" />
-
-            <EditText
-                android:id="@+id/state"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="5">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Zipcode" />
-
-            <EditText
-                android:id="@+id/zip_code"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5"
-                android:inputType="number" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="5">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Country" />
-
-            <EditText
-                android:id="@+id/country"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="5">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Username" />
-
-            <EditText
-                android:id="@+id/username"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="5">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Photo" />
+            android:layout_marginTop="12dp"
+            android:orientation="vertical">
 
             <Button
-                android:id="@+id/upload_photo"
-                android:layout_width="0dp"
+                android:id="@+id/previous"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5"
-                android:text="Capture Image" />
+                android:text="Previous" />
 
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="8dp"
-            android:text="Next" />
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Next" />
+        </RelativeLayout>
     </LinearLayout>
-
 </ScrollView>

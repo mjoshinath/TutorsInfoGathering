@@ -18,52 +18,61 @@
         <item>foreign_languages</item>
         <item>engineering_and_technology</item>
     </string-array>
-
     <string-array name="mathematics">
         <item>Advanced Math</item>
         <item>Algebra</item>
         <item>Calculus</item>
         <item>Geometry</item>
     </string-array>
-
     <string-array name="science">
         <item>Advanced Math</item>
         <item>Algebra</item>
     </string-array>
-
     <string-array name="history">
         <item>Advanced Math</item>
     </string-array>
-
     <string-array name="arts_and_humanities">
         <item>Advanced Math</item>
         <item>Algebra</item>
         <item>Calculus</item>
     </string-array>
-
     <string-array name="business">
         <item>Advanced Math</item>
         <item>Algebra</item>
         <item>Calculus</item>
         <item>Geometry</item>
     </string-array>
-
     <string-array name="social_science">
         <item>Advanced Math</item>
         <item>Algebra</item>
         <item>Calculus</item>
         <item>Geometry</item>
     </string-array>
-
     <string-array name="foreign_languages">
         <item>Advanced Math</item>
         <item>Algebra</item>
         <item>Calculus</item>
         <item>Geometry</item>
     </string-array>
-
     <string-array name="engineering_and_technology">
         <item>Advanced Math</item>
         <item>Algebra</item>
     </string-array>
+
+    <string-array name="years_of_exp">
+        <item>0 years</item>
+        <item>1 - 3 years</item>
+        <item>4 - 5 years</item>
+        <item>6 - 8 years</item>
+        <item>9 - 15 years</item>
+        <item>16 - 20 years</item>
+        <item>21 - 27 years</item>
+        <item>28 - 35 years</item>
+        <item>Above 35 years</item>
+    </string-array>
+
+    <string name="title_activity_work_exp">WorkExpActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_submit">SubmitActivity</string>
+
 </resources>

@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/logo" />
 
     <TextView
         android:layout_width="match_parent"
@@ -45,4 +45,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Documentation" />
+
+    <Button
+        android:id="@+id/add_meeting_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Meeting Log" />
 </LinearLayout>

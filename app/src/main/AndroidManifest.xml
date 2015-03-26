@@ -28,6 +28,18 @@
             android:name=".CategoriesActivity"
             android:label="@string/title_activity_categories" >
         </activity>
+        <activity
+            android:name=".WorkExpActivity"
+            android:label="@string/title_activity_work_exp" >
+        </activity>
+        <activity
+            android:name=".ProfessionalInfoActivity"
+            android:label="title_activity_professional_info" >
+        </activity>
+        <activity
+            android:name=".SubmitActivity"
+            android:label="@string/title_activity_submit" >
+        </activity>
     </application>
 
 </manifest>
