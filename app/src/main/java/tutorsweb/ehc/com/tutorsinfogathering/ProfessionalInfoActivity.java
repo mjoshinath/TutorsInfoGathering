@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
@@ -20,6 +21,10 @@ public class ProfessionalInfoActivity extends Activity implements View.OnClickLi
     private Button next;
     private Button previous;
     private ActionBar actionBar;
+    private EditText tutoringExp;
+    private EditText languages;
+    private Spinner yrsOfTeachingExp;
+    private EditText interests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +37,15 @@ public class ProfessionalInfoActivity extends Activity implements View.OnClickLi
         profExpSpinner.setAdapter(adapter);
 
         previous = (Button) findViewById(R.id.previous);
-        previous.setOnClickListener(this);
-
         next = (Button) findViewById(R.id.next);
+        yrsOfTeachingExp = (Spinner) findViewById(R.id.teaching_exp);
+        tutoringExp = (EditText) findViewById(R.id.tutoring_exp);
+        languages = (EditText) findViewById(R.id.languages);
+        interests = (EditText) findViewById(R.id.interests);
+
+        previous.setOnClickListener(this);
         next.setOnClickListener(this);
+
 
         setActionBarProperties();
     }
@@ -47,25 +57,6 @@ public class ProfessionalInfoActivity extends Activity implements View.OnClickLi
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.professional_info, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
@@ -74,12 +65,35 @@ public class ProfessionalInfoActivity extends Activity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                Intent intent = new Intent(this, WorkExpActivity.class);
-                startActivity(intent);
+                if (doValidation()) {
+                    Intent intent = new Intent(this, WorkExpActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.previous:
                 onBackPressed();
                 break;
         }
+    }
+
+    private boolean doValidation() {
+        String tutoringExp = this.tutoringExp.getText().toString().trim();
+        String languages = this.languages.getText().toString().trim();
+        if (tutoringExp.equalsIgnoreCase("")) {
+            this.tutoringExp.setError("Required Tutoring experience!");
+            this.tutoringExp.requestFocus();
+            return false;
+        } else {
+            this.tutoringExp.setError(null);
+        }
+
+        if (languages.equalsIgnoreCase("")) {
+            this.languages.setError("Languages field can't be empty!");
+            this.languages.requestFocus();
+            return false;
+        } else {
+            this.languages.setError(null);
+        }
+        return true;
     }
 }

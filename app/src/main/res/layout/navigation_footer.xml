@@ -10,12 +10,20 @@
         android:id="@+id/previous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Previous" />
+        android:text="Previous"
+        android:background="#B0B6BC"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#FFFFFF"/>
 
     <Button
         android:id="@+id/next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="Next" />
+        android:text="Next"
+        android:background="#32B1D2"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#FFFFFF"/>
 </RelativeLayout>

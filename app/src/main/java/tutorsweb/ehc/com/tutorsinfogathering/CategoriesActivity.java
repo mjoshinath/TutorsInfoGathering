@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
@@ -29,15 +30,6 @@ public class CategoriesActivity extends Activity implements View.OnClickListener
 
     private ExpandableListView expListView;
     private HashMap<String, String[]> mainCategoriesAndChilds;
-    private int mainCategorySize;
-    private String[] mathematics;
-    private String[] arts_and_humanities;
-    private String[] business;
-    private String[] engineering_and_technology;
-    private String[] foreign_languages;
-    private String[] history;
-    private String[] science;
-    private String[] social_science;
     private String[] mainCategoryNames;
     private Button next;
     private Button previous;
@@ -104,25 +96,6 @@ public class CategoriesActivity extends Activity implements View.OnClickListener
         actionBar = getActionBar();
         actionBar.setTitle("Categories");
         actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.categories, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -226,7 +199,7 @@ public class CategoriesActivity extends Activity implements View.OnClickListener
                 convertView = infalInflater.inflate(R.layout.list_item, null);
             }
 
-            TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
+            CheckBox txtListChild = (CheckBox) convertView.findViewById(R.id.lblListItem);
             txtListChild.setText(childText);
 
             return convertView;

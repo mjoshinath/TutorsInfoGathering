@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +13,6 @@ import android.widget.EditText;
 
 
 public class SignInActivity extends Activity implements View.OnClickListener {
-
     private EditText emailId;
     private EditText password;
     private Button signIn;
@@ -42,31 +42,38 @@ public class SignInActivity extends Activity implements View.OnClickListener {
         actionBar.hide();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.sign_in, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+    private boolean doValidation() {
+        String password = this.password.getText().toString().trim();
+        String email = this.emailId.getText().toString().trim();
+        if (email.equalsIgnoreCase("")) {
+            emailId.setError("Email field cannot be empty!");
+            return false;
         }
-        return super.onOptionsItemSelected(item);
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() && !TextUtils.isEmpty(email)) {
+            emailId.setError("Invalid Email");
+            emailId.requestFocus();
+            return false;
+        }
+        if (password.equalsIgnoreCase("")) {
+            this.password.setError("Password field cannot be empty!");
+            this.password.requestFocus();
+            return false;
+        }
+        if (password.length() < 6) {
+            this.password.setError("Password length must be greater than 6");
+            return false;
+        }
+        return true;
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sign_in:
-                Intent intent = new Intent(this, HomePage.class);
-                startActivity(intent);
+                if (doValidation()) {
+                    Intent intent = new Intent(this, HomePage.class);
+                    startActivity(intent);
+                }
         }
     }
 }

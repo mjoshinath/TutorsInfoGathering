@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tutorsweb.ehc.com.tutorsinfogathering" >
+    package="tutorsweb.ehc.com.tutorsinfogathering">
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+        <uses-feature android:name="android.hardware.camera" />
+
         <activity
             android:name=".SignInActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,28 +20,28 @@
         </activity>
         <activity
             android:name=".HomePage"
-            android:label="@string/title_activity_home_page" >
-        </activity>
+            android:label="@string/title_activity_home_page"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".PersonnelInfoActivity"
-            android:label="@string/title_activity_personnel_info" >
-        </activity>
+            android:label="@string/title_activity_personnel_info"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".CategoriesActivity"
-            android:label="@string/title_activity_categories" >
-        </activity>
+            android:label="@string/title_activity_categories"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".WorkExpActivity"
-            android:label="@string/title_activity_work_exp" >
-        </activity>
+            android:label="@string/title_activity_work_exp"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ProfessionalInfoActivity"
-            android:label="title_activity_professional_info" >
-        </activity>
+            android:label="title_activity_professional_info"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".SubmitActivity"
-            android:label="@string/title_activity_submit" >
-        </activity>
+            android:label="@string/title_activity_submit"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

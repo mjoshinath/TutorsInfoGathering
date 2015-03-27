@@ -1,5 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scrollbars="none">
 
@@ -49,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="5">
 
@@ -64,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5" />
         </LinearLayout>
+        <!--        University/College/School Name-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,6 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="5">
 
@@ -299,14 +302,22 @@
                 android:id="@+id/previous"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Previous" />
+                android:background="#B0B6BC"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Previous"
+                android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="Next" />
+                android:background="#32B1D2"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Next"
+                android:textColor="#FFFFFF" />
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

@@ -12,8 +12,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/logo" />
 
     <EditText
@@ -29,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="Password"
-        android:inputType="textPassword|numberPassword" />
+        android:inputType="textAutoComplete"
+        android:password="true" />
 
     <Button
         android:id="@+id/sign_in"
@@ -37,6 +38,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
-        android:text="Sign in" />
+        android:background="#B0B6BC"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Sign in"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

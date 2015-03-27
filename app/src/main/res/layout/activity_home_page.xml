@@ -1,54 +1,79 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp"
-    android:paddingTop="36dp"
-    tools:context="tutorsweb.ehc.com.tutorsinfogathering.HomePage">
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
 
-    <ImageView
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="36dp"
+        tools:context="tutorsweb.ehc.com.tutorsinfogathering.HomePage">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="Welcome"
-        android:textSize="16sp" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo" />
 
-    <Button
-        android:id="@+id/signup_tutor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Signup Tutor" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Welcome"
+            android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/signup_institute"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Signup Institute" />
+        <Button
+            android:id="@+id/signup_tutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:background="#B0B6BC"
+            android:text="Signup Tutor"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Reports" />
+        <Button
+            android:id="@+id/signup_institute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:background="#B0B6BC"
+            android:text="Signup Institute"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/documentation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Documentation" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:background="#B0B6BC"
+            android:text="Reports"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/add_meeting_log"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Meeting Log" />
-</LinearLayout>
+        <Button
+            android:id="@+id/documentation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:background="#B0B6BC"
+            android:text="Documentation"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/add_meeting_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:background="#B0B6BC"
+            android:text="Add Meeting Log"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

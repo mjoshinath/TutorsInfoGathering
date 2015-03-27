@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="Personnel Information"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
@@ -231,7 +231,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="Categories"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
@@ -265,7 +265,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="Professional Experience"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
@@ -359,7 +359,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="Work Experience"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
@@ -639,14 +639,22 @@
                 android:id="@+id/previous"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Previous" />
+                android:background="#B0B6BC"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Previous"
+                android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="Submit" />
+                android:background="#32B1D2"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Submit"
+                android:textColor="#FFFFFF" />
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

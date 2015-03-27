@@ -67,7 +67,9 @@
                 android:id="@+id/date_of_birth"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
+                android:layout_weight="3.5"
+                android:focusable="false"
+                android:hint="dd/mm/yyyy" />
         </LinearLayout>
 
         <LinearLayout
@@ -199,11 +201,17 @@
                 android:text="Photo" />
 
             <Button
-                android:id="@+id/upload_photo"
+                android:id="@+id/capture_image"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
                 android:text="Capture Image" />
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -213,7 +221,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginTop="8dp"
-            android:text="Next" />
+            android:background="#32B1D2"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="Next"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 </ScrollView>
