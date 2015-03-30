@@ -1,19 +1,17 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -25,8 +23,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 
 import static tutorsweb.ehc.com.tutorsinfogathering.R.*;
@@ -59,6 +55,17 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private Button previous;
     private Button home;
     private View personnelPhase;
+    private SharedPreferences userSharedPreference;
+    private SharedPreferences.Editor sharedPrefsEditable;
+    private String firstNameText;
+    private String lastNameText;
+    private String dateOfBirthText;
+    private String addressText;
+    private String cityText;
+    private String stateText;
+    private String zipCodeText;
+    private String countryText;
+    private String userNameText;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +99,10 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(layout.activity_personnel_info, null);
-        Log.d("test18", "Hi am called");
+
+        userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        sharedPrefsEditable = userSharedPreference.edit();
+
         next = (Button) getActivity().findViewById(id.next);
         previous = (Button) getActivity().findViewById(id.previous);
         getWidgets(view);
@@ -103,21 +113,47 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (doValidation())
-                fragmentReplaceMethod();
+                if (doValidation()) {
+                    saveFilledDataInSharedPrefs();
+                    fragmentReplaceMethod();
+                }
             }
         });
-        personnelPhase=getActivity().findViewById(id.phase_personnel);
+        personnelPhase = getActivity().findViewById(id.phase_personnel);
         personnelPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
         previous.setVisibility(View.INVISIBLE);
         return view;
+    }
+
+    private void saveFilledDataInSharedPrefs() {
+        firstNameText = firstName.getText().toString().trim();
+        lastNameText = lastName.getText().toString().trim();
+        dateOfBirthText = dateOfBirth.getText().toString().trim();
+        addressText = address.getText().toString().trim();
+        cityText = city.getText().toString().trim();
+        stateText = state.getText().toString().trim();
+        zipCodeText = zipCode.getText().toString().trim();
+        countryText = country.getText().toString().trim();
+        userNameText = userName.getText().toString().trim();
+
+        sharedPrefsEditable.putString("firstNameText", firstNameText);
+        sharedPrefsEditable.putString("lastNameText", lastNameText);
+        sharedPrefsEditable.putString("dateOfBirthText", dateOfBirthText);
+        sharedPrefsEditable.putString("addressText", addressText);
+        sharedPrefsEditable.putString("cityText", cityText);
+        sharedPrefsEditable.putString("stateText", stateText);
+        sharedPrefsEditable.putString("zipCodeText", zipCodeText);
+        sharedPrefsEditable.putString("countryText", countryText);
+        sharedPrefsEditable.putString("userNameText", userNameText);
+
+        sharedPrefsEditable.commit();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                Intent intent1 = new Intent(getActivity(),HomePage.class);
+                Intent intent1 = new Intent(getActivity(), HomePage.class);
                 startActivity(intent1);
         }
         return (super.onOptionsItemSelected(menuItem));
@@ -166,17 +202,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
                 }
                 break;
             case id.capture_image:
-                File tempFile = null;
-                try {
-                    tempFile = File.createTempFile("my_app", ".jpg");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                fileName = tempFile.getAbsolutePath();
-                Uri uri = Uri.fromFile(tempFile);
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                startActivityForResult(intent, PICTURE_REQUEST_CODE);
+                //ToDo
         }
     }
 
@@ -186,21 +212,6 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         fragmentTransaction.addToBackStack("Personnel");
         fragmentTransaction.replace(id.main_view, new CategoriesFragment());
         fragmentTransaction.commit();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_CANCELED) {
-            if (requestCode == PICTURE_REQUEST_CODE) {
-                captureImage.setVisibility(View.GONE);
-                userImage.setImageBitmap(BitmapFactory.decodeFile(fileName));
-                //userImage.setImageDrawable(adduri);
-                userImage.setVisibility(View.VISIBLE);
-            } else {
-                super.onActivityResult(requestCode, resultCode, data);
-            }
-        }
-
     }
 
     private boolean doValidation() {

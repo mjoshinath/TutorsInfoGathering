@@ -8,7 +8,9 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -44,6 +46,8 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
     private FragmentManager fragmentMngr;
     private FragmentTransaction fragmentTransaction;
     private View workExpPhase;
+    private SharedPreferences userSharedPreference;
+    private SharedPreferences.Editor sharedPrefsEditable;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,10 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.activity_work_exp,null);
+
+        userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        sharedPrefsEditable = userSharedPreference.edit();
+
         getWidgets();
         applyActions();
         setActionBarProperties();
@@ -67,6 +75,7 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
 //                if (doValidation())
+                saveFilledDataInSharedPrefs();
                 fragmentReplaceMethod();
             }
         });
@@ -79,6 +88,23 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
         workExpPhase=getActivity().findViewById(R.id.phase_work_exp);
         workExpPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
         return view;
+    }
+
+    private void saveFilledDataInSharedPrefs() {
+        sharedPrefsEditable.putString("startDateText",startDate.getText().toString().trim());
+        sharedPrefsEditable.putString("endDateText",endDate.getText().toString().trim());
+        sharedPrefsEditable.putString("startDateWorkExpText",startDateWorkExp.getText().toString().trim());
+        sharedPrefsEditable.putString("endDateWorkExpText",endDateWorkExp.getText().toString().trim());
+        sharedPrefsEditable.putString("degreeNameText",degreeName.getText().toString().trim());
+        sharedPrefsEditable.putString("universityNameText",universityName.getText().toString().trim());
+        sharedPrefsEditable.putString("fieldOfStudyText",fieldOfStudy.getText().toString().trim());
+        sharedPrefsEditable.putString("locationText",location.getText().toString().trim());
+        sharedPrefsEditable.putString("companyNameText",companyName.getText().toString().trim());
+        sharedPrefsEditable.putString("jobTitleText",jobTitle.getText().toString().trim());
+        sharedPrefsEditable.putString("locationWorkExpText",locationWorkExp.getText().toString().trim());
+        sharedPrefsEditable.putString("jobDescriptionText",jobDescription.getText().toString().trim());
+
+        sharedPrefsEditable.commit();
     }
 
     private void fragmentReplaceMethod() {

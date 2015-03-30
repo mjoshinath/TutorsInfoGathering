@@ -1,25 +1,21 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-
 
 public class ProfessionalInfoFragment extends Fragment implements View.OnClickListener {
 
@@ -36,6 +32,9 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     private FragmentManager fragmentMngr;
     private FragmentTransaction fragmentTransaction;
     private View professionalPhase;
+    private SharedPreferences userSharedPreference;
+    private SharedPreferences.Editor sharedPrefsEditable;
+    private String yrsOfTeachingExpText;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +61,9 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_professional_info, null);
 
+        userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        sharedPrefsEditable = userSharedPreference.edit();
+
         profExpSpinner = (Spinner) view.findViewById(R.id.teaching_exp);
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.years_of_exp, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -69,15 +71,23 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
 
         previous = (Button) getActivity().findViewById(R.id.previous);
         next = (Button) getActivity().findViewById(R.id.next);
-        yrsOfTeachingExp = (Spinner) view.findViewById(R.id.teaching_exp);
-        tutoringExp = (EditText) view.findViewById(R.id.tutoring_exp);
-        languages = (EditText) view.findViewById(R.id.languages);
-        interests = (EditText) view.findViewById(R.id.interests);
+        getWidgets();
+        yrsOfTeachingExp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                yrsOfTeachingExpText = parent.getItemAtPosition(position).toString();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                if (doValidation())
+                saveFilledDataInSharedPrefs();
                 fragmentReplaceMethod();
             }
         });
@@ -89,9 +99,25 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         });
 
         setActionBarProperties();
-        professionalPhase=getActivity().findViewById(R.id.phase_professional);
+        professionalPhase = getActivity().findViewById(R.id.phase_professional);
         professionalPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
         return view;
+    }
+
+    private void getWidgets() {
+        yrsOfTeachingExp = (Spinner) view.findViewById(R.id.teaching_exp);
+        tutoringExp = (EditText) view.findViewById(R.id.tutoring_exp);
+        languages = (EditText) view.findViewById(R.id.languages);
+        interests = (EditText) view.findViewById(R.id.interests);
+    }
+
+    private void saveFilledDataInSharedPrefs() {
+        sharedPrefsEditable.putString("yrsOfTeachingExpText", yrsOfTeachingExpText);
+        sharedPrefsEditable.putString("tutoringExpText", tutoringExp.getText().toString().trim());
+        sharedPrefsEditable.putString("languagesText", languages.getText().toString().trim());
+        sharedPrefsEditable.putString("interestsText", interests.getText().toString().trim());
+
+        sharedPrefsEditable.commit();
     }
 
     private void setActionBarProperties() {
