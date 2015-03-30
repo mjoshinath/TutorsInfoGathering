@@ -64,6 +64,9 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
         sharedPrefsEditable = userSharedPreference.edit();
 
+        sharedPrefsEditable.putBoolean("professional", true);
+        sharedPrefsEditable.commit();
+
         profExpSpinner = (Spinner) view.findViewById(R.id.teaching_exp);
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.years_of_exp, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -172,5 +175,10 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     public void onDestroyView() {
         super.onDestroyView();
         professionalPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

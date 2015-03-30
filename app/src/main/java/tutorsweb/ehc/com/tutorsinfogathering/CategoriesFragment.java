@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -34,6 +35,8 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     private Button nextButton;
     private Button previous;
     private View categoriesPhase;
+    private SharedPreferences userSharedPreference;
+    private SharedPreferences.Editor sharedPrefsEditable;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,12 @@ main_view
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_categories, null);
+
+        userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        sharedPrefsEditable = userSharedPreference.edit();
+
+        sharedPrefsEditable.putBoolean("categories", true);
+        sharedPrefsEditable.commit();
 
         mainCategoryNames = new String[]{"mathematics", "arts_and_humanities", "business", "engineering_and_technology", "foreign_languages", "history", "science", "social_science"};
         mainCategoriesAndChilds = new HashMap<String, String[]>();
@@ -258,5 +267,10 @@ main_view
     public void onDestroyView() {
         super.onDestroyView();
         categoriesPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

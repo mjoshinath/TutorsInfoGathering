@@ -51,6 +51,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
     private TextView companyName;
     private TextView jobTitle;
     private TextView jobDescription;
+    private SharedPreferences.Editor sharedPrefsEdit;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,10 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
         getWidgets(view);
 
         sharedPrefs = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        sharedPrefsEdit = sharedPrefs.edit();
+
+        sharedPrefsEdit.putBoolean("categories", true);
+        sharedPrefsEdit.commit();
 
         setSharedPrefsDataToReview();
         setActionBarProperties();
@@ -101,23 +106,23 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
         country = (TextView) view.findViewById(R.id.country);
         userName = (TextView) view.findViewById(R.id.username);
 
-        yearsOfTeachingExp= (TextView) view.findViewById(R.id.years_of_teaching_exp);
-        tutoringExp= (TextView) view.findViewById(R.id.tutoring_exp);
-        languages= (TextView) view.findViewById(R.id.languages);
-        interests= (TextView) view.findViewById(R.id.interests);
+        yearsOfTeachingExp = (TextView) view.findViewById(R.id.years_of_teaching_exp);
+        tutoringExp = (TextView) view.findViewById(R.id.tutoring_exp);
+        languages = (TextView) view.findViewById(R.id.languages);
+        interests = (TextView) view.findViewById(R.id.interests);
 
-        degreeName= (TextView) view.findViewById(R.id.degree_name);
-        universityName= (TextView) view.findViewById(R.id.university_name);
-        startDate= (TextView) view.findViewById(R.id.start_date);
-        endDate= (TextView) view.findViewById(R.id.end_date);
-        startDateWorkExp= (TextView) view.findViewById(R.id.start_date_work_exp);
-        endDateWorkExp= (TextView) view.findViewById(R.id.end_date_work_exp);
-        location= (TextView) view.findViewById(R.id.location);
-        locationWorkExp= (TextView) view.findViewById(R.id.location_work_exp);
-        fieldOfStudy= (TextView) view.findViewById(R.id.field_of_study);
-        companyName= (TextView) view.findViewById(R.id.company_name);
-        jobTitle= (TextView) view.findViewById(R.id.job_title);
-        jobDescription= (TextView) view.findViewById(R.id.job_description);
+        degreeName = (TextView) view.findViewById(R.id.degree_name);
+        universityName = (TextView) view.findViewById(R.id.university_name);
+        startDate = (TextView) view.findViewById(R.id.start_date);
+        endDate = (TextView) view.findViewById(R.id.end_date);
+        startDateWorkExp = (TextView) view.findViewById(R.id.start_date_work_exp);
+        endDateWorkExp = (TextView) view.findViewById(R.id.end_date_work_exp);
+        location = (TextView) view.findViewById(R.id.location);
+        locationWorkExp = (TextView) view.findViewById(R.id.location_work_exp);
+        fieldOfStudy = (TextView) view.findViewById(R.id.field_of_study);
+        companyName = (TextView) view.findViewById(R.id.company_name);
+        jobTitle = (TextView) view.findViewById(R.id.job_title);
+        jobDescription = (TextView) view.findViewById(R.id.job_description);
     }
 
     private void setSharedPrefsDataToReview() {
@@ -174,5 +179,10 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
         super.onDestroyView();
         submit.setText("Next");
         submitPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

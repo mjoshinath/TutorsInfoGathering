@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.io.File;
 import java.util.Calendar;
 
 import static tutorsweb.ehc.com.tutorsinfogathering.R.*;
@@ -66,6 +68,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private String zipCodeText;
     private String countryText;
     private String userNameText;
+    private File capturedImagesDir;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +105,9 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
 
         userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
         sharedPrefsEditable = userSharedPreference.edit();
+
+        sharedPrefsEditable.putBoolean("personnel", true);
+        sharedPrefsEditable.commit();
 
         next = (Button) getActivity().findViewById(id.next);
         previous = (Button) getActivity().findViewById(id.previous);
@@ -197,12 +203,14 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
                 Log.d("test18", "home");
                 break;
             case id.next:
-                if (doValidation()) {
+                fragmentReplaceMethod();
+                /*if (doValidation()) {
                     fragmentReplaceMethod();
-                }
+                }*/
                 break;
             case id.capture_image:
-                //ToDo
+                break;
+
         }
     }
 
@@ -356,5 +364,10 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     public void onDestroyView() {
         super.onDestroyView();
         personnelPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

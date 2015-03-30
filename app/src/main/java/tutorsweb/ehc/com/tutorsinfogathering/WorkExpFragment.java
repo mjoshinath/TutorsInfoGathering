@@ -64,6 +64,9 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
         userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
         sharedPrefsEditable = userSharedPreference.edit();
 
+        sharedPrefsEditable.putBoolean("workExp", true);
+        sharedPrefsEditable.commit();
+
         getWidgets();
         applyActions();
         setActionBarProperties();
@@ -353,5 +356,10 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
         workExpPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
