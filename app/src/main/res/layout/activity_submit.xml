@@ -10,7 +10,7 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        tools:context="tutorsweb.ehc.com.tutorsinfogathering.SubmitActivity">
+        tools:context="tutorsweb.ehc.com.tutorsinfogathering.SubmitFragment">
 
         <TextView
             android:layout_width="match_parent"
@@ -622,14 +622,7 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="12dp"
-            android:background="#000000" />
-
-        <RelativeLayout
+        <!--<RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -655,6 +648,6 @@
                 android:paddingRight="16dp"
                 android:text="Submit"
                 android:textColor="#FFFFFF" />
-        </RelativeLayout>
+        </RelativeLayout>-->
     </LinearLayout>
 </ScrollView>

@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="0dp"
-    tools:context="tutorsweb.ehc.com.tutorsinfogathering.CategoriesActivity">
+    tools:context="tutorsweb.ehc.com.tutorsinfogathering.CategoriesFragment">
 
     <TextView
         android:layout_width="match_parent"

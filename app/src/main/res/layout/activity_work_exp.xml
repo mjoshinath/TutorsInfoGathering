@@ -11,7 +11,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="tutorsweb.ehc.com.tutorsinfogathering.WorkExpActivity">
+        tools:context="tutorsweb.ehc.com.tutorsinfogathering.WorkExpFragment">
 
         <TextView
             android:layout_width="match_parent"
@@ -292,7 +292,7 @@
                 android:lines="3" />
         </LinearLayout>
 
-        <RelativeLayout
+   <!--     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -318,6 +318,6 @@
                 android:paddingRight="16dp"
                 android:text="Next"
                 android:textColor="#FFFFFF" />
-        </RelativeLayout>
+        </RelativeLayout>-->
     </LinearLayout>
 </ScrollView>
