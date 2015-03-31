@@ -77,5 +77,7 @@
     <string name="title_activity_sandwich_wizard_model">SandwichWizardModel</string>
     <string name="title_activity_reg_steps_host">RegStepsHostActivity</string>
     <string name="title_activity_show_web_view">ShowWebView</string>
+    <string name="title_activity_my">MyActivity</string>
+    <string name="title_activity_data_transfer">DataTransferActivity</string>
 
 </resources>

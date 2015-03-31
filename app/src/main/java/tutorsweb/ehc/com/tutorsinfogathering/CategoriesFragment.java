@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -132,6 +133,7 @@ main_view
         nextButton = (Button) getActivity().findViewById(R.id.next);
         previous = (Button) getActivity().findViewById(R.id.previous);
         previous.setVisibility(View.VISIBLE);
+        setHasOptionsMenu(true);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,6 +171,19 @@ main_view
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
         actionBar.setTitle("Categories");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent intent1 = new Intent(getActivity(), HomePage.class);
+                startActivity(intent1);
+                sharedPrefsEditable.clear();
+                sharedPrefsEditable.commit();
+                break;
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 
     @Override

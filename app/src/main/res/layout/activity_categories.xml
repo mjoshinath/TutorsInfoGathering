@@ -6,20 +6,14 @@
     android:paddingBottom="0dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="0dp"
+    android:paddingTop="16dp"
     tools:context="tutorsweb.ehc.com.tutorsinfogathering.CategoriesFragment">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:gravity="center" />
 
     <ExpandableListView
         android:id="@+id/categories_exp_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:scrollbars="none"/>
+        android:scrollbars="none" />
 
 </LinearLayout>

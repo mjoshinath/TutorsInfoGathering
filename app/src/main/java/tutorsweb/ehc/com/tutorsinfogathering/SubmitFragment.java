@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -94,6 +95,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
 
         setSharedPrefsDataToReview();
         setActionBarProperties();
+        setHasOptionsMenu(true);
 
         submit = (Button) getActivity().findViewById(R.id.next);
         submit.setText("Submit");
@@ -202,6 +204,19 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
         actionBar.setTitle("Review / Submit");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent intent1 = new Intent(getActivity(), HomePage.class);
+                startActivity(intent1);
+                sharedPrefsEdit.clear();
+                sharedPrefsEdit.commit();
+                break;
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 
     @Override
