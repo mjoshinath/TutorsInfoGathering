@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tutorsweb.ehc.com.tutorsinfogathering" >
+    package="tutorsweb.ehc.com.tutorsinfogathering">
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <uses-feature android:name="android.hardware.camera" />
+
+        <uses-permission android:name="android.permission.INTERNET" />
 
         <activity
             android:name=".SignInActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,37 +24,15 @@
             android:label="@string/title_activity_home_page"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PersonnelInfoFragment"
-            android:label="@string/title_activity_personnel_info"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".CategoriesFragment"
-            android:label="@string/title_activity_categories"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".WorkExpFragment"
-            android:label="@string/title_activity_work_exp"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ProfessionalInfoFragment"
-            android:label="title_activity_professional_info"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SubmitFragment"
-            android:label="@string/title_activity_submit"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".FormWizardActivity"
-            android:label="@string/title_activity_form_wizard" >
-        </activity>
-        <activity
             android:name=".SandwichWizardModel"
-            android:label="@string/title_activity_sandwich_wizard_model" >
-        </activity>
+            android:label="@string/title_activity_sandwich_wizard_model"></activity>
         <activity
             android:name=".RegStepsHostActivity"
-            android:label="@string/title_activity_reg_steps_host" >
-        </activity>
+            android:label="@string/title_activity_reg_steps_host"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ShowWebView"
+            android:label="@string/title_activity_show_web_view"></activity>
     </application>
 
 </manifest>

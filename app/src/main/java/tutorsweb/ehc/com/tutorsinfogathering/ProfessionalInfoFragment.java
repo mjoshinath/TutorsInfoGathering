@@ -75,6 +75,9 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         previous = (Button) getActivity().findViewById(R.id.previous);
         next = (Button) getActivity().findViewById(R.id.next);
         getWidgets();
+
+        updateUi();
+
         yrsOfTeachingExp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -105,6 +108,12 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         professionalPhase = getActivity().findViewById(R.id.phase_professional);
         professionalPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
         return view;
+    }
+
+    private void updateUi() {
+        tutoringExp.setText(userSharedPreference.getString("tutoringExpText", ""));
+        languages.setText(userSharedPreference.getString("languagesText", ""));
+        interests.setText(userSharedPreference.getString("interestsText", ""));
     }
 
     private void getWidgets() {

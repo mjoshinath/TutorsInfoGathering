@@ -76,5 +76,6 @@
     <string name="title_activity_form_wizard">FormWizardActivity</string>
     <string name="title_activity_sandwich_wizard_model">SandwichWizardModel</string>
     <string name="title_activity_reg_steps_host">RegStepsHostActivity</string>
+    <string name="title_activity_show_web_view">ShowWebView</string>
 
 </resources>

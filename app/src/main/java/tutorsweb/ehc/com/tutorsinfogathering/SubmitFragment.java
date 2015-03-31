@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,7 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Iterator;
+import java.util.Set;
 
 
 public class SubmitFragment extends Fragment implements View.OnClickListener {
@@ -52,6 +59,14 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
     private TextView jobTitle;
     private TextView jobDescription;
     private SharedPreferences.Editor sharedPrefsEdit;
+    private ImageView userImage;
+    private String userImageStringFormat;
+    private Bitmap userImageInBitFormat;
+    private TextView categories;
+    private Set<String> categoriesSet;
+    private Object category;
+    private StringBuilder categoriesString = new StringBuilder();
+    private Iterator<String> iterator;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +89,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
         sharedPrefs = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
         sharedPrefsEdit = sharedPrefs.edit();
 
-        sharedPrefsEdit.putBoolean("categories", true);
+        sharedPrefsEdit.putBoolean("submit", true);
         sharedPrefsEdit.commit();
 
         setSharedPrefsDataToReview();
@@ -105,6 +120,9 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
         zipCode = (TextView) view.findViewById(R.id.zip_code);
         country = (TextView) view.findViewById(R.id.country);
         userName = (TextView) view.findViewById(R.id.username);
+        userImage = (ImageView) view.findViewById(R.id.user_image);
+
+        categories = (TextView) view.findViewById(R.id.categories);
 
         yearsOfTeachingExp = (TextView) view.findViewById(R.id.years_of_teaching_exp);
         tutoringExp = (TextView) view.findViewById(R.id.tutoring_exp);
@@ -136,6 +154,20 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
         country.setText(sharedPrefs.getString("countryText", ""));
         userName.setText(sharedPrefs.getString("userNameText", ""));
 
+        userImageStringFormat = sharedPrefs.getString("userImageString", "");
+        userImageInBitFormat = stringToBitMap(userImageStringFormat);
+        userImage.setImageBitmap(userImageInBitFormat);
+
+        categoriesSet = sharedPrefs.getStringSet("checkedCategories", null);
+        if (categoriesSet != null) {
+            iterator = categoriesSet.iterator();
+            while (iterator.hasNext()) {
+                categoriesString.append(iterator.next().toString() + ", ");
+            }
+            String string = new String(categoriesString);
+            categories.setText(string.substring(0, string.length() - 2));
+        }
+
         yearsOfTeachingExp.setText(sharedPrefs.getString("yrsOfTeachingExpText", ""));
         tutoringExp.setText(sharedPrefs.getString("tutoringExpText", ""));
         languages.setText(sharedPrefs.getString("languagesText", ""));
@@ -155,6 +187,18 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
         companyName.setText(sharedPrefs.getString("companyNameText", ""));
     }
 
+
+    public Bitmap stringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
         actionBar.setTitle("Review / Submit");
@@ -169,7 +213,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.next:
                 Log.d("test18", "called");
-                //ToDo posting collected info. to database
+                sharedPrefsEdit.clear();
+                sharedPrefsEdit.commit();
                 break;
         }
     }

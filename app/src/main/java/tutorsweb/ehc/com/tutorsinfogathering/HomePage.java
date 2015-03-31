@@ -23,6 +23,7 @@ public class HomePage extends Activity implements View.OnClickListener {
         addMettingLog = (Button) findViewById(R.id.add_meeting_log);
 
         signUpTutorButton.setOnClickListener(this);
+        addMettingLog.setOnClickListener(this);
     }
 
     private void setActionBarProperties() {
@@ -37,7 +38,11 @@ public class HomePage extends Activity implements View.OnClickListener {
             case R.id.signup_tutor:
                 Intent intent = new Intent(this, RegStepsHostActivity.class);
                 startActivity(intent);
+                break;
             case R.id.add_meeting_log:
+                Intent webViewIntent = new Intent(this, ShowWebView.class);
+                startActivity(webViewIntent);
+                break;
         }
     }
 

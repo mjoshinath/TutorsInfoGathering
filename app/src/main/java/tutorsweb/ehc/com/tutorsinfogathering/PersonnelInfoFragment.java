@@ -1,6 +1,7 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -10,9 +11,11 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Calendar;
 
@@ -69,6 +73,10 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private String countryText;
     private String userNameText;
     private File capturedImagesDir;
+
+    private static final int CAMERA_REQUEST = 1888;
+    private Bitmap photo;
+    private String userImageString;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,13 +124,17 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         applyActions();
         setActionBarProperties();
 
+        updateUi();
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (doValidation()) {
+                saveFilledDataInSharedPrefs();
+                fragmentReplaceMethod();
+                /*if (doValidation()) {
                     saveFilledDataInSharedPrefs();
                     fragmentReplaceMethod();
-                }
+                }*/
             }
         });
         personnelPhase = getActivity().findViewById(id.phase_personnel);
@@ -131,7 +143,20 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         return view;
     }
 
+    private void updateUi() {
+        firstName.setText(userSharedPreference.getString("firstNameText", ""));
+        lastName.setText(userSharedPreference.getString("lastNameText", ""));
+        address.setText(userSharedPreference.getString("addressText", ""));
+        city.setText(userSharedPreference.getString("cityText", ""));
+        state.setText(userSharedPreference.getString("stateText", ""));
+        dateOfBirth.setText(userSharedPreference.getString("dateOfBirthText", ""));
+        zipCode.setText(userSharedPreference.getString("zipCodeText", ""));
+        country.setText(userSharedPreference.getString("countryText", ""));
+        userName.setText(userSharedPreference.getString("userNameText", ""));
+    }
+
     private void saveFilledDataInSharedPrefs() {
+
         firstNameText = firstName.getText().toString().trim();
         lastNameText = lastName.getText().toString().trim();
         dateOfBirthText = dateOfBirth.getText().toString().trim();
@@ -151,6 +176,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         sharedPrefsEditable.putString("zipCodeText", zipCodeText);
         sharedPrefsEditable.putString("countryText", countryText);
         sharedPrefsEditable.putString("userNameText", userNameText);
+        sharedPrefsEditable.putString("userImageString", userImageString);
 
         sharedPrefsEditable.commit();
     }
@@ -161,6 +187,9 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
             case android.R.id.home:
                 Intent intent1 = new Intent(getActivity(), HomePage.class);
                 startActivity(intent1);
+                sharedPrefsEditable.clear();
+                sharedPrefsEditable.commit();
+                break;
         }
         return (super.onOptionsItemSelected(menuItem));
     }
@@ -209,9 +238,29 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
                 }*/
                 break;
             case id.capture_image:
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 break;
 
         }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            photo = (Bitmap) data.getExtras().get("data");
+            userImage.setImageBitmap(photo);
+            Log.d("photo", "" + photo.toString());
+
+            userImageString = BitMapToString(photo);
+        }
+    }
+
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
     }
 
     private void fragmentReplaceMethod() {

@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -16,16 +17,21 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 
 public class CategoriesFragment extends Fragment implements View.OnClickListener {
 
     private ExpandableListView expListView;
     private HashMap<String, String[]> mainCategoriesAndChilds;
+    private HashSet<String> checkedCategories = new HashSet<String>();
     private String[] mainCategoryNames;
     private Button next;
     private ActionBar actionBar;
@@ -37,6 +43,10 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     private View categoriesPhase;
     private SharedPreferences userSharedPreference;
     private SharedPreferences.Editor sharedPrefsEditable;
+    private int categoriesCheckedSizes;
+    private Iterator<String> iterator;
+    private StringBuffer categoriesString = new StringBuffer();
+    private String categoriesStringTemp;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +137,13 @@ main_view
             @Override
             public void onClick(View v) {
 //                if (doValidation())
-                fragmentReplaceMethod();
+                if (categoriesCheckedSizes >= 3) {
+                    sharedPrefsEditable.putStringSet("checkedCategories", checkedCategories);
+                    sharedPrefsEditable.commit();
+                    fragmentReplaceMethod();
+                } else {
+                    Toast.makeText(getActivity(), "Select minimum of three categories", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         previous.setOnClickListener(new View.OnClickListener() {
@@ -136,8 +152,9 @@ main_view
                 getActivity().onBackPressed();
             }
         });
-        categoriesPhase=getActivity().findViewById(R.id.phase_categories);
+        categoriesPhase = getActivity().findViewById(R.id.phase_categories);
         categoriesPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
+
         return view;
     }
 
@@ -158,8 +175,15 @@ main_view
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                /*Intent intent = new Intent(this, ProfessionalInfoFragment.class);
-                startActivity(intent);*/
+                if (categoriesCheckedSizes >= 3) {
+                    sharedPrefsEditable.putStringSet("checkedCategories", checkedCategories);
+                    sharedPrefsEditable.commit();
+                    fragmentReplaceMethod();
+                    /*Intent intent = new Intent(this, ProfessionalInfoFragment.class);
+                    startActivity(intent);*/
+                } else {
+                    Toast.makeText(getActivity(), "Select minimum of three categories", Toast.LENGTH_SHORT);
+                }
                 break;
             case R.id.previous:
                 getActivity().onBackPressed();
@@ -200,7 +224,7 @@ main_view
 
         @Override
         public Object getGroup(int groupPosition) {
-            Log.d("test18", "groupPosition" + groupPosition);
+//            Log.d("test18", "groupPosition" + groupPosition);
             return mainCategoryNames[groupPosition];
         }
 
@@ -258,9 +282,22 @@ main_view
 
             CheckBox txtListChild = (CheckBox) convertView.findViewById(R.id.lblListItem);
             txtListChild.setText(childText);
-
+            txtListChild.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        checkedCategories.add(buttonView.getText().toString().trim());
+                    } else {
+                        checkedCategories.remove(buttonView.getText().toString().trim());
+                    }
+                    Log.d("test18", "checkedCategories :" + checkedCategories);
+                    categoriesCheckedSizes = checkedCategories.size();
+                }
+            });
             return convertView;
         }
+
+
     }
 
     @Override

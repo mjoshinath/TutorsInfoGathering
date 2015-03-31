@@ -59,7 +59,7 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_work_exp,null);
+        view = inflater.inflate(R.layout.activity_work_exp, null);
 
         userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
         sharedPrefsEditable = userSharedPreference.edit();
@@ -68,6 +68,7 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
         sharedPrefsEditable.commit();
 
         getWidgets();
+        updateUi();
         applyActions();
         setActionBarProperties();
 
@@ -88,24 +89,39 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
                 getActivity().onBackPressed();
             }
         });
-        workExpPhase=getActivity().findViewById(R.id.phase_work_exp);
+        workExpPhase = getActivity().findViewById(R.id.phase_work_exp);
         workExpPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
         return view;
     }
 
+    private void updateUi() {
+        startDate.setText(userSharedPreference.getString("startDateText", ""));
+        endDate.setText(userSharedPreference.getString("endDateText", ""));
+        startDateWorkExp.setText(userSharedPreference.getString("startDateWorkExpText", ""));
+        endDateWorkExp.setText(userSharedPreference.getString("endDateWorkExpText", ""));
+        degreeName.setText(userSharedPreference.getString("degreeNameText", ""));
+        universityName.setText(userSharedPreference.getString("universityNameText", ""));
+        fieldOfStudy.setText(userSharedPreference.getString("fieldOfStudyText", ""));
+        location.setText(userSharedPreference.getString("locationText", ""));
+        companyName.setText(userSharedPreference.getString("companyNameText", ""));
+        jobTitle.setText(userSharedPreference.getString("jobTitleText", ""));
+        locationWorkExp.setText(userSharedPreference.getString("locationWorkExpText", ""));
+        jobDescription.setText(userSharedPreference.getString("jobDescriptionText", ""));
+    }
+
     private void saveFilledDataInSharedPrefs() {
-        sharedPrefsEditable.putString("startDateText",startDate.getText().toString().trim());
-        sharedPrefsEditable.putString("endDateText",endDate.getText().toString().trim());
-        sharedPrefsEditable.putString("startDateWorkExpText",startDateWorkExp.getText().toString().trim());
-        sharedPrefsEditable.putString("endDateWorkExpText",endDateWorkExp.getText().toString().trim());
-        sharedPrefsEditable.putString("degreeNameText",degreeName.getText().toString().trim());
-        sharedPrefsEditable.putString("universityNameText",universityName.getText().toString().trim());
-        sharedPrefsEditable.putString("fieldOfStudyText",fieldOfStudy.getText().toString().trim());
-        sharedPrefsEditable.putString("locationText",location.getText().toString().trim());
-        sharedPrefsEditable.putString("companyNameText",companyName.getText().toString().trim());
-        sharedPrefsEditable.putString("jobTitleText",jobTitle.getText().toString().trim());
-        sharedPrefsEditable.putString("locationWorkExpText",locationWorkExp.getText().toString().trim());
-        sharedPrefsEditable.putString("jobDescriptionText",jobDescription.getText().toString().trim());
+        sharedPrefsEditable.putString("startDateText", startDate.getText().toString().trim());
+        sharedPrefsEditable.putString("endDateText", endDate.getText().toString().trim());
+        sharedPrefsEditable.putString("startDateWorkExpText", startDateWorkExp.getText().toString().trim());
+        sharedPrefsEditable.putString("endDateWorkExpText", endDateWorkExp.getText().toString().trim());
+        sharedPrefsEditable.putString("degreeNameText", degreeName.getText().toString().trim());
+        sharedPrefsEditable.putString("universityNameText", universityName.getText().toString().trim());
+        sharedPrefsEditable.putString("fieldOfStudyText", fieldOfStudy.getText().toString().trim());
+        sharedPrefsEditable.putString("locationText", location.getText().toString().trim());
+        sharedPrefsEditable.putString("companyNameText", companyName.getText().toString().trim());
+        sharedPrefsEditable.putString("jobTitleText", jobTitle.getText().toString().trim());
+        sharedPrefsEditable.putString("locationWorkExpText", locationWorkExp.getText().toString().trim());
+        sharedPrefsEditable.putString("jobDescriptionText", jobDescription.getText().toString().trim());
 
         sharedPrefsEditable.commit();
     }

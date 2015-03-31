@@ -42,7 +42,8 @@
                 android:id="@+id/degree_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
+                android:layout_weight="3.5"
+                android:inputType="text" />
         </LinearLayout>
 
         <LinearLayout
@@ -63,7 +64,8 @@
                 android:id="@+id/university_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
+                android:layout_weight="3.5"
+                android:inputType="text" />
         </LinearLayout>
         <!--        University/College/School Name-->
 
@@ -130,7 +132,8 @@
                 android:id="@+id/field_of_study"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
+                android:layout_weight="3.5"
+                android:inputType="text" />
         </LinearLayout>
 
         <LinearLayout
@@ -150,7 +153,8 @@
                 android:id="@+id/location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
+                android:layout_weight="3.5"
+                android:inputType="text" />
         </LinearLayout>
 
         <TextView
@@ -184,7 +188,8 @@
                 android:id="@+id/company_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
+                android:layout_weight="3.5"
+                android:inputType="text" />
         </LinearLayout>
 
         <LinearLayout
@@ -204,7 +209,8 @@
                 android:id="@+id/job_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
+                android:layout_weight="3.5"
+                android:inputType="text" />
         </LinearLayout>
 
         <LinearLayout
@@ -268,7 +274,8 @@
                 android:id="@+id/location_work_exp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
+                android:layout_weight="3.5"
+                android:inputType="text" />
         </LinearLayout>
 
         <LinearLayout
@@ -289,35 +296,36 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
+                android:inputType="text"
                 android:lines="3" />
         </LinearLayout>
 
-   <!--     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="vertical">
+        <!--     <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="12dp"
+                 android:orientation="vertical">
 
-            <Button
-                android:id="@+id/previous"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#B0B6BC"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="Previous"
-                android:textColor="#FFFFFF" />
+                 <Button
+                     android:id="@+id/previous"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:background="#B0B6BC"
+                     android:paddingLeft="16dp"
+                     android:paddingRight="16dp"
+                     android:text="Previous"
+                     android:textColor="#FFFFFF" />
 
-            <Button
-                android:id="@+id/next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="#32B1D2"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="Next"
-                android:textColor="#FFFFFF" />
-        </RelativeLayout>-->
+                 <Button
+                     android:id="@+id/next"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentRight="true"
+                     android:background="#32B1D2"
+                     android:paddingLeft="16dp"
+                     android:paddingRight="16dp"
+                     android:text="Next"
+                     android:textColor="#FFFFFF" />
+             </RelativeLayout>-->
     </LinearLayout>
 </ScrollView>
