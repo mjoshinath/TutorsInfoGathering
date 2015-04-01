@@ -23,17 +23,28 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import helper.WebServiceCallBack;
+import helper.WebserviceHelper;
+import model.categories.Category;
+import model.categories.SubCategory;
 
-public class CategoriesFragment extends Fragment implements View.OnClickListener {
+
+public class CategoriesFragment extends Fragment implements View.OnClickListener, WebServiceCallBack {
 
     private ExpandableListView expListView;
     private HashMap<String, String[]> mainCategoriesAndChilds;
     private HashSet<String> checkedCategories = new HashSet<String>();
-    private String[] mainCategoryNames;
+    private HashSet<Integer> checkedCategoriesIds = new HashSet<Integer>();
+    //    private String[] mainCategoryNames;
+    private ArrayList<String> mainCategoryNames;
     private Button next;
     private ActionBar actionBar;
     private View view;
@@ -48,6 +59,12 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     private Iterator<String> iterator;
     private StringBuffer categoriesString = new StringBuffer();
     private String categoriesStringTemp;
+    private String url;
+    private SubCategory subCategoriesResponse;
+    private Integer id;
+    private String name;
+    private String response;
+    ArrayList<Category> categoryResponse;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +131,8 @@ main_view
         sharedPrefsEditable.putBoolean("categories", true);
         sharedPrefsEditable.commit();
 
-        mainCategoryNames = new String[]{"mathematics", "arts_and_humanities", "business", "engineering_and_technology", "foreign_languages", "history", "science", "social_science"};
+
+        /*mainCategoryNames = new String[]{"mathematics", "arts_and_humanities", "business", "engineering_and_technology", "foreign_languages", "history", "science", "social_science"};
         mainCategoriesAndChilds = new HashMap<String, String[]>();
 
         mainCategoriesAndChilds.put("mathematics", getResources().getStringArray(R.array.mathematics));
@@ -124,18 +142,27 @@ main_view
         mainCategoriesAndChilds.put("foreign_languages", getResources().getStringArray(R.array.foreign_languages));
         mainCategoriesAndChilds.put("history", getResources().getStringArray(R.array.history));
         mainCategoriesAndChilds.put("science", getResources().getStringArray(R.array.science));
-        mainCategoriesAndChilds.put("social_science", getResources().getStringArray(R.array.social_science));
+        mainCategoriesAndChilds.put("social_science", getResources().getStringArray(R.array.social_science));*/
 
         expListView = (ExpandableListView) view.findViewById(R.id.categories_exp_listview);
-        ExpandableListViewAdapter adapter = new ExpandableListViewAdapter(getActivity().getApplicationContext(), mainCategoryNames, mainCategoriesAndChilds);
-        expListView.setAdapter(adapter);
+        String json = userSharedPreference.getString("categories1", "");
+        if (json != null && !json.isEmpty()) {
+            ArrayList<Category> categories=new Gson().fromJson(json, new TypeToken<ArrayList<Category>>() {
+            }.getType());
+            ExpandableListViewAdapter adapter = new ExpandableListViewAdapter(getActivity().getApplicationContext(),categories );
+            expListView.setAdapter(adapter);
+        } else {
+            new WebserviceHelper(getActivity().getApplicationContext()).getData(this);
+        }
+
         setActionBarProperties();
         nextButton = (Button) getActivity().findViewById(R.id.next);
         previous = (Button) getActivity().findViewById(R.id.previous);
         previous.setVisibility(View.VISIBLE);
         setHasOptionsMenu(true);
+        nextButton.setOnClickListener(this);
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        /*nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                if (doValidation())
@@ -147,7 +174,7 @@ main_view
                     Toast.makeText(getActivity(), "Select minimum of three categories", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +183,8 @@ main_view
         });
         categoriesPhase = getActivity().findViewById(R.id.phase_categories);
         categoriesPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
+        url = "http://192.168.1.124:5000/api/v1/categories";
+        new WebserviceHelper(getActivity()).getData(this);
 
         return view;
     }
@@ -194,6 +223,7 @@ main_view
                     sharedPrefsEditable.putStringSet("checkedCategories", checkedCategories);
                     sharedPrefsEditable.commit();
                     fragmentReplaceMethod();
+                    Log.d("test18", "next called");
                     /*Intent intent = new Intent(this, ProfessionalInfoFragment.class);
                     startActivity(intent);*/
                 } else {
@@ -206,6 +236,20 @@ main_view
         }
     }
 
+    @Override
+    public void populateData(String jsonResponse) {
+        categoryResponse = new Gson().fromJson(jsonResponse, new TypeToken<ArrayList<Category>>() {
+        }.getType());
+        sharedPrefsEditable.putString("categories1", jsonResponse).commit();
+        ExpandableListViewAdapter adapter = new ExpandableListViewAdapter(getActivity().getApplicationContext(), categoryResponse);
+        expListView.setAdapter(adapter);
+    }
+
+    @Override
+    public void hideProgressBarOnFailure() {
+
+    }
+
 
    /* @Override
     public void onBackPressed() {
@@ -215,38 +259,35 @@ main_view
     private class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
         private Context context;
-        private String[] listDataHeader;
-        private HashMap<String, String[]> listDataChild;
-
-        public ExpandableListViewAdapter(Context context, String[] listDataHeader,
-                                         HashMap<String, String[]> listChildData) {
-            this.context = context;
-            this.listDataHeader = mainCategoryNames;
-            this.listDataChild = listChildData;
-        }
-
+        private ArrayList<Category> categories;
         private TextView lblListHeader;
+
+        public ExpandableListViewAdapter(Context applicationContext, ArrayList<Category> categoryResponse) {
+            categories = categoryResponse;
+            context = applicationContext;
+
+        }
 
         @Override
         public int getGroupCount() {
-            return mainCategoryNames.length;
+            return categories.size();
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return mainCategoriesAndChilds.get(mainCategoryNames[groupPosition]).length;
+            return categories.get(groupPosition).getSubCategories().size();
         }
 
         @Override
-        public Object getGroup(int groupPosition) {
+        public Category getGroup(int groupPosition) {
 //            Log.d("test18", "groupPosition" + groupPosition);
-            return mainCategoryNames[groupPosition];
+            return categories.get(groupPosition);
         }
 
         @Override
-        public Object getChild(int groupPosition, int childPosition) {
+        public SubCategory getChild(int groupPosition, int childPosition) {
             Log.d("test18", "childPosition" + childPosition);
-            return mainCategoriesAndChilds.get(mainCategoryNames[groupPosition])[childPosition];
+            return categories.get(groupPosition).getSubCategories().get(childPosition);
         }
 
         @Override
@@ -266,7 +307,7 @@ main_view
 
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            String headerTitle = (String) getGroup(groupPosition);
+            Category category = getGroup(groupPosition);
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.list_group, null);
@@ -274,10 +315,7 @@ main_view
 
             lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
             lblListHeader.setTypeface(null, Typeface.BOLD);
-            String headerTitleTemp = headerTitle.toString().replace("_", " ");
-            headerTitleTemp = headerTitleTemp.substring(0, 1).toUpperCase() + headerTitleTemp.substring(1);
-            lblListHeader.setText(headerTitleTemp);
-
+            lblListHeader.setText(category.getName());
             return convertView;
         }
 
@@ -288,7 +326,7 @@ main_view
 
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-            final String childText = (String) getChild(groupPosition, childPosition);
+            final SubCategory subCategory = getChild(groupPosition, childPosition);
 
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -296,14 +334,16 @@ main_view
             }
 
             CheckBox txtListChild = (CheckBox) convertView.findViewById(R.id.lblListItem);
-            txtListChild.setText(childText);
+            txtListChild.setText(subCategory.getName());
             txtListChild.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         checkedCategories.add(buttonView.getText().toString().trim());
+                        checkedCategoriesIds.add(subCategory.getId());
                     } else {
                         checkedCategories.remove(buttonView.getText().toString().trim());
+                        checkedCategoriesIds.remove(subCategory.getId());
                     }
                     Log.d("test18", "checkedCategories :" + checkedCategories);
                     categoriesCheckedSizes = checkedCategories.size();

@@ -76,4 +76,5 @@ public class SignInActivity extends Activity implements View.OnClickListener {
                 }
         }
     }
+
 }

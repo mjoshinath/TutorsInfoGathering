@@ -41,6 +41,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private ActionBar actionBar;
     private EditText firstName;
     private EditText lastName;
+    private EditText emailId;
+    private EditText mobileNumber;
     private EditText dateOfBirth;
     private EditText address;
     private EditText city;
@@ -65,6 +67,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private SharedPreferences.Editor sharedPrefsEditable;
     private String firstNameText;
     private String lastNameText;
+    private String emailIdText;
+    private String mobileNumberText;
     private String dateOfBirthText;
     private String addressText;
     private String cityText;
@@ -72,11 +76,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private String zipCodeText;
     private String countryText;
     private String userNameText;
-    private File capturedImagesDir;
 
-    private static final int CAMERA_REQUEST = 1888;
-    private Bitmap photo;
-    private String userImageString;
+    private static final int CAMERA_REQUEST = 1;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +154,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         zipCode.setText(userSharedPreference.getString("zipCodeText", ""));
         country.setText(userSharedPreference.getString("countryText", ""));
         userName.setText(userSharedPreference.getString("userNameText", ""));
+        emailId.setText(userSharedPreference.getString("emailIdText", ""));
+        mobileNumber.setText(userSharedPreference.getString("mobileNumberText", ""));
     }
 
     private void saveFilledDataInSharedPrefs() {
@@ -166,6 +169,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         zipCodeText = zipCode.getText().toString().trim();
         countryText = country.getText().toString().trim();
         userNameText = userName.getText().toString().trim();
+        emailIdText = emailId.getText().toString().trim();
+        mobileNumberText = mobileNumber.getText().toString().trim();
 
         sharedPrefsEditable.putString("firstNameText", firstNameText);
         sharedPrefsEditable.putString("lastNameText", lastNameText);
@@ -176,6 +181,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         sharedPrefsEditable.putString("zipCodeText", zipCodeText);
         sharedPrefsEditable.putString("countryText", countryText);
         sharedPrefsEditable.putString("userNameText", userNameText);
+        sharedPrefsEditable.putString("emailIdText", emailIdText);
+        sharedPrefsEditable.putString("mobileNumberText", mobileNumberText);
 
         sharedPrefsEditable.commit();
     }
@@ -201,6 +208,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private void getWidgets(View view) {
         firstName = (EditText) view.findViewById(id.first_name);
         lastName = (EditText) view.findViewById(id.last_name);
+        emailId = (EditText) view.findViewById(id.email_id);
+        mobileNumber = (EditText) view.findViewById(id.mobile_number);
         dateOfBirth = (EditText) view.findViewById(id.date_of_birth);
         address = (EditText) view.findViewById(id.address);
         city = (EditText) view.findViewById(id.city);

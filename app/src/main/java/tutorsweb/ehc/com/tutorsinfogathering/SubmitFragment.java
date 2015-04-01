@@ -1,20 +1,19 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Iterator;
 import java.util.Set;
 
+import helper.Network;
 
 public class SubmitFragment extends Fragment implements View.OnClickListener {
 
@@ -36,6 +44,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences sharedPrefs;
     private TextView firstName;
     private TextView lastName;
+    private TextView emailId;
+    private TextView mobileNumber;
     private TextView dateOfBirth;
     private TextView address;
     private TextView city;
@@ -69,6 +79,48 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
     private StringBuilder categoriesString = new StringBuilder();
     private Iterator<String> iterator;
 
+    private AsyncHttpClient asyncHttpClient;
+    private RequestParams requestParams;
+    private String url;
+
+    private String firstNameText;
+    private String lastNameText;
+    private String dateOfBirthText;
+    private String addressText;
+    private String stateText;
+    private String cityText;
+    private String zipCodeText;
+    private String countryText;
+    private String userNameText;
+    private String userImageString;
+    private String yrsOfTeachingExpText;
+    private String tutoringExpText;
+    private String languagesText;
+    private String interestsText;
+    private String degreeNameText;
+    private String universityNameText;
+    private String startDateText;
+    private String endDateText;
+    private String startDateWorkExpText;
+    private String endDateWorkExpText;
+    private String locationText;
+    private String locationWorkExpText;
+    private String jobTitleText;
+    private String jobDescriptionText;
+    private String fieldOfStudyText;
+    private String companyNameText;
+    private String emailIdText;
+    private String mobileNumberText;
+    private JSONObject jsonObject;
+
+    private static final String TABLE_QUERY = "CREATE TABLE IF NOT EXISTS i_reg_ezee_data_tbl(TUTOR_DETAILS VARCHAR(200))";
+    private static final String INSERT_DETAILS_QUERY = "INSERT INTO i_reg_ezee_data_tbl(TUTOR_DETAILS) VALUES(?)";
+
+    private SQLiteDatabase mydatabase;
+    private SQLiteStatement preparedStatement;
+    private String stringToBeInserted;
+
+
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,23 +145,61 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
         sharedPrefsEdit.putBoolean("submit", true);
         sharedPrefsEdit.commit();
 
+        getSharedPrefsData();
+
         setSharedPrefsDataToReview();
         setActionBarProperties();
         setHasOptionsMenu(true);
 
         submit = (Button) getActivity().findViewById(R.id.next);
+        previous = (Button) getActivity().findViewById(R.id.previous);
+
         submit.setText("Submit");
         submit.setOnClickListener(this);
-        previous = (Button) getActivity().findViewById(R.id.previous);
-        previous.setOnClickListener(new View.OnClickListener() {
+        previous.setOnClickListener(this);
+        /*previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();
             }
-        });
+        });*/
         submitPhase = getActivity().findViewById(R.id.phase_submit);
         submitPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
         return view;
+    }
+
+    private void getSharedPrefsData() {
+        firstNameText = sharedPrefs.getString("firstNameText", "");
+        lastNameText = sharedPrefs.getString("lastNameText", "");
+        dateOfBirthText = sharedPrefs.getString("dateOfBirthText", "");
+        addressText = sharedPrefs.getString("addressText", "");
+        stateText = sharedPrefs.getString("stateText", "");
+        cityText = sharedPrefs.getString("cityText", "");
+        zipCodeText = sharedPrefs.getString("zipCodeText", "");
+        countryText = sharedPrefs.getString("countryText", "");
+        userNameText = sharedPrefs.getString("userNameText", "");
+        emailIdText = sharedPrefs.getString("emailIdText", "");
+        mobileNumberText = sharedPrefs.getString("mobileNumberText", "");
+
+        userImageString = sharedPrefs.getString("userImageString", "");
+
+        yrsOfTeachingExpText = sharedPrefs.getString("yrsOfTeachingExpText", "");
+        tutoringExpText = sharedPrefs.getString("tutoringExpText", "");
+        languagesText = sharedPrefs.getString("languagesText", "");
+        interestsText = sharedPrefs.getString("interestsText", "");
+
+        degreeNameText = sharedPrefs.getString("degreeNameText", "");
+        universityNameText = sharedPrefs.getString("universityNameText", "");
+        startDateText = sharedPrefs.getString("startDateText", "");
+        endDateText = sharedPrefs.getString("endDateText", "");
+        startDateWorkExpText = sharedPrefs.getString("startDateWorkExpText", "");
+        endDateWorkExpText = sharedPrefs.getString("endDateWorkExpText", "");
+        locationText = sharedPrefs.getString("locationText", "");
+        locationWorkExpText = sharedPrefs.getString("locationWorkExpText", "");
+        jobTitleText = sharedPrefs.getString("jobTitleText", "");
+        jobDescriptionText = sharedPrefs.getString("jobDescriptionText", "");
+        fieldOfStudyText = sharedPrefs.getString("fieldOfStudyText", "");
+        companyNameText = sharedPrefs.getString("companyNameText", "");
     }
 
     private void getWidgets(View view) {
@@ -122,6 +212,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
         zipCode = (TextView) view.findViewById(R.id.zip_code);
         country = (TextView) view.findViewById(R.id.country);
         userName = (TextView) view.findViewById(R.id.username);
+        emailId = (TextView) view.findViewById(R.id.email_id);
+        mobileNumber = (TextView) view.findViewById(R.id.mobile_number);
         userImage = (ImageView) view.findViewById(R.id.user_image);
 
         categories = (TextView) view.findViewById(R.id.categories);
@@ -146,19 +238,20 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setSharedPrefsDataToReview() {
-        firstName.setText(sharedPrefs.getString("firstNameText", ""));
-        lastName.setText(sharedPrefs.getString("lastNameText", ""));
-        dateOfBirth.setText(sharedPrefs.getString("dateOfBirthText", ""));
-        address.setText(sharedPrefs.getString("addressText", ""));
-        city.setText(sharedPrefs.getString("cityText", ""));
-        state.setText(sharedPrefs.getString("stateText", ""));
-        zipCode.setText(sharedPrefs.getString("zipCodeText", ""));
-        country.setText(sharedPrefs.getString("countryText", ""));
-        userName.setText(sharedPrefs.getString("userNameText", ""));
+        firstName.setText(firstNameText);
+        lastName.setText(lastNameText);
+        dateOfBirth.setText(dateOfBirthText);
+        address.setText(addressText);
+        city.setText(cityText);
+        state.setText(stateText);
+        zipCode.setText(zipCodeText);
+        country.setText(countryText);
+        userName.setText(userNameText);
+        emailId.setText(emailIdText);
+        mobileNumber.setText(mobileNumberText);
 
-        userImageStringFormat = sharedPrefs.getString("userImageString", "");
-        Log.d("test18","image in string->"+userImageStringFormat);
-        userImageInBitFormat = stringToBitMap(userImageStringFormat);
+        Log.d("test18", "image in string->" + userImageString);
+        userImageInBitFormat = stringToBitMap(userImageString);
         userImage.setImageBitmap(userImageInBitFormat);
 
         categoriesSet = sharedPrefs.getStringSet("checkedCategories", null);
@@ -171,25 +264,24 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
             categories.setText(string.substring(0, string.length() - 2));
         }
 
-        yearsOfTeachingExp.setText(sharedPrefs.getString("yrsOfTeachingExpText", ""));
-        tutoringExp.setText(sharedPrefs.getString("tutoringExpText", ""));
-        languages.setText(sharedPrefs.getString("languagesText", ""));
-        interests.setText(sharedPrefs.getString("interestsText", ""));
+        yearsOfTeachingExp.setText(yrsOfTeachingExpText);
+        tutoringExp.setText(tutoringExpText);
+        languages.setText(languagesText);
+        interests.setText(interestsText);
 
-        degreeName.setText(sharedPrefs.getString("degreeNameText", ""));
-        universityName.setText(sharedPrefs.getString("universityNameText", ""));
-        startDate.setText(sharedPrefs.getString("startDateText", ""));
-        endDate.setText(sharedPrefs.getString("endDateText", ""));
-        startDateWorkExp.setText(sharedPrefs.getString("startDateWorkExpText", ""));
-        endDateWorkExp.setText(sharedPrefs.getString("endDateWorkExpText", ""));
-        location.setText(sharedPrefs.getString("locationText", ""));
-        locationWorkExp.setText(sharedPrefs.getString("locationWorkExpText", ""));
-        jobTitle.setText(sharedPrefs.getString("jobTitleText", ""));
-        jobDescription.setText(sharedPrefs.getString("jobDescriptionText", ""));
-        fieldOfStudy.setText(sharedPrefs.getString("fieldOfStudyText", ""));
-        companyName.setText(sharedPrefs.getString("companyNameText", ""));
+        degreeName.setText(degreeNameText);
+        universityName.setText(universityNameText);
+        startDate.setText(startDateText);
+        endDate.setText(endDateText);
+        startDateWorkExp.setText(startDateWorkExpText);
+        endDateWorkExp.setText(endDateWorkExpText);
+        location.setText(locationText);
+        locationWorkExp.setText(locationWorkExpText);
+        jobTitle.setText(jobTitleText);
+        jobDescription.setText(jobDescriptionText);
+        fieldOfStudy.setText(fieldOfStudyText);
+        companyName.setText(companyNameText);
     }
-
 
     public Bitmap stringToBitMap(String encodedString) {
         try {
@@ -229,9 +321,81 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.next:
                 Log.d("test18", "called");
-                sharedPrefsEdit.clear();
-                sharedPrefsEdit.commit();
+                createJSONObject();
+                url = "192.168.1.124:5000/api/v1/tutors?tutor";
+                requestParams = new RequestParams();
+                requestParams.put("jsonObject", jsonObject);
+                if (Network.isConnected(getActivity())) {
+                    asyncHttpClient = new AsyncHttpClient();
+
+                    asyncHttpClient.post(url, requestParams, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            sharedPrefsEdit.clear();
+                            sharedPrefsEdit.commit();
+                            Log.d("test18", "Success!");
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            Log.d("test18", "Failure");
+                        }
+                    });
+                } else {
+                    if (!mydatabase.isOpen())
+                        mydatabase = getActivity().openOrCreateDatabase("iRegEzee", getActivity().MODE_PRIVATE, null);
+                    mydatabase.execSQL(TABLE_QUERY);//Creating Table
+                    preparedStatement = mydatabase.compileStatement(INSERT_DETAILS_QUERY);//Inserting details into DB
+                    preparedStatement.bindString(1, jsonObject.toString());
+                    preparedStatement.execute();
+                }
+                /*sharedPrefsEdit.clear();
+                sharedPrefsEdit.commit();*/
                 break;
+        }
+    }
+
+    public void createJSONObject() {
+        jsonObject = new JSONObject();
+        setJsonObjectAttributes();
+    }
+
+    private void setJsonObjectAttributes() {
+        try {
+            jsonObject.put("first_name", firstNameText);
+            jsonObject.put("last_name", lastNameText);
+            jsonObject.put("dob", dateOfBirthText);
+            jsonObject.put("address", addressText);
+//            jsonObject.put("stateText", stateText);
+//            jsonObject.put("cityText", cityText);
+//            jsonObject.put("zipCodeText", zipCodeText);
+//            jsonObject.put("countryText", countryText);
+            jsonObject.put("display_name", userNameText);
+            jsonObject.put("email", emailIdText);
+            jsonObject.put("primary_contact_number", mobileNumberText);
+            jsonObject.put("gender", "male");
+
+//            jsonObject.put("userImageString", userImageString);
+
+//            jsonObject.put("yrsOfTeachingExpText", yrsOfTeachingExpText);
+//            jsonObject.put("tutoringExpText", tutoringExpText);
+            jsonObject.put("languages", languagesText);
+//            jsonObject.put("interestsText", interestsText);
+
+//            jsonObject.put("degreeNameText", degreeNameText);
+//            jsonObject.put("universityNameText", universityNameText);
+//            jsonObject.put("startDateText", startDateText);
+//            jsonObject.put("endDateText", endDateText);
+//            jsonObject.put("startDateWorkExpText", startDateWorkExpText);
+//            jsonObject.put("endDateWorkExpText", endDateWorkExpText);
+//            jsonObject.put("locationText", locationText);
+//            jsonObject.put("locationWorkExpText", locationWorkExpText);
+//            jsonObject.put("jobTitleText", jobTitleText);
+            jsonObject.put("description", jobDescriptionText);
+//            jsonObject.put("fieldOfStudyText", fieldOfStudyText);
+//            jsonObject.put("companyNameText", companyNameText);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

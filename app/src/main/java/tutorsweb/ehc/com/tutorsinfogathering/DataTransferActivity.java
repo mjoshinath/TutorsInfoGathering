@@ -55,6 +55,7 @@ public class DataTransferActivity extends Activity {
         }
     }
 
+
     /*For reading JSON from DataBase
     *
     * String json = Read_column_value_logic_here
