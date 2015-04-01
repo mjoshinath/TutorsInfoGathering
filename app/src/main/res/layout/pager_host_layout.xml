@@ -26,10 +26,20 @@
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:weightSum="5">
+        android:weightSum="6">
 
         <View
             android:id="@+id/phase_personnel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+            android:background="#B0B6BC"
+            android:gravity="center"
+            android:padding="2dp" />
+
+        <View
+            android:id="@+id/phase_capture_image"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"

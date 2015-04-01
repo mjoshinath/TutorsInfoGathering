@@ -21,6 +21,7 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
     private View phaseProfessional;
     private View phaseWorkExp;
     private View phaseSubmit;
+    private View phaseCaptureImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
         sharedPrefEdit = sharedPrefs.edit();
 
         sharedPrefEdit.putBoolean("personnel", false);
+        sharedPrefEdit.putBoolean("captureImage", false);
         sharedPrefEdit.putBoolean("categories", false);
         sharedPrefEdit.putBoolean("professional", false);
         sharedPrefEdit.putBoolean("workExp", false);
@@ -58,6 +60,7 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
 
     private void getWidgets() {
         phasePersonnel = findViewById(R.id.phase_personnel);
+        phaseCaptureImage = findViewById(R.id.phase_capture_image);
         phaseCategories = findViewById(R.id.phase_categories);
         phaseProfessional = findViewById(R.id.phase_professional);
         phaseWorkExp = findViewById(R.id.phase_work_exp);
@@ -85,6 +88,10 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
             case R.id.phase_personnel:
                 if (sharedPrefs.getBoolean("personnel", false))
                     fragmentTransaction.replace(R.id.main_view, new PersonnelInfoFragment());
+                break;
+            case R.id.phase_capture_image:
+                if (sharedPrefs.getBoolean("captureImage", false))
+                    fragmentTransaction.replace(R.id.main_view, new CaptureUserImageFragment());
                 break;
             case R.id.phase_categories:
                 if (sharedPrefs.getBoolean("categories", false))

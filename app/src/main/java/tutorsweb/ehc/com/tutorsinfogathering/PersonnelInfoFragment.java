@@ -176,7 +176,6 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         sharedPrefsEditable.putString("zipCodeText", zipCodeText);
         sharedPrefsEditable.putString("countryText", countryText);
         sharedPrefsEditable.putString("userNameText", userNameText);
-        sharedPrefsEditable.putString("userImageString", userImageString);
 
         sharedPrefsEditable.commit();
     }
@@ -197,7 +196,6 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private void applyActions() {
         next.setOnClickListener(this);
         dateOfBirth.setOnClickListener(this);
-        captureImage.setOnClickListener(this);
     }
 
     private void getWidgets(View view) {
@@ -245,7 +243,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    /*public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             photo = (Bitmap) data.getExtras().get("data");
             userImage.setImageBitmap(photo);
@@ -253,21 +251,21 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
 
             userImageString = BitMapToString(photo);
         }
-    }
+    }*/
 
-    public String BitMapToString(Bitmap bitmap) {
+    /*public String BitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
         String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
-    }
+    }*/
 
     private void fragmentReplaceMethod() {
         fragmentMngr = getFragmentManager();
         fragmentTransaction = fragmentMngr.beginTransaction();
         fragmentTransaction.addToBackStack("Personnel");
-        fragmentTransaction.replace(id.main_view, new CategoriesFragment());
+        fragmentTransaction.replace(id.main_view, new CaptureUserImageFragment());
         fragmentTransaction.commit();
     }
 

@@ -5,12 +5,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -77,7 +75,6 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         previous = (Button) getActivity().findViewById(R.id.previous);
         next = (Button) getActivity().findViewById(R.id.next);
         getWidgets();
-        setHasOptionsMenu(true);
 
         updateUi();
 
@@ -138,19 +135,6 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
         actionBar.setTitle("Professional Information");
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case android.R.id.home:
-                Intent intent1 = new Intent(getActivity(), HomePage.class);
-                startActivity(intent1);
-                sharedPrefsEditable.clear();
-                sharedPrefsEditable.commit();
-                break;
-        }
-        return (super.onOptionsItemSelected(menuItem));
     }
 
     @Override

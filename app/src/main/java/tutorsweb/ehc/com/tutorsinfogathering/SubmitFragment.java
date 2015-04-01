@@ -157,6 +157,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
         userName.setText(sharedPrefs.getString("userNameText", ""));
 
         userImageStringFormat = sharedPrefs.getString("userImageString", "");
+        Log.d("test18","image in string->"+userImageStringFormat);
         userImageInBitFormat = stringToBitMap(userImageStringFormat);
         userImage.setImageBitmap(userImageInBitFormat);
 
