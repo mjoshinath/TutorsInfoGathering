@@ -21,11 +21,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -78,6 +81,9 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private String userNameText;
 
     private static final int CAMERA_REQUEST = 1;
+    private Spinner gender;
+    private ArrayAdapter<CharSequence> adapter;
+    private String genderSelected;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +133,20 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
 
         updateUi();
 
+        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.gender, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        gender.setAdapter(adapter);
+        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                genderSelected = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,6 +203,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         sharedPrefsEditable.putString("userNameText", userNameText);
         sharedPrefsEditable.putString("emailIdText", emailIdText);
         sharedPrefsEditable.putString("mobileNumberText", mobileNumberText);
+        sharedPrefsEditable.putString("genderSelectedText", genderSelected);
 
         sharedPrefsEditable.commit();
     }
@@ -219,6 +240,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         userName = (EditText) view.findViewById(id.username);
         captureImage = (Button) view.findViewById(id.capture_image);
         userImage = (ImageView) view.findViewById(id.user_image);
+        gender = (Spinner) view.findViewById(id.gender);
     }
 
     private void setActionBarProperties() {

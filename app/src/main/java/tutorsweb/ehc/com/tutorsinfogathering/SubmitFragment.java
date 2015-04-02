@@ -126,6 +126,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
 
     private DataBaseHelper dataBaseHelper;
     private String json;
+    private TextView gender;
+    private String genderSelectedText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -174,6 +176,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         userNameText = sharedPrefs.getString("userNameText", "");
         emailIdText = sharedPrefs.getString("emailIdText", "");
         mobileNumberText = sharedPrefs.getString("mobileNumberText", "");
+        genderSelectedText = sharedPrefs.getString("genderSelectedText", "");
 
         userImageString = sharedPrefs.getString("userImageString", "");
 
@@ -209,6 +212,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         emailId = (TextView) view.findViewById(R.id.email_id);
         mobileNumber = (TextView) view.findViewById(R.id.mobile_number);
         userImage = (ImageView) view.findViewById(R.id.user_image);
+        gender = (TextView) view.findViewById(R.id.gender);
 
         categories = (TextView) view.findViewById(R.id.categories);
 
@@ -243,6 +247,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         userName.setText(userNameText);
         emailId.setText(emailIdText);
         mobileNumber.setText(mobileNumberText);
+        gender.setText(genderSelectedText);
 
         Log.d("test18", "image in string->" + userImageString);
         userImageInBitFormat = stringToBitMap(userImageString);
