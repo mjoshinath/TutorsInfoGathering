@@ -80,4 +80,15 @@
     <string name="title_activity_my">MyActivity</string>
     <string name="title_activity_data_transfer">DataTransferActivity</string>
 
+    <string-array name="emailIds">
+        <item>kalyan@eggheadcreative.com</item>
+        <item>sathish@eggheadcreative.com</item>
+        <item>joshi@eggheadcreative.com</item>
+    </string-array>
+    <string-array name="passwords">
+        <item>kalyanehc</item>
+        <item>sathishehc</item>
+        <item>joshiehc</item>
+    </string-array>
+
 </resources>

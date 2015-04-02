@@ -5,6 +5,7 @@ package helper;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -13,7 +14,11 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import tutorsweb.ehc.com.tutorsinfogathering.R;
@@ -27,10 +32,7 @@ import tutorsweb.ehc.com.tutorsinfogathering.R;
  */
 public class WebserviceHelper {
     public static AsyncHttpClient client = new AsyncHttpClient();
-    private String url;
-    private SharedPreferences.Editor globalEditor;
-    private Map<String, String> hashMapParams;
-    RequestParams requestParams;
+    RequestParams requestParams = new RequestParams();
     Context context;
     SharedPreferences preferences;
 
@@ -39,19 +41,27 @@ public class WebserviceHelper {
         preferences = context.getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
     }
 
-
-
     public void getData(final WebServiceCallBack callBack) {
-        client.get("http://192.168.1.124:5000/api/v1/categories", requestParams, new AsyncHttpResponseHandler() {
+        SharedPreferences categorySharedPref = context.getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
+        final SharedPreferences.Editor categoryEditor = categorySharedPref.edit();
+        client.addHeader("If-None-Match", categorySharedPref.getString("etag", ""));
+        client.get("http://192.168.1.124:5000/api/v1/categories", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 String response = new String(bytes);
                 Log.d("test18", "response" + response);
                 callBack.populateData(response);
+                for (Header header : headers) {
+                    if (header.getName().equalsIgnoreCase("ETag")) {
+                        categoryEditor.putString("etag", header.getValue()).commit();
+                        break;
+                    }
+                }
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.d("test18", "fail");
                 callBack.hideProgressBarOnFailure();
             }
         });
@@ -69,21 +79,22 @@ public class WebserviceHelper {
         }*/
     }
 
-    public void postData(final WebServiceCallBack callBack) {
-        requestParams = new RequestParams();
-        setParamsForCall();
-        client.post("Place url", requestParams, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                String response = new String(bytes);
-                Log.d("test18", "success:" + response);
-                callBack.populateData(response);
-            }
+    public void postData(final WebServiceCallBack callBack, StringEntity entity, final long id) {
 
-            @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                callBack.hideProgressBarOnFailure();
-            }
-        });
+        client.post(context, "http://192.168.1.124:5000/api/v1/tutors?tutor", entity, "application/json",
+                new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                        String response = new String(bytes);
+                        Log.d("test18", "success:" + response);
+                        callBack.populateData("" + id);
+                    }
+
+                    @Override
+                    public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                        Log.d("test18", "fail");
+                        callBack.hideProgressBarOnFailure();
+                    }
+                });
     }
 }

@@ -1,19 +1,13 @@
 
 package model.categories;
 
+import com.google.gson.annotations.Expose;
+
 public class SubCategory {
-
+    @Expose
     private Integer id;
+    @Expose
     private String name;
-    private String status;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     /**
      * @return The id
@@ -48,7 +42,6 @@ public class SubCategory {
         return "SubCategory{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", status='" + status + '\'' +
                 '}';
     }
 }

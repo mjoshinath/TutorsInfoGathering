@@ -11,15 +11,32 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.loopj.android.http.RequestParams;
 
-public class HomePage extends Activity implements View.OnClickListener {
+import org.apache.http.entity.StringEntity;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import helper.WebServiceCallBack;
+import helper.WebserviceHelper;
+import model.categories.TutorDetails;
+import support.DataBaseHelper;
+
+
+public class HomePage extends Activity implements View.OnClickListener, WebServiceCallBack {
 
     private Button signUpTutorButton;
     private ActionBar actionBar;
     private Button addMettingLog;
-    private SQLiteDatabase mydatabase;
 
-    private static final String SELECT_DETAILS_QUERY = "SELECT * FROM i_reg_ezee_data_tbl";
+    private DataBaseHelper dataBaseHelper;
+    private ArrayList<TutorDetails> multipleTutorDetails;
+    private RequestParams requestParams;
+    private Button syncDataButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +45,11 @@ public class HomePage extends Activity implements View.OnClickListener {
 
         signUpTutorButton = (Button) findViewById(R.id.signup_tutor);
         addMettingLog = (Button) findViewById(R.id.add_meeting_log);
+        syncDataButton = (Button) findViewById(R.id.sync_data);
 
         signUpTutorButton.setOnClickListener(this);
         addMettingLog.setOnClickListener(this);
+        syncDataButton.setOnClickListener(this);
 
         setActionBarProperties();
     }
@@ -53,20 +72,35 @@ public class HomePage extends Activity implements View.OnClickListener {
                 startActivity(webViewIntent);
                 break;
             case R.id.sync_data:
-                if (!mydatabase.isOpen())
-                    mydatabase = openOrCreateDatabase("iRegEzee", MODE_PRIVATE, null);
-                Cursor cursor = mydatabase.rawQuery(SELECT_DETAILS_QUERY, null);
-                String data = "";
-                if (cursor.moveToFirst()) {
-                    do {
-                        data = cursor.getString(0);
-                        Log.d("test18", data);
-                    } while (cursor.moveToNext());
+                dataBaseHelper = new DataBaseHelper(getApplicationContext());
+                multipleTutorDetails = dataBaseHelper.getTutorDetails();
+                Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
+                Iterator<TutorDetails> iterator = multipleTutorDetails.iterator();
+                while (iterator.hasNext()) {
+                    TutorDetails eachTutorDetails = iterator.next();
+                    try {
+                        JSONObject eachTutorDetailsInJsonFormat = new JSONObject(eachTutorDetails.getDetails());
+                        StringEntity entity = null;
+                        entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
+                        Log.d("test08", "entity-" + entity);
+                        new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
-                mydatabase.close();
                 break;
         }
     }
 
+    @Override
+    public void populateData(String jsonResponse) {
+        dataBaseHelper.delete(Long.parseLong(jsonResponse));
+    }
 
+    @Override
+    public void hideProgressBarOnFailure() {
+
+    }
 }

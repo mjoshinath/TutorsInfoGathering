@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
@@ -65,6 +66,8 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     private String name;
     private String response;
     ArrayList<Category> categoryResponse;
+    private SharedPreferences categorySharedPref;
+    private SharedPreferences.Editor categoryEditor;
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +129,8 @@ main_view
         view = inflater.inflate(R.layout.activity_categories, null);
 
         userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        categorySharedPref = getActivity().getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
+        categoryEditor = categorySharedPref.edit();
         sharedPrefsEditable = userSharedPreference.edit();
 
         sharedPrefsEditable.putBoolean("categories", true);
@@ -145,11 +150,11 @@ main_view
         mainCategoriesAndChilds.put("social_science", getResources().getStringArray(R.array.social_science));*/
 
         expListView = (ExpandableListView) view.findViewById(R.id.categories_exp_listview);
-        String json = userSharedPreference.getString("categories1", "");
+        String json = categorySharedPref.getString("categories", "");
         if (json != null && !json.isEmpty()) {
-            ArrayList<Category> categories=new Gson().fromJson(json, new TypeToken<ArrayList<Category>>() {
+            ArrayList<Category> categories = new Gson().fromJson(json, new TypeToken<ArrayList<Category>>() {
             }.getType());
-            ExpandableListViewAdapter adapter = new ExpandableListViewAdapter(getActivity().getApplicationContext(),categories );
+            ExpandableListViewAdapter adapter = new ExpandableListViewAdapter(getActivity().getApplicationContext(), categories);
             expListView.setAdapter(adapter);
         } else {
             new WebserviceHelper(getActivity().getApplicationContext()).getData(this);
@@ -183,8 +188,8 @@ main_view
         });
         categoriesPhase = getActivity().findViewById(R.id.phase_categories);
         categoriesPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
-        url = "http://192.168.1.124:5000/api/v1/categories";
-        new WebserviceHelper(getActivity()).getData(this);
+//        url = "http://192.168.1.124:5000/api/v1/categories";
+//        new WebserviceHelper(getActivity()).getData(this);
 
         return view;
     }
@@ -219,16 +224,16 @@ main_view
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                if (categoriesCheckedSizes >= 3) {
-                    sharedPrefsEditable.putStringSet("checkedCategories", checkedCategories);
-                    sharedPrefsEditable.commit();
-                    fragmentReplaceMethod();
-                    Log.d("test18", "next called");
+//                if (categoriesCheckedSizes >= 3) {
+                sharedPrefsEditable.putStringSet("checkedCategories", checkedCategories);
+                sharedPrefsEditable.commit();
+                fragmentReplaceMethod();
+                Log.d("test18", "next called");
                     /*Intent intent = new Intent(this, ProfessionalInfoFragment.class);
                     startActivity(intent);*/
-                } else {
-                    Toast.makeText(getActivity(), "Select minimum of three categories", Toast.LENGTH_SHORT);
-                }
+//                } else {
+                Toast.makeText(getActivity(), "Select minimum of three categories", Toast.LENGTH_SHORT);
+//                }
                 break;
             case R.id.previous:
                 getActivity().onBackPressed();
@@ -238,9 +243,10 @@ main_view
 
     @Override
     public void populateData(String jsonResponse) {
-        categoryResponse = new Gson().fromJson(jsonResponse, new TypeToken<ArrayList<Category>>() {
+        categoryResponse = new Gson().fromJson(jsonResponse, new TypeToken<List<Category>>() {
         }.getType());
-        sharedPrefsEditable.putString("categories1", jsonResponse).commit();
+        categoryEditor.putString("categories", jsonResponse).commit();
+        Log.d("test18", "categories" + categoryResponse);
         ExpandableListViewAdapter adapter = new ExpandableListViewAdapter(getActivity().getApplicationContext(), categoryResponse);
         expListView.setAdapter(adapter);
     }
@@ -275,6 +281,7 @@ main_view
 
         @Override
         public int getChildrenCount(int groupPosition) {
+            Log.d("test18", "childCount" + categories.get(groupPosition).getSubCategories().size());
             return categories.get(groupPosition).getSubCategories().size();
         }
 
@@ -327,12 +334,11 @@ main_view
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             final SubCategory subCategory = getChild(groupPosition, childPosition);
-
-            if (convertView == null) {
+            Log.d("test18", "subCategories :" + subCategory);
+            if(convertView==null) {
                 LayoutInflater infalInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.list_item, null);
             }
-
             CheckBox txtListChild = (CheckBox) convertView.findViewById(R.id.lblListItem);
             txtListChild.setText(subCategory.getName());
             txtListChild.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -20,21 +20,32 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Set;
 
 import helper.Network;
+import helper.WebServiceCallBack;
+import helper.WebserviceHelper;
+import model.categories.Address;
+import model.categories.Tutor;
+import model.categories.TutorModel;
+import model.categories.WorkExperiences;
+import support.DataBaseHelper;
 
-public class SubmitFragment extends Fragment implements View.OnClickListener {
+public class SubmitFragment extends Fragment implements View.OnClickListener, WebServiceCallBack {
 
     private Button previous;
     private Button submit;
@@ -113,25 +124,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
     private String mobileNumberText;
     private JSONObject jsonObject;
 
-    private static final String TABLE_QUERY = "CREATE TABLE IF NOT EXISTS i_reg_ezee_data_tbl(TUTOR_DETAILS VARCHAR(200))";
-    private static final String INSERT_DETAILS_QUERY = "INSERT INTO i_reg_ezee_data_tbl(TUTOR_DETAILS) VALUES(?)";
-
-    private SQLiteDatabase mydatabase;
-    private SQLiteStatement preparedStatement;
-    private String stringToBeInserted;
-
-
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_submit);
-
-        previous = (Button) findViewById(R.id.previous);
-        previous.setOnClickListener(this);
-
-        submit = (Button) findViewById(R.id.submit);
-        submit.setOnClickListener(this);
-    }*/
+    private DataBaseHelper dataBaseHelper;
+    private String json;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -260,8 +254,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
             while (iterator.hasNext()) {
                 categoriesString.append(iterator.next().toString() + ", ");
             }
-            String string = new String(categoriesString);
-            categories.setText(string.substring(0, string.length() - 2));
+//            String string = new String(categoriesString);
+            categories.setText(categoriesString);
         }
 
         yearsOfTeachingExp.setText(yrsOfTeachingExpText);
@@ -321,43 +315,56 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.next:
                 Log.d("test18", "called");
-                createJSONObject();
-                url = "192.168.1.124:5000/api/v1/tutors?tutor";
-                requestParams = new RequestParams();
-                requestParams.put("jsonObject", jsonObject);
+                json = createJSONObject();
                 if (Network.isConnected(getActivity())) {
-                    asyncHttpClient = new AsyncHttpClient();
-
-                    asyncHttpClient.post(url, requestParams, new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            sharedPrefsEdit.clear();
-                            sharedPrefsEdit.commit();
-                            Log.d("test18", "Success!");
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            Log.d("test18", "Failure");
-                        }
-                    });
+                    StringEntity entity = null;
+                    try {
+                        entity = new StringEntity(json);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    new WebserviceHelper(getActivity()).postData(this, entity, 0L);
                 } else {
-                    if (!mydatabase.isOpen())
-                        mydatabase = getActivity().openOrCreateDatabase("iRegEzee", getActivity().MODE_PRIVATE, null);
-                    mydatabase.execSQL(TABLE_QUERY);//Creating Table
-                    preparedStatement = mydatabase.compileStatement(INSERT_DETAILS_QUERY);//Inserting details into DB
-                    preparedStatement.bindString(1, jsonObject.toString());
-                    preparedStatement.execute();
+                    dataBaseHelper = new DataBaseHelper(getActivity());
+                    dataBaseHelper.insertTutorDetails(json);
                 }
-                /*sharedPrefsEdit.clear();
-                sharedPrefsEdit.commit();*/
+                Toast.makeText(getActivity(), "Tutor Successfully Registered", Toast.LENGTH_SHORT).show();
+                sharedPrefsEdit.clear();
+                sharedPrefsEdit.commit();
+                Intent intent = new Intent(getActivity(), HomePage.class);
+                startActivity(intent);
                 break;
         }
     }
 
-    public void createJSONObject() {
+    public String createJSONObject() {
         jsonObject = new JSONObject();
-        setJsonObjectAttributes();
+//        setJsonObjectAttributes();
+        Tutor tutor = new Tutor();
+        tutor.setFirstName(firstNameText);
+        tutor.setLastName(lastNameText);
+        tutor.setDob(dateOfBirthText);
+        tutor.setEmail(emailIdText);
+        tutor.setPrimaryContactNumber(mobileNumberText);
+        tutor.setDisplayName(userNameText);
+
+        Address address = new Address();
+        address.setCity(cityText);
+        address.setCountry(countryText);
+        address.setZipCode(zipCodeText);
+        address.setStreet1(addressText);
+
+        tutor.setAddress(address);
+
+        WorkExperiences workExperiences = new WorkExperiences();
+        workExperiences.setCompanyName(companyNameText);
+
+        tutor.setWorkExperiences(workExperiences);
+
+        TutorModel tutorModel = new TutorModel();
+        tutorModel.setTutor(tutor);
+
+        return new Gson().toJson(tutorModel);
     }
 
     private void setJsonObjectAttributes() {
@@ -409,5 +416,16 @@ public class SubmitFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void populateData(String jsonResponse) {
+
+    }
+
+    @Override
+    public void hideProgressBarOnFailure() {
+        dataBaseHelper = new DataBaseHelper(getActivity());
+        dataBaseHelper.insertTutorDetails(json);
     }
 }
