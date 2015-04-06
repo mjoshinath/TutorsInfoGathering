@@ -11,88 +11,96 @@
         android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8.8"
+        android:layout_weight="8.5"
         android:orientation="vertical"
         android:overScrollMode="always" />
 
     <LinearLayout
-        android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="0.2"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:weightSum="6">
+        android:layout_weight="0.5"
+        android:background="#DDDDDD"
+        android:orientation="vertical"
+        android:weightSum="0.5">
 
-        <View
-            android:id="@+id/phase_personnel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
-            android:layout_weight="1"
-            android:background="#B0B6BC"
-            android:gravity="center"
-            android:padding="2dp" />
+        <LinearLayout
+            android:id="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_weight="0.3"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:weightSum="6"
+            android:paddingTop="6dp"
+            android:layout_marginTop="4dp">
 
-        <View
-            android:id="@+id/phase_capture_image"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
-            android:layout_weight="1"
-            android:background="#B0B6BC"
-            android:gravity="center"
-            android:padding="2dp" />
+            <View
+                android:id="@+id/phase_personnel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="#B0B6BC"
+                android:gravity="center" />
 
-        <View
-            android:id="@+id/phase_categories"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
-            android:layout_weight="1"
-            android:background="#B0B6BC"
-            android:gravity="center"
-            android:padding="2dp" />
+            <View
+                android:id="@+id/phase_capture_image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="#B0B6BC"
+                android:gravity="center"
+                android:padding="2dp" />
 
-        <View
-            android:id="@+id/phase_professional"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
-            android:layout_weight="1"
-            android:background="#B0B6BC"
-            android:gravity="center"
-            android:padding="2dp" />
+            <View
+                android:id="@+id/phase_categories"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="#B0B6BC"
+                android:gravity="center"
+                android:padding="2dp" />
 
-        <View
-            android:id="@+id/phase_work_exp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
-            android:layout_weight="1"
-            android:background="#B0B6BC"
-            android:gravity="center"
-            android:padding="2dp" />
+            <View
+                android:id="@+id/phase_professional"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="#B0B6BC"
+                android:gravity="center"
+                android:padding="2dp" />
 
-        <View
-            android:id="@+id/phase_submit"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#B0B6BC"
-            android:gravity="center"
-            android:padding="2dp" />
+            <View
+                android:id="@+id/phase_work_exp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="#B0B6BC"
+                android:gravity="center"
+                android:padding="2dp" />
+
+            <View
+                android:id="@+id/phase_submit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#B0B6BC"
+                android:gravity="center"
+                android:padding="2dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
         android:weightSum="2">
@@ -116,7 +124,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#32B1D2"
+            android:background="#FFCB04"
             android:text="Next"
             android:textColor="#FFFFFF" />
     </LinearLayout>

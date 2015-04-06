@@ -91,7 +91,7 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
             }
         });
         workExpPhase = getActivity().findViewById(R.id.phase_work_exp);
-        workExpPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
+        workExpPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         return view;
     }
 

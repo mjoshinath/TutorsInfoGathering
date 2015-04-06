@@ -33,16 +33,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import helper.Network;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
+import model.categories.AcademicDegreesAttribute;
 import model.categories.Address;
 import model.categories.Tutor;
 import model.categories.TutorModel;
 import model.categories.WorkExperiences;
+import model.categories.WorkExperiencesAttribute;
 import support.DataBaseHelper;
 
 public class SubmitFragment extends Fragment implements View.OnClickListener, WebServiceCallBack {
@@ -128,6 +132,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     private String json;
     private TextView gender;
     private String genderSelectedText;
+    private List<WorkExperiencesAttribute> workExperiencesAttributeList = new ArrayList<WorkExperiencesAttribute>();
+    private List<AcademicDegreesAttribute> academicDegreesAttributeList = new ArrayList<AcademicDegreesAttribute>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,7 +166,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
             }
         });*/
         submitPhase = getActivity().findViewById(R.id.phase_submit);
-        submitPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
+        submitPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         return view;
     }
 
@@ -332,11 +338,14 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
                 } else {
                     dataBaseHelper = new DataBaseHelper(getActivity());
                     dataBaseHelper.insertTutorDetails(json);
+                    sharedPrefsEdit.clear();
+                    sharedPrefsEdit.commit();
                 }
                 Toast.makeText(getActivity(), "Tutor Successfully Registered", Toast.LENGTH_SHORT).show();
-                sharedPrefsEdit.clear();
-                sharedPrefsEdit.commit();
+                /*sharedPrefsEdit.clear();
+                sharedPrefsEdit.commit();*/
                 Intent intent = new Intent(getActivity(), HomePage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
         }
@@ -352,6 +361,10 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         tutor.setEmail(emailIdText);
         tutor.setPrimaryContactNumber(mobileNumberText);
         tutor.setDisplayName(userNameText);
+        tutor.setGender(genderSelectedText);
+        tutor.setYearsOfTeachingExperience(yrsOfTeachingExpText);
+        tutor.setTutoringExperience(tutoringExpText);
+        tutor.setLanguages(languagesText);
 
         Address address = new Address();
         address.setCity(cityText);
@@ -361,10 +374,27 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
 
         tutor.setAddress(address);
 
-        WorkExperiences workExperiences = new WorkExperiences();
-        workExperiences.setCompanyName(companyNameText);
+        WorkExperiencesAttribute workExperiencesAttribute = new WorkExperiencesAttribute();
+        workExperiencesAttribute.setCompanyName(companyNameText);
+        workExperiencesAttribute.setStartDate(startDateWorkExpText);
+        workExperiencesAttribute.setEndDate(endDateWorkExpText);
+        workExperiencesAttribute.setLocation(locationWorkExpText);
+        workExperiencesAttribute.setJobTitle(jobTitleText);
+        workExperiencesAttribute.setDescription(jobDescriptionText);
 
-        tutor.setWorkExperiences(workExperiences);
+        workExperiencesAttributeList.add(workExperiencesAttribute);
+        tutor.setWorkExperiencesAttributes(workExperiencesAttributeList);
+
+        AcademicDegreesAttribute academicDegreesAttribute = new AcademicDegreesAttribute();
+        academicDegreesAttribute.setName(degreeNameText);
+        academicDegreesAttribute.setSchoolName(universityNameText);
+        academicDegreesAttribute.setStartDate(startDateText);
+        academicDegreesAttribute.setEndDate(endDateText);
+        academicDegreesAttribute.setLocation(locationText);
+        academicDegreesAttribute.setFieldOfStudy(fieldOfStudyText);
+
+        academicDegreesAttributeList.add(academicDegreesAttribute);
+        tutor.setAcademicDegreesAttributes(academicDegreesAttributeList);
 
         TutorModel tutorModel = new TutorModel();
         tutorModel.setTutor(tutor);
@@ -425,7 +455,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
 
     @Override
     public void populateData(String jsonResponse) {
-
+        sharedPrefsEdit.clear();
+        sharedPrefsEdit.commit();
     }
 
     @Override

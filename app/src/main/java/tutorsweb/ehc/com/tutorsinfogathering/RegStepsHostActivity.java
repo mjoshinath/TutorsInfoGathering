@@ -4,8 +4,10 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class RegStepsHostActivity extends Activity implements View.OnClickListener {
@@ -76,7 +78,10 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
+        Log.d("test333", "onBackPressed");
         super.onBackPressed();
+        if (getActionBar().getTitle().toString().equalsIgnoreCase("IRegEzee")) {
+        }
     }
 
     @Override
@@ -112,4 +117,5 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
         }
         fragmentTransaction.commit();
     }
+
 }

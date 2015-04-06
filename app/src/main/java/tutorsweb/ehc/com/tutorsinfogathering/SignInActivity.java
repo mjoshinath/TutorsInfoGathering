@@ -56,15 +56,16 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
         signInCredentialsPrefs = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
         signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
 
+        if (signInCredentialsPrefs.contains("email") && !signInCredentialsPrefs.getString("email", "").equals("")) {
+            Intent intent = new Intent(this, HomePage.class);
+            startActivity(intent);
+        }
+
         sharedPrefs = getSharedPreferences("session", MODE_MULTI_PROCESS);
         sharedPrefsEdit = sharedPrefs.edit();
 
-        emailId = (EditText) findViewById(R.id.email_id);
-        password = (EditText) findViewById(R.id.password);
-        signIn = (Button) findViewById(R.id.sign_in);
-        errorMsgPopup = (LinearLayout) findViewById(R.id.error_msg_popup);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
+        getWidgets();
+        updateUi();
         databaseHelper = new DataBaseHelper(getApplicationContext());
 
         signIn.setOnClickListener(this);
@@ -79,6 +80,19 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
         new WebserviceHelper(getApplicationContext()).getData(this);
 
         setActionBarProperties();
+    }
+
+    private void getWidgets() {
+        emailId = (EditText) findViewById(R.id.email_id);
+        password = (EditText) findViewById(R.id.password);
+        signIn = (Button) findViewById(R.id.sign_in);
+        errorMsgPopup = (LinearLayout) findViewById(R.id.error_msg_popup);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+    }
+
+    private void updateUi() {
+        emailId.setText(signInCredentialsPrefs.getString("email", ""));
+        password.setText(signInCredentialsPrefs.getString("password", ""));
     }
 
     @Override
@@ -103,20 +117,24 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
         String email = this.emailId.getText().toString().trim();
         if (email.equalsIgnoreCase("")) {
             emailId.setError("Email field cannot be empty!");
+            progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() && !TextUtils.isEmpty(email)) {
             emailId.setError("Invalid Email");
             emailId.requestFocus();
+            progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
         if (password.equalsIgnoreCase("")) {
             this.password.setError("Password field cannot be empty!");
             this.password.requestFocus();
+            progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
         if (password.length() < 6) {
             this.password.setError("Password length must be greater than 6");
+            progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
         return true;

@@ -16,6 +16,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="36dp"
+            android:paddingRight="36dp"
             android:src="@drawable/change" />
 
         <TextView
@@ -25,65 +27,61 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="Welcome"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/signup_tutor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:background="#B0B6BC"
+            android:layout_marginTop="16dp"
+            android:background="#FFCB04"
             android:text="Signup Tutor"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textColor="#000000" />
 
         <Button
             android:id="@+id/signup_institute"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:background="#B0B6BC"
+            android:background="#FFCB04"
             android:text="Signup Institute"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textColor="#000000" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:background="#B0B6BC"
+            android:background="#FFCB04"
             android:text="Reports"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textColor="#000000" />
 
         <Button
             android:id="@+id/documentation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:background="#B0B6BC"
+            android:background="#FFCB04"
             android:text="Documentation"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textColor="#000000" />
 
         <Button
             android:id="@+id/add_meeting_log"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:background="#B0B6BC"
+            android:background="#FFCB04"
             android:text="Add Meeting Log"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textColor="#000000" />
 
         <Button
             android:id="@+id/sync_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:background="#B0B6BC"
+            android:background="#FFCB04"
             android:text="Sync Data"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:textColor="#000000" />
     </LinearLayout>
 </ScrollView>

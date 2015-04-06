@@ -61,7 +61,8 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
         captureImage = (Button) view.findViewById(R.id.capture_image);
         userImage = (ImageView) view.findViewById(R.id.user_image);
 
-        captureImagePhase.setBackgroundColor(Color.parseColor("#32B1D2"));
+        captureImagePhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        previous.setVisibility(View.VISIBLE);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +112,7 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
 
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
-        actionBar.setTitle("Capture User Image");
+        actionBar.setTitle("Capture Tutor Picture");
     }
 
     @Override

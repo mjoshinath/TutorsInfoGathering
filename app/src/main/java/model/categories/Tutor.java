@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tutor {
 
@@ -32,9 +33,18 @@ public class Tutor {
     private String primaryContactNumber;
     @Expose
     private Address address;
-    @SerializedName("work_experiences")
+    @SerializedName("years_of_teaching_experience")
     @Expose
-    private WorkExperiences workExperiences;
+    private String yearsOfTeachingExperience;
+    @SerializedName("tutoring_experience")
+    @Expose
+    private String tutoringExperience;
+    @SerializedName("work_experiences_attributes")
+    @Expose
+    private List<WorkExperiencesAttribute> workExperiencesAttributes = new ArrayList<WorkExperiencesAttribute>();
+    @SerializedName("academic_degrees_attributes")
+    @Expose
+    private List<AcademicDegreesAttribute> academicDegreesAttributes = new ArrayList<AcademicDegreesAttribute>();
 
     /**
      * @return The firstName
@@ -176,12 +186,36 @@ public class Tutor {
         this.address = address;
     }
 
-    public WorkExperiences getWorkExperiences() {
-        return workExperiences;
+    public String getYearsOfTeachingExperience() {
+        return yearsOfTeachingExperience;
     }
 
-    public void setWorkExperiences(WorkExperiences workExperiences) {
-        this.workExperiences = workExperiences;
+    public void setYearsOfTeachingExperience(String yearsOfTeachingExperience) {
+        this.yearsOfTeachingExperience = yearsOfTeachingExperience;
+    }
+
+    public String getTutoringExperience() {
+        return tutoringExperience;
+    }
+
+    public void setTutoringExperience(String tutoringExperience) {
+        this.tutoringExperience = tutoringExperience;
+    }
+
+    public List<WorkExperiencesAttribute> getWorkExperiencesAttributes() {
+        return workExperiencesAttributes;
+    }
+
+    public void setWorkExperiencesAttributes(List<WorkExperiencesAttribute> workExperiencesAttributes) {
+        this.workExperiencesAttributes = workExperiencesAttributes;
+    }
+
+    public List<AcademicDegreesAttribute> getAcademicDegreesAttributes() {
+        return academicDegreesAttributes;
+    }
+
+    public void setAcademicDegreesAttributes(List<AcademicDegreesAttribute> academicDegreesAttributes) {
+        this.academicDegreesAttributes = academicDegreesAttributes;
     }
 
     @Override
@@ -197,7 +231,10 @@ public class Tutor {
                 ", gender='" + gender + '\'' +
                 ", primaryContactNumber='" + primaryContactNumber + '\'' +
                 ", address=" + address +
-                ", workExperiences=" + workExperiences +
+                ", yearsOfTeachingExperience='" + yearsOfTeachingExperience + '\'' +
+                ", tutoringExperience='" + tutoringExperience + '\'' +
+                ", workExperiencesAttributes=" + workExperiencesAttributes +
+                ", academicDegreesAttributes=" + academicDegreesAttributes +
                 '}';
     }
 }

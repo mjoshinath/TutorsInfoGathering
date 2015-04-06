@@ -78,6 +78,7 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
 
         updateUi();
 
+        setHasOptionsMenu(true);
         yrsOfTeachingExp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -106,7 +107,7 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
 
         setActionBarProperties();
         professionalPhase = getActivity().findViewById(R.id.phase_professional);
-        professionalPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
+        professionalPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         return view;
     }
 

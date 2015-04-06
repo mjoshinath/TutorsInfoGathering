@@ -15,8 +15,11 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +38,6 @@ import java.io.File;
 import java.util.Calendar;
 
 import static tutorsweb.ehc.com.tutorsinfogathering.R.*;
-
 
 public class PersonnelInfoFragment extends Fragment implements View.OnClickListener {
 
@@ -132,7 +134,6 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         setActionBarProperties();
 
         updateUi();
-
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.gender, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender.setAdapter(adapter);
@@ -150,16 +151,14 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if (doValidation()) {
                 saveFilledDataInSharedPrefs();
                 fragmentReplaceMethod();
-                /*if (doValidation()) {
-                    saveFilledDataInSharedPrefs();
-                    fragmentReplaceMethod();
-                }*/
+//                }
             }
         });
         personnelPhase = getActivity().findViewById(id.phase_personnel);
-        personnelPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
+        personnelPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         previous.setVisibility(View.INVISIBLE);
         return view;
     }
@@ -310,7 +309,40 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         String zipCode = this.zipCode.getText().toString().trim();
         String country = this.country.getText().toString().trim();
         String userName = this.userName.getText().toString().trim();
+        String emailId = this.emailId.getText().toString().trim();
+        String mobileNumber = this.mobileNumber.getText().toString().trim();
 
+        if (emailId.equalsIgnoreCase("")) {
+            this.emailId.setError("Email Required!");
+            this.emailId.requestFocus();
+            return false;
+        } else {
+            this.emailId.setError(null);
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches() && !TextUtils.isEmpty(emailId)) {
+            this.emailId.setError("Invalid Email");
+            this.emailId.requestFocus();
+            return false;
+        } else {
+            this.emailId.setError(null);
+        }
+
+        if (mobileNumber.equalsIgnoreCase("")) {
+            this.mobileNumber.setError("Mobile Number Required!");
+            this.mobileNumber.requestFocus();
+            return false;
+        } else {
+            this.mobileNumber.setError(null);
+        }
+
+        if (!Patterns.PHONE.matcher(mobileNumber).matches() && !TextUtils.isEmpty(mobileNumber)) {
+            this.mobileNumber.setError("Invalid Mobile Number");
+            this.mobileNumber.requestFocus();
+            return false;
+        }
+
+        /*
         if (firstName.equalsIgnoreCase("")) {
             this.firstName.setError("Required First Name!");
             this.firstName.requestFocus();
@@ -405,7 +437,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
             return false;
         } else {
             this.userName.setError(null);
-        }
+        }*/
         return true;
     }
 
@@ -447,5 +479,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Intent intent1 = new Intent(getActivity(), HomePage.class);
+        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent1);
     }
 }

@@ -163,7 +163,6 @@ main_view
         setActionBarProperties();
         nextButton = (Button) getActivity().findViewById(R.id.next);
         previous = (Button) getActivity().findViewById(R.id.previous);
-        previous.setVisibility(View.VISIBLE);
         setHasOptionsMenu(true);
         nextButton.setOnClickListener(this);
 
@@ -187,7 +186,7 @@ main_view
             }
         });
         categoriesPhase = getActivity().findViewById(R.id.phase_categories);
-        categoriesPhase.setBackgroundColor(Color.parseColor("#32B1D2"));
+        categoriesPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
 //        url = "http://192.168.1.124:5000/api/v1/categories";
 //        new WebserviceHelper(getActivity()).getData(this);
 

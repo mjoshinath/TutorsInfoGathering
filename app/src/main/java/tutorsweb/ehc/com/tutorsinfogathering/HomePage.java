@@ -3,11 +3,14 @@ package tutorsweb.ehc.com.tutorsinfogathering;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -37,11 +40,16 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private ArrayList<TutorDetails> multipleTutorDetails;
     private RequestParams requestParams;
     private Button syncDataButton;
+    private SharedPreferences signInCredentialsPrefs;
+    private SharedPreferences.Editor signInCredentialsPrefsEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        signInCredentialsPrefs = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
+        signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
 
         signUpTutorButton = (Button) findViewById(R.id.signup_tutor);
         addMettingLog = (Button) findViewById(R.id.add_meeting_log);
@@ -51,13 +59,38 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         addMettingLog.setOnClickListener(this);
         syncDataButton.setOnClickListener(this);
 
+        dataBaseHelper = new DataBaseHelper(getApplicationContext());
+        multipleTutorDetails = dataBaseHelper.getTutorDetails();
+        Log.d("test111", "" + multipleTutorDetails.size());
+        if (multipleTutorDetails.size() > 0)
+            syncDataButton.setText("Sync Data ( " + multipleTutorDetails.size() + " record(s) )");
+
         setActionBarProperties();
     }
 
     private void setActionBarProperties() {
         actionBar = getActionBar();
         actionBar.setTitle("IRegEzee");
-        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_page, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.logout) {
+            signInCredentialsPrefsEdit.clear();
+            signInCredentialsPrefsEdit.commit();
+            Intent intent = new Intent(this, SignInActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -72,8 +105,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 startActivity(webViewIntent);
                 break;
             case R.id.sync_data:
-                dataBaseHelper = new DataBaseHelper(getApplicationContext());
-                multipleTutorDetails = dataBaseHelper.getTutorDetails();
+                /*dataBaseHelper = new DataBaseHelper(getApplicationContext());
+                multipleTutorDetails = dataBaseHelper.getTutorDetails();*/
                 Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
                 Iterator<TutorDetails> iterator = multipleTutorDetails.iterator();
                 while (iterator.hasNext()) {
@@ -102,5 +135,15 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     @Override
     public void hideProgressBarOnFailure() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
