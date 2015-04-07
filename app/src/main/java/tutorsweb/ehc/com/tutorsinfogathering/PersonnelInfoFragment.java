@@ -244,7 +244,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
 
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
-        actionBar.setTitle("Personnel Information");
+        actionBar.setTitle("Personal Information");
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }

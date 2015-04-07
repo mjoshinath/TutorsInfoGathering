@@ -26,6 +26,14 @@
             android:background="#007F9F" />
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,20 +42,17 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         android:paddingTop="36dp"
+        android:layout_centerInParent="true"
         tools:context=".SignInActivity">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="32dp"
             android:src="@drawable/change" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="invisible" />
 
         <EditText
             android:id="@+id/email_id"
@@ -70,12 +75,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="24dp"
-            android:background="#B0B6BC"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/mybutton"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
             android:text="Sign in"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000000" />
 
     </LinearLayout>
 </RelativeLayout>

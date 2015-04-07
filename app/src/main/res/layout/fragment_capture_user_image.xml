@@ -13,13 +13,14 @@
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
         android:layout_weight="8"
-        android:src="@drawable/avatar" />
+        android:background="@drawable/user_default_picture" />
 
     <Button
         android:id="@+id/capture_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="0dp"
-        android:layout_weight="1.8"
+        android:layout_weight="1.5"
+        android:background="#DDDDDD"
         android:text="Capture Image" />
 </LinearLayout>

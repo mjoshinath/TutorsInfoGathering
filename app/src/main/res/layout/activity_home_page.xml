@@ -16,8 +16,10 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="18dp"
             android:paddingLeft="36dp"
             android:paddingRight="36dp"
+            android:paddingTop="18dp"
             android:src="@drawable/change" />
 
         <TextView
@@ -34,9 +36,9 @@
             android:id="@+id/signup_tutor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginTop="16dp"
-            android:background="#FFCB04"
+            android:background="@drawable/mybutton"
             android:text="Signup Tutor"
             android:textColor="#000000" />
 
@@ -44,16 +46,16 @@
             android:id="@+id/signup_institute"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:background="#FFCB04"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/mybutton"
             android:text="Signup Institute"
             android:textColor="#000000" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:background="#FFCB04"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/mybutton"
             android:text="Reports"
             android:textColor="#000000" />
 
@@ -61,8 +63,8 @@
             android:id="@+id/documentation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:background="#FFCB04"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/mybutton"
             android:text="Documentation"
             android:textColor="#000000" />
 
@@ -70,8 +72,8 @@
             android:id="@+id/add_meeting_log"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:background="#FFCB04"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/mybutton"
             android:text="Add Meeting Log"
             android:textColor="#000000" />
 
@@ -79,8 +81,8 @@
             android:id="@+id/sync_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:background="#FFCB04"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/mybutton"
             android:text="Sync Data"
             android:textColor="#000000" />
     </LinearLayout>
