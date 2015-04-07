@@ -10,15 +10,16 @@
     <ImageView
         android:id="@+id/user_image"
         android:layout_width="match_parent"
-        android:src="@drawable/placeholder"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        android:layout_weight="6" />
+        android:layout_weight="8"
+        android:src="@drawable/avatar" />
 
     <Button
         android:id="@+id/capture_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.2"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="1.8"
         android:text="Capture Image" />
 </LinearLayout>

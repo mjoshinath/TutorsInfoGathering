@@ -53,6 +53,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+
     public long insertMarketingCredentials(String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -93,9 +95,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 TutorDetails tutorDetail = new TutorDetails();
                 tutorDetail.setId(cursor.getInt(0));
                 tutorDetail.setDetails(cursor.getString(1));
-                int i = 0;
+//                int i = 0;
                 tutorDetails.add(tutorDetail);
-                i++;
+//                i++;
                 Log.d("test08", "tutorDetail-" + tutorDetail);
             } while (cursor.moveToNext());
         }
@@ -105,7 +107,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public void delete(long id) {
+        Log.d("test08", "delete-" + id);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + TUTOR_DETAILS_TABLE_NAME + " WHERE id='" + id + "'");
+        db.execSQL("DELETE FROM " + TUTOR_DETAILS_TABLE_NAME + " WHERE id=" + id);
     }
 }

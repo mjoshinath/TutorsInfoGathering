@@ -62,7 +62,7 @@ public class WebserviceHelper {
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
                 Log.d("test18", "fail");
-                callBack.hideProgressBarOnFailure();
+                callBack.hideProgressBarOnFailure("");
             }
         });
     }
@@ -93,7 +93,7 @@ public class WebserviceHelper {
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
                         Log.d("test18", "fail");
-                        callBack.hideProgressBarOnFailure();
+                        callBack.hideProgressBarOnFailure("" + id);
                     }
                 });
     }

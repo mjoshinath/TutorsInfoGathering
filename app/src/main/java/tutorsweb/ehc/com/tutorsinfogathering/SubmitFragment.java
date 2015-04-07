@@ -460,7 +460,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     }
 
     @Override
-    public void hideProgressBarOnFailure() {
+    public void hideProgressBarOnFailure(String response) {
         dataBaseHelper = new DataBaseHelper(getActivity());
         dataBaseHelper.insertTutorDetails(json);
     }

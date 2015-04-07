@@ -103,7 +103,7 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
     }
 
     @Override
-    public void hideProgressBarOnFailure() {
+    public void hideProgressBarOnFailure(String response) {
 
     }
 

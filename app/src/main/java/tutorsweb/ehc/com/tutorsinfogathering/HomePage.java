@@ -116,7 +116,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                         StringEntity entity = null;
                         entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
                         Log.d("test08", "entity-" + entity);
-                        new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L);
+                        new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (UnsupportedEncodingException e) {
@@ -133,8 +133,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     }
 
     @Override
-    public void hideProgressBarOnFailure() {
-
+    public void hideProgressBarOnFailure(String response) {
+        dataBaseHelper.delete(Long.parseLong(response));
     }
 
     @Override

@@ -251,7 +251,7 @@ main_view
     }
 
     @Override
-    public void hideProgressBarOnFailure() {
+    public void hideProgressBarOnFailure(String response) {
 
     }
 

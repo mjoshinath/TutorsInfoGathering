@@ -6,5 +6,5 @@ package helper;
 public interface WebServiceCallBack {
     public void populateData(String jsonResponse);
 
-    public void hideProgressBarOnFailure();
+    public void hideProgressBarOnFailure(String response);
 }
