@@ -61,8 +61,6 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
         captureImage = (Button) view.findViewById(R.id.capture_image);
         userImage = (ImageView) view.findViewById(R.id.user_image);
 
-        userImage.setImageResource(R.drawable.avatar);
-
         captureImagePhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         previous.setVisibility(View.VISIBLE);
         next.setOnClickListener(new View.OnClickListener() {

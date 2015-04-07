@@ -42,6 +42,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private Button syncDataButton;
     private SharedPreferences signInCredentialsPrefs;
     private SharedPreferences.Editor signInCredentialsPrefsEdit;
+    private Button reportsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +55,12 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         signUpTutorButton = (Button) findViewById(R.id.signup_tutor);
         addMettingLog = (Button) findViewById(R.id.add_meeting_log);
         syncDataButton = (Button) findViewById(R.id.sync_data);
+        reportsButton = (Button) findViewById(R.id.reports);
 
         signUpTutorButton.setOnClickListener(this);
         addMettingLog.setOnClickListener(this);
         syncDataButton.setOnClickListener(this);
+        reportsButton.setOnClickListener(this);
 
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
         multipleTutorDetails = dataBaseHelper.getTutorDetails();
@@ -70,7 +73,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
     private void setActionBarProperties() {
         actionBar = getActionBar();
-        actionBar.setTitle("IRegEzee");
+        actionBar.setTitle("IReg");
     }
 
     @Override
@@ -123,6 +126,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                         e.printStackTrace();
                     }
                 }
+                break;
+            case R.id.reports:
+                Intent intent1 = new Intent(this, ReportsActivity.class);
+                startActivity(intent1);
                 break;
         }
     }

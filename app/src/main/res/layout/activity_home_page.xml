@@ -52,6 +52,7 @@
             android:textColor="#000000" />
 
         <Button
+            android:id="@+id/reports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -74,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:background="@drawable/mybutton"
-            android:text="Add Meeting Log"
+            android:text="Lead Capture"
             android:textColor="#000000" />
 
         <Button
