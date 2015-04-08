@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -87,7 +88,14 @@ public class WebserviceHelper {
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         String response = new String(bytes);
                         Log.d("test18", "success:" + response);
-                        callBack.populateData("" + id);
+                        if (response.contains("Email exists"))
+                            Toast.makeText(context, "Email already exists", Toast.LENGTH_SHORT).show();
+                        else if (response.contains("Successfully created")) {
+                            Toast.makeText(context, "Tutor Successfully Registered", Toast.LENGTH_SHORT).show();
+                            callBack.populateData("" + id);
+                        }else{
+                            Toast.makeText(context, "Empty Record", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override

@@ -341,7 +341,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
                     sharedPrefsEdit.clear();
                     sharedPrefsEdit.commit();
                 }
-                Toast.makeText(getActivity(), "Tutor Successfully Registered", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Tutor Successfully Registered", Toast.LENGTH_SHORT).show();
 
                 /*sharedPrefsEdit.clear();
                 sharedPrefsEdit.commit();*/
