@@ -30,6 +30,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="5">
 
@@ -40,7 +41,7 @@
                 android:text="Institute Name" />
 
             <EditText
-                android:id="@+id/first_name"
+                android:id="@+id/institute_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -167,46 +168,6 @@
                 android:inputType="text" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="5">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Gender" />
-
-            <Spinner
-                android:id="@+id/gender"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="5">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Address" />
-
-            <EditText
-                android:id="@+id/address"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3.5"
-                android:inputType="text"
-                android:lines="3" />
-        </LinearLayout>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -229,12 +190,12 @@
             tools:context="tutorsweb.ehc.com.tutorsinfogathering.CaptureUserImageFragment">
 
             <ImageView
-                android:id="@+id/user_image"
+                android:id="@+id/institute_image"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_above="@+id/capture_image"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/user_default_picture" />
+                android:background="@drawable/institute_placeholder" />
 
             <Button
                 android:id="@+id/capture_image"
@@ -361,6 +322,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="5">
 
