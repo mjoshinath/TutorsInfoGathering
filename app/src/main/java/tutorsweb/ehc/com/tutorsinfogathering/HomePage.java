@@ -4,9 +4,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -43,6 +40,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private SharedPreferences signInCredentialsPrefs;
     private SharedPreferences.Editor signInCredentialsPrefsEdit;
     private Button reportsButton;
+    private Button documentationButton;
+    private Button signUpInstituteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +55,15 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         addMettingLog = (Button) findViewById(R.id.add_meeting_log);
         syncDataButton = (Button) findViewById(R.id.sync_data);
         reportsButton = (Button) findViewById(R.id.reports);
+        documentationButton = (Button) findViewById(R.id.documentation);
+        signUpInstituteButton = (Button) findViewById(R.id.signup_institute);
 
         signUpTutorButton.setOnClickListener(this);
         addMettingLog.setOnClickListener(this);
         syncDataButton.setOnClickListener(this);
         reportsButton.setOnClickListener(this);
+        documentationButton.setOnClickListener(this);
+        signUpInstituteButton.setOnClickListener(this);
 
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
         multipleTutorDetails = dataBaseHelper.getTutorDetails();
@@ -103,6 +106,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 Intent intent = new Intent(this, RegStepsHostActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.signup_institute:
+                Intent intent3 = new Intent(this, InstituteSignUpHostActivity.class);
+                startActivity(intent3);
+                break;
             case R.id.add_meeting_log:
                 Intent webViewIntent = new Intent(this, ShowWebView.class);
                 startActivity(webViewIntent);
@@ -130,6 +137,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             case R.id.reports:
                 Intent intent1 = new Intent(this, ReportsActivity.class);
                 startActivity(intent1);
+                break;
+            case R.id.documentation:
+                Intent intent2 = new Intent(this, DocumentationActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

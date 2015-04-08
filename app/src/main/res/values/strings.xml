@@ -96,5 +96,11 @@
     </string-array>
 
     <string name="title_activity_reports">ReportsActivity</string>
+    <string name="title_activity_documentation">DocumentationActivity</string>
+    <string name="title_activity_institute_signup_host">InstituteSignupHostActivity</string>
+
+    <string-array name="member_type">
+        <item>Tutor</item>
+    </string-array>
 
 </resources>

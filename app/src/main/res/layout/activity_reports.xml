@@ -3,12 +3,47 @@
     android:layout_height="wrap_content"
     android:scrollbars="none">
 
+
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
         tools:context="tutorsweb.ehc.com.tutorsinfogathering.ReportsActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/marketing_executive_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tutor_progress_bar"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:text="Name : "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/marketing_executive_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tutor_progress_bar"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:text="Id : "
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="12dp"
+            android:background="#000000" />
 
         <TextView
             android:id="@+id/tutor_progress_title"

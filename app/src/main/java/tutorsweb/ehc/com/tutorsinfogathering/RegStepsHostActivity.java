@@ -12,7 +12,6 @@ import android.view.View;
 
 public class RegStepsHostActivity extends Activity implements View.OnClickListener {
 
-
     private FragmentManager fragmentMngr;
     private FragmentTransaction fragmentTransaction;
     private ActionBar actionBar;

@@ -45,6 +45,14 @@
             android:name=".ReportsActivity"
             android:label="@string/title_activity_reports" >
         </activity>
+        <activity
+            android:name=".DocumentationActivity"
+            android:label="@string/title_activity_documentation" >
+        </activity>
+        <activity
+            android:name=".InstituteSignUpHostActivity"
+            android:label="@string/title_activity_institute_signup_host" >
+        </activity>
     </application>
 
 </manifest>
