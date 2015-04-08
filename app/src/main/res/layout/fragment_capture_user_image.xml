@@ -1,26 +1,24 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:weightSum="10"
     tools:context="tutorsweb.ehc.com.tutorsinfogathering.CaptureUserImageFragment">
 
     <ImageView
         android:id="@+id/user_image"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_marginBottom="16dp"
-        android:layout_weight="8"
+        android:layout_above="@+id/capture_image"
         android:background="@drawable/user_default_picture" />
 
     <Button
         android:id="@+id/capture_image"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_weight="1.5"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:background="#DDDDDD"
         android:text="Capture Image" />
-</LinearLayout>
+</RelativeLayout>
