@@ -32,6 +32,8 @@ public class Tutor {
     @Expose
     private String primaryContactNumber;
     @Expose
+    private String avatar;
+    @Expose
     private Address address;
     @SerializedName("years_of_teaching_experience")
     @Expose
@@ -144,6 +146,14 @@ public class Tutor {
         this.dob = dob;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     /**
      * @return The gender
      */
@@ -230,6 +240,7 @@ public class Tutor {
                 ", dob='" + dob + '\'' +
                 ", gender='" + gender + '\'' +
                 ", primaryContactNumber='" + primaryContactNumber + '\'' +
+                ", avatar='" + avatar + '\'' +
                 ", address=" + address +
                 ", yearsOfTeachingExperience='" + yearsOfTeachingExperience + '\'' +
                 ", tutoringExperience='" + tutoringExperience + '\'' +

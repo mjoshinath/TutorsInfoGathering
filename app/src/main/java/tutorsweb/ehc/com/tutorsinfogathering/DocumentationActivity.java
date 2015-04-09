@@ -36,7 +36,8 @@ public class DocumentationActivity extends Activity implements View.OnClickListe
             case R.id.first_link:
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 try {
-                    Uri uri=Uri.fromFile(new File(String.valueOf(getAssets().open("temp.ppt"))));
+                    Uri uri = Uri.fromFile(new File(getAssets().open("temp.ppt").toString()));
+//                    Uri uri = Uri.fromFile(new File(getAssets().open("temp.ppt").toString()));
                     intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
                 } catch (IOException e) {
                     e.printStackTrace();

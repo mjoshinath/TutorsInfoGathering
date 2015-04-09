@@ -126,7 +126,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                         StringEntity entity = null;
                         entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
                         Log.d("test08", "entity-" + entity);
-                        new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId());
+                        new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors?tutor");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (UnsupportedEncodingException e) {

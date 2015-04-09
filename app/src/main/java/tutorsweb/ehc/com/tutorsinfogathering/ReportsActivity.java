@@ -3,6 +3,7 @@ package tutorsweb.ehc.com.tutorsinfogathering;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ public class ReportsActivity extends Activity {
     private ProgressBar circularProgressBar;
     private TextView progress;
     private ActionBar actionBar;
+    private SharedPreferences signInCredentialsPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

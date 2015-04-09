@@ -80,9 +80,9 @@ public class WebserviceHelper {
         }*/
     }
 
-    public void postData(final WebServiceCallBack callBack, StringEntity entity, final long id) {
+    public void postData(final WebServiceCallBack callBack, StringEntity entity, final long id, String requestType) {
 
-        client.post(context, "http://192.168.1.124:5000/api/v1/tutors?tutor", entity, "application/json",
+        client.post(context, "http://192.168.1.132:5000/api/v1/" + requestType, entity, "application/json",
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
@@ -93,7 +93,7 @@ public class WebserviceHelper {
                         else if (response.contains("Successfully created")) {
                             Toast.makeText(context, "Tutor Successfully Registered", Toast.LENGTH_SHORT).show();
                             callBack.populateData("" + id);
-                        }else{
+                        } else {
                             Toast.makeText(context, "Empty Record", Toast.LENGTH_SHORT).show();
                         }
                     }

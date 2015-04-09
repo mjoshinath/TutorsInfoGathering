@@ -253,7 +253,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Job Description" />
+                android:text="Institute Description" />
 
             <EditText
                 android:id="@+id/job_description"
@@ -268,7 +268,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
-            android:text="Tell Us About Your Institute"
+            android:text="Primary Contact Details"
             android:textStyle="bold" />
 
         <View

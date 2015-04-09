@@ -334,7 +334,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    new WebserviceHelper(getActivity()).postData(this, entity, 0L);
+                    new WebserviceHelper(getActivity()).postData(this, entity, 0L, "tutors");
                 } else {
                     dataBaseHelper = new DataBaseHelper(getActivity());
                     dataBaseHelper.insertTutorDetails(json);
@@ -353,7 +353,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     }
 
     public String createJSONObject() {
-        jsonObject = new JSONObject();
+//        jsonObject = new JSONObject();
 //        setJsonObjectAttributes();
         Tutor tutor = new Tutor();
         tutor.setFirstName(firstNameText);
@@ -366,6 +366,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         tutor.setYearsOfTeachingExperience(yrsOfTeachingExpText);
         tutor.setTutoringExperience(tutoringExpText);
         tutor.setLanguages(languagesText);
+//        tutor.setAvatar(userImageString);
+//        tutor.setAvatar("iVBORw0KGgoAAAANSUhEUgAAAgQAAAG5CAYAAADxviygAAAgAElEQVR4nOx92Y4jyZGtk8lcqxeNVgwG0Mwd/f+XqD9hgMG8Sa3url4q94");
 
         Address address = new Address();
         address.setCity(cityText);

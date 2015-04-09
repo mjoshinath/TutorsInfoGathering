@@ -18,11 +18,22 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.apache.http.entity.StringEntity;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import helper.WebServiceCallBack;
+import helper.WebserviceHelper;
 import model.categories.MemberInfo;
+import model.categories.company.Company;
+import model.categories.company.CompanyModel;
+import model.categories.company.EmployeesAttribute;
 
-public class AddMemberFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AddMemberFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, WebServiceCallBack {
 
     private View view;
     private Spinner memberTypeSpinner;
@@ -46,6 +57,10 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 
     private SharedPreferences instituteSharedPrefs;
     private SharedPreferences.Editor instituteSharedPrefsEdit;
+    private StringEntity entity;
+    private String json;
+    private JSONObject jsonObject;
+    private ArrayList<EmployeesAttribute> listOfEmployeeAttributes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,6 +141,13 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
+                json = createJSONObject();
+                try {
+                    entity = new StringEntity(json);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                new WebserviceHelper(getActivity()).postData(this, entity, 0L, "companies");
                 break;
             case R.id.previous:
                 getActivity().onBackPressed();
@@ -138,6 +160,35 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
                     clearFields();
                 break;
         }
+    }
+
+    private String createJSONObject() {
+        EmployeesAttribute employeesAttribute = new EmployeesAttribute();
+
+        employeesAttribute.setFirstName(instituteSharedPrefs.getString("firstNameText", ""));
+        employeesAttribute.setLastName(instituteSharedPrefs.getString("lastNameText", ""));
+        employeesAttribute.setEmail(instituteSharedPrefs.getString("emailIdText", ""));
+        employeesAttribute.setStreet(instituteSharedPrefs.getString("address1Text", ""));
+        employeesAttribute.setCity(instituteSharedPrefs.getString("cityText", ""));
+        employeesAttribute.setZipCode(instituteSharedPrefs.getString("zipCodeText", ""));
+        employeesAttribute.setCountry(instituteSharedPrefs.getString("countryText", ""));
+
+        Company company = new Company();
+
+        company.setName(instituteSharedPrefs.getString("instituteNameText", ""));
+        company.setBanner(instituteSharedPrefs.getString("instituteImageString", ""));
+        company.setDescription(instituteSharedPrefs.getString("jobDescriptionText", ""));
+        company.setEstablishedOn(instituteSharedPrefs.getString("dateOfEstablishmentText", ""));
+
+        listOfEmployeeAttributes = new ArrayList<EmployeesAttribute>();
+        listOfEmployeeAttributes.add(employeesAttribute);
+
+        company.setEmployeesAttributes(listOfEmployeeAttributes);
+
+        CompanyModel companyModel = new CompanyModel();
+        companyModel.setCompany(company);
+
+        return new Gson().toJson(companyModel);
     }
 
     private void addNewMember() {
@@ -191,6 +242,16 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void populateData(String jsonResponse) {
+
+    }
+
+    @Override
+    public void hideProgressBarOnFailure(String response) {
 
     }
 }
