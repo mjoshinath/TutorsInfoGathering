@@ -7,8 +7,11 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -41,32 +44,52 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     private EditText instituteName;
     private EditText address1;
     private EditText address2;
+    private EditText dateOfEstablishment;
     private EditText city;
     private EditText state;
     private EditText zipCode;
     private EditText country;
     private EditText username;
-    private EditText dateOfBirth;
     private EditText jobDescription;
     private EditText emailId;
     private EditText mobileNumber;
     private Button captureImage;
     private Bitmap photo;
     private ImageView instituteImage;
-    private String userImageString;
+    private String instituteImageString;
+    private String instituteNameText;
+    private String address1Text;
+    private String address2Text;
+    private String cityText;
+    private String stateText;
+    private String zipCodeText;
+    private String countryText;
+    private String dateOfEstablishmentText;
+    private String jobDescriptionText;
+    private String usernameText;
+    private String emailIdText;
+    private String mobileNumberText;
+    private SharedPreferences instituteSharedPrefs;
+    private SharedPreferences.Editor instituteSharedPrefsEdit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_institute_info, container, false);
+
+        instituteSharedPrefs = getActivity().getSharedPreferences("instituteSession", Context.MODE_MULTI_PROCESS);
+        instituteSharedPrefsEdit = instituteSharedPrefs.edit();
 
         institutePhase = getActivity().findViewById(R.id.phase_institute);
         previous = (Button) getActivity().findViewById(R.id.previous);
         next = (Button) getActivity().findViewById(R.id.next);
 
         getWidgets(view);
+        getFilledData();
+        maintainSharedPrefs();
+        updateUi();
 
         next.setOnClickListener(this);
-        dateOfBirth.setOnClickListener(this);
+        dateOfEstablishment.setOnClickListener(this);
         captureImage.setOnClickListener(this);
 
         institutePhase.setBackgroundColor(Color.parseColor("#FFCB04"));
@@ -78,6 +101,55 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         return view;
     }
 
+    private void updateUi() {
+        instituteName.setText(instituteSharedPrefs.getString(instituteNameText, ""));
+        address1.setText(instituteSharedPrefs.getString(address1Text, ""));
+        address2.setText(instituteSharedPrefs.getString(address2Text, ""));
+        city.setText(instituteSharedPrefs.getString(cityText, ""));
+        state.setText(instituteSharedPrefs.getString(stateText, ""));
+        zipCode.setText(instituteSharedPrefs.getString(zipCodeText, ""));
+        country.setText(instituteSharedPrefs.getString(countryText, ""));
+        dateOfEstablishment.setText(instituteSharedPrefs.getString(dateOfEstablishmentText, ""));
+        jobDescription.setText(instituteSharedPrefs.getString(jobDescriptionText, ""));
+        username.setText(instituteSharedPrefs.getString(usernameText, ""));
+        emailId.setText(instituteSharedPrefs.getString(emailIdText, ""));
+        mobileNumber.setText(instituteSharedPrefs.getString(mobileNumberText, ""));
+        instituteImage.setImageBitmap(stringToBitMap(instituteSharedPrefs.getString(instituteImageString, "")));
+    }
+
+    private void maintainSharedPrefs() {
+        instituteSharedPrefsEdit.putString("instituteNameText", instituteNameText);
+        instituteSharedPrefsEdit.putString("address1Text", address1Text);
+        instituteSharedPrefsEdit.putString("address2Text", address2Text);
+        instituteSharedPrefsEdit.putString("cityText", cityText);
+        instituteSharedPrefsEdit.putString("stateText", stateText);
+        instituteSharedPrefsEdit.putString("zipCodeText", zipCodeText);
+        instituteSharedPrefsEdit.putString("countryText", countryText);
+        instituteSharedPrefsEdit.putString("dateOfEstablishmentText", dateOfEstablishmentText);
+        instituteSharedPrefsEdit.putString("jobDescriptionText", jobDescriptionText);
+        instituteSharedPrefsEdit.putString("usernameText", usernameText);
+        instituteSharedPrefsEdit.putString("emailIdText", emailIdText);
+        instituteSharedPrefsEdit.putString("mobileNumberText", mobileNumberText);
+        instituteSharedPrefsEdit.putString("instituteImageString", instituteImageString);
+
+        instituteSharedPrefsEdit.commit();
+    }
+
+    private void getFilledData() {
+        instituteNameText = instituteName.getText().toString();
+        address1Text = address1.getText().toString();
+        address2Text = address2.getText().toString();
+        cityText = city.getText().toString();
+        stateText = state.getText().toString();
+        zipCodeText = zipCode.getText().toString();
+        countryText = country.getText().toString();
+        dateOfEstablishmentText = dateOfEstablishment.getText().toString();
+        jobDescriptionText = jobDescription.getText().toString();
+        usernameText = username.getText().toString();
+        emailIdText = emailId.getText().toString();
+        mobileNumberText = mobileNumber.getText().toString();
+    }
+
     private void getWidgets(View view) {
         instituteName = (EditText) view.findViewById(R.id.institute_name);
         address1 = (EditText) view.findViewById(R.id.address1);
@@ -86,7 +158,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         state = (EditText) view.findViewById(R.id.state);
         zipCode = (EditText) view.findViewById(R.id.zip_code);
         country = (EditText) view.findViewById(R.id.country);
-        dateOfBirth = (EditText) view.findViewById(R.id.date_of_birth);
+        dateOfEstablishment = (EditText) view.findViewById(R.id.date_of_establishment);
         jobDescription = (EditText) view.findViewById(R.id.job_description);
         username = (EditText) view.findViewById(R.id.username);
         emailId = (EditText) view.findViewById(R.id.email_id);
@@ -108,7 +180,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
             case R.id.next:
                 fragmentReplaceMethod();
                 break;
-            case R.id.date_of_birth:
+            case R.id.date_of_establishment:
                 showDatePickerDialog(v);
                 break;
             case R.id.capture_image:
@@ -122,8 +194,8 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             photo = (Bitmap) data.getExtras().get("data");
             instituteImage.setImageBitmap(photo);
-            userImageString = BitMapToString(photo);
-            Log.d("test18", "on capture" + userImageString);
+            instituteImageString = BitMapToString(photo);
+            Log.d("test18", "on capture" + instituteImageString);
         }
     }
 
@@ -135,14 +207,25 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         return temp;
     }
 
+    public Bitmap stringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
                 Intent intent1 = new Intent(getActivity(), HomePage.class);
                 startActivity(intent1);
-                /*sharedPrefsEditable.clear();
-                sharedPrefsEditable.commit();*/
+                instituteSharedPrefsEdit.clear();
+                instituteSharedPrefsEdit.commit();
                 break;
         }
         return (super.onOptionsItemSelected(menuItem));
@@ -192,7 +275,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
             this.year = year;
             this.month = month;
             this.day = day;
-            dateOfBirth.setText(day + " / " + (month + 1) + " / " + year);
+            dateOfEstablishment.setText(day + " / " + (month + 1) + " / " + year);
         }
     }
 }

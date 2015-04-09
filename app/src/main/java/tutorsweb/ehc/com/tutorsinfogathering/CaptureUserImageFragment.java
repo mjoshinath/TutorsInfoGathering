@@ -42,7 +42,7 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
     private Bitmap userImageInBitFormat;
     private View captureImagePhase;
 
-    private static final int CAMERA_REQUEST = 1888;
+    private static final int CAMERA_REQUEST = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
