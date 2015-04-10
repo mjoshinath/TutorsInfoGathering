@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +36,7 @@ import model.categories.company.Company;
 import model.categories.company.CompanyModel;
 import model.categories.company.EmployeesAttribute;
 
-public class AddMemberFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, WebServiceCallBack {
+public class AddMemberFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, WebServiceCallBack, TextWatcher {
 
     private View view;
     private Spinner memberTypeSpinner;
@@ -93,6 +96,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         saveButton.setOnClickListener(this);
         addMemberButton.setOnClickListener(this);
         memberTypeSpinner.setOnItemSelectedListener(this);
+        emailId.addTextChangedListener(this);
 
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.member_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -122,6 +126,8 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         firstName.setText(instituteSharedPrefs.getString("firstNameText", ""));
         lastName.setText(instituteSharedPrefs.getString("lastNameText", ""));
         emailId.setText(instituteSharedPrefs.getString("emailIdText", ""));
+        saveButton.setEnabled(false);
+        addMemberButton.setEnabled(false);
     }
 
     private void getWidgets(View view) {
@@ -152,8 +158,10 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
                 addNewMember();
                 break;
             case R.id.add_member:
-                if (isDataSaved)
+                if (isDataSaved) {
                     clearFields();
+                    addMemberButton.setEnabled(false);
+                }
                 break;
         }
     }
@@ -215,6 +223,8 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
             Toast.makeText(getActivity(), "Member Saved", Toast.LENGTH_SHORT).show();
             isDataSaved = true;
         }
+        saveButton.setEnabled(false);
+        addMemberButton.setEnabled(true);
     }
 
     private void clearFields() {
@@ -266,6 +276,22 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void hideProgressBarOnFailure(String response) {
+    }
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        saveButton.setEnabled(false);
+        String email = emailId.getText().toString().trim();
+        if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() && !TextUtils.isEmpty(email)) {
+            saveButton.setEnabled(true);
+        }
     }
 }
