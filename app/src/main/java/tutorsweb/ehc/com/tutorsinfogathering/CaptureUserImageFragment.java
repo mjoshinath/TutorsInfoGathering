@@ -62,6 +62,8 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
         userImage = (ImageView) view.findViewById(R.id.user_image);
 
         captureImagePhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        captureImagePhase.setClickable(false);
+
         previous.setVisibility(View.VISIBLE);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,6 +171,7 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
     public void onDestroyView() {
         super.onDestroyView();
         captureImagePhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        captureImagePhase.setClickable(true);
     }
 
     @Override

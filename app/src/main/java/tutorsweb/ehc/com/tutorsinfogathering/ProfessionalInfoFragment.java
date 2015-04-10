@@ -5,10 +5,12 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -74,8 +76,8 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
 
         previous = (Button) getActivity().findViewById(R.id.previous);
         next = (Button) getActivity().findViewById(R.id.next);
-        getWidgets();
 
+        getWidgets();
         updateUi();
 
         setHasOptionsMenu(true);
@@ -108,6 +110,7 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         setActionBarProperties();
         professionalPhase = getActivity().findViewById(R.id.phase_professional);
         professionalPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        professionalPhase.setClickable(false);
         return view;
     }
 
@@ -131,6 +134,19 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         sharedPrefsEditable.putString("interestsText", interests.getText().toString().trim());
 
         sharedPrefsEditable.commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent intent1 = new Intent(getActivity(), HomePage.class);
+                startActivity(intent1);
+                sharedPrefsEditable.clear();
+                sharedPrefsEditable.commit();
+                break;
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 
     private void setActionBarProperties() {
@@ -185,6 +201,7 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     public void onDestroyView() {
         super.onDestroyView();
         professionalPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        professionalPhase.setClickable(true);
     }
 
     @Override

@@ -158,6 +158,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
             }
         });
         personnelPhase = getActivity().findViewById(id.phase_personnel);
+        personnelPhase.setClickable(false);
         personnelPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         previous.setVisibility(View.INVISIBLE);
         return view;
@@ -474,6 +475,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     public void onDestroyView() {
         super.onDestroyView();
         personnelPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        personnelPhase.setClickable(true);
     }
 
     @Override

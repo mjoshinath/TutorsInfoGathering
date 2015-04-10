@@ -187,6 +187,7 @@ main_view
         });
         categoriesPhase = getActivity().findViewById(R.id.phase_categories);
         categoriesPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        categoriesPhase.setClickable(false);
 //        url = "http://192.168.1.124:5000/api/v1/categories";
 //        new WebserviceHelper(getActivity()).getData(this);
 
@@ -362,6 +363,7 @@ main_view
     public void onDestroyView() {
         super.onDestroyView();
         categoriesPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        categoriesPhase.setClickable(true);
     }
 
     @Override

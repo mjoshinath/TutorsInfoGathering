@@ -167,6 +167,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         });*/
         submitPhase = getActivity().findViewById(R.id.phase_submit);
         submitPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        submitPhase.setClickable(false);
         return view;
     }
 
@@ -449,6 +450,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         super.onDestroyView();
         submit.setText("Next");
         submitPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        submitPhase.setClickable(true);
     }
 
     @Override

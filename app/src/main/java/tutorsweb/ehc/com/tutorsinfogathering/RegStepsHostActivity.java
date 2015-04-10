@@ -4,11 +4,11 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 public class RegStepsHostActivity extends Activity implements View.OnClickListener {
 
@@ -23,6 +23,7 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
     private View phaseWorkExp;
     private View phaseSubmit;
     private View phaseCaptureImage;
+    private Button previousButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,12 +32,13 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
 
         getWidgets();
 
-        phasePersonnel.setOnClickListener(this);
+        /*phasePersonnel.setOnClickListener(this);
         phaseCategories.setOnClickListener(this);
         phaseProfessional.setOnClickListener(this);
         phaseWorkExp.setOnClickListener(this);
         phaseSubmit.setOnClickListener(this);
-        phaseCaptureImage.setOnClickListener(this );
+        phaseCaptureImage.setOnClickListener(this);
+        previousButton.setOnClickListener(this);*/
 
         sharedPrefs = getSharedPreferences("session", MODE_MULTI_PROCESS);
         sharedPrefEdit = sharedPrefs.edit();
@@ -67,6 +69,7 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
         phaseProfessional = findViewById(R.id.phase_professional);
         phaseWorkExp = findViewById(R.id.phase_work_exp);
         phaseSubmit = findViewById(R.id.phase_submit);
+        previousButton = (Button) findViewById(R.id.previous);
     }
 
     private void getActionBarProperties() {
@@ -80,15 +83,13 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
     public void onBackPressed() {
         Log.d("test333", "onBackPressed");
         super.onBackPressed();
-        if (getActionBar().getTitle().toString().equalsIgnoreCase("IRegEzee")) {
-        }
     }
 
     @Override
     public void onClick(View v) {
         fragmentMngr = getFragmentManager();
         fragmentTransaction = fragmentMngr.beginTransaction();
-
+        fragmentTransaction.addToBackStack("");
         switch (v.getId()) {
             case R.id.phase_personnel:
                 if (sharedPrefs.getBoolean("personnel", false))
@@ -113,6 +114,9 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
             case R.id.phase_submit:
                 if (sharedPrefs.getBoolean("submit", false))
                     fragmentTransaction.replace(R.id.main_view, new SubmitFragment());
+                break;
+            case R.id.previous:
+                onBackPressed();
                 break;
         }
         fragmentTransaction.commit();

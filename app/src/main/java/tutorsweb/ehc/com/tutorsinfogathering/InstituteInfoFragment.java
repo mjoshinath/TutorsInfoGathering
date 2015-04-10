@@ -277,6 +277,9 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Intent intent1 = new Intent(getActivity(), HomePage.class);
+        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent1);
     }
 
     @Override

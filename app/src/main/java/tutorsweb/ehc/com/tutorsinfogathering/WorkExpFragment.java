@@ -92,6 +92,7 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
         });
         workExpPhase = getActivity().findViewById(R.id.phase_work_exp);
         workExpPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        workExpPhase.setClickable(false);
         return view;
     }
 
@@ -386,6 +387,7 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
         workExpPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        workExpPhase.setClickable(true);
     }
 
     @Override
