@@ -483,4 +483,5 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent1);
     }
+
 }

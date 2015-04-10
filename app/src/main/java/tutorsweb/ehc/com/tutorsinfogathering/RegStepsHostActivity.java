@@ -36,6 +36,7 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
         phaseProfessional.setOnClickListener(this);
         phaseWorkExp.setOnClickListener(this);
         phaseSubmit.setOnClickListener(this);
+        phaseCaptureImage.setOnClickListener(this );
 
         sharedPrefs = getSharedPreferences("session", MODE_MULTI_PROCESS);
         sharedPrefEdit = sharedPrefs.edit();
