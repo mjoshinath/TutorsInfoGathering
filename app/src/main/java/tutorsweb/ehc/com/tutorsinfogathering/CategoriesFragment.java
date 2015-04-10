@@ -334,7 +334,7 @@ main_view
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             final SubCategory subCategory = getChild(groupPosition, childPosition);
             Log.d("test18", "subCategories :" + subCategory);
-            if(convertView==null) {
+            if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.list_item, null);
             }
@@ -356,8 +356,6 @@ main_view
             });
             return convertView;
         }
-
-
     }
 
     @Override
@@ -369,5 +367,10 @@ main_view
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

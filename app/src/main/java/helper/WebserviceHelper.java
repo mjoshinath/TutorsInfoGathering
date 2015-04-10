@@ -46,7 +46,7 @@ public class WebserviceHelper {
         SharedPreferences categorySharedPref = context.getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
         final SharedPreferences.Editor categoryEditor = categorySharedPref.edit();
         client.addHeader("If-None-Match", categorySharedPref.getString("etag", ""));
-        client.get("http://192.168.1.124:5000/api/v1/categories", new AsyncHttpResponseHandler() {
+        client.get("http://192.168.1.132:5000/api/v1/categories", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 String response = new String(bytes);

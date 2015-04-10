@@ -52,7 +52,7 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
         sharedPrefs = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
         sharedPrefsEdit = sharedPrefs.edit();
 
-        sharedPrefsEdit.putBoolean("captureImage", false);
+        sharedPrefsEdit.putBoolean("captureImage", true);
         sharedPrefsEdit.commit();
 
         next = (Button) getActivity().findViewById(R.id.next);

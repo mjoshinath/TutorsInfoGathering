@@ -77,9 +77,9 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         addMemberButton = (Button) view.findViewById(R.id.add_member);
 
         getWidgets(view);
-        getFieldsData();
-        maintainSharedPrefs();
         updateUi();
+//        getFieldsData();
+//        maintainSharedPrefs();
 
         membersList = new ArrayList<MemberInfo>();
 
@@ -141,13 +141,9 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                json = createJSONObject();
-                try {
-                    entity = new StringEntity(json);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                new WebserviceHelper(getActivity()).postData(this, entity, 0L, "companies");
+                getFieldsData();
+                maintainSharedPrefs();
+                webServiceCallForInstituteSignUp();
                 break;
             case R.id.previous:
                 getActivity().onBackPressed();
@@ -162,23 +158,40 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         }
     }
 
+    private void webServiceCallForInstituteSignUp() {
+        json = createJSONObject();
+        try {
+            entity = new StringEntity(json);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "companies");
+    }
+
     private String createJSONObject() {
         EmployeesAttribute employeesAttribute = new EmployeesAttribute();
 
-        employeesAttribute.setFirstName(instituteSharedPrefs.getString("firstNameText", ""));
-        employeesAttribute.setLastName(instituteSharedPrefs.getString("lastNameText", ""));
-        employeesAttribute.setEmail(instituteSharedPrefs.getString("emailIdText", ""));
-        employeesAttribute.setStreet(instituteSharedPrefs.getString("address1Text", ""));
-        employeesAttribute.setCity(instituteSharedPrefs.getString("cityText", ""));
-        employeesAttribute.setZipCode(instituteSharedPrefs.getString("zipCodeText", ""));
-        employeesAttribute.setCountry(instituteSharedPrefs.getString("countryText", ""));
+        employeesAttribute.setFirstName(instituteSharedPrefs.getString("employeeFirstNameText", ""));
+        employeesAttribute.setLastName(instituteSharedPrefs.getString("employeeLastNameText", ""));
+        employeesAttribute.setEmail(instituteSharedPrefs.getString("employeeEmailText", ""));
+        employeesAttribute.setPrimaryContactNumber(instituteSharedPrefs.getString("employeeContactNumberText", ""));
+        employeesAttribute.setDisplayName(instituteSharedPrefs.getString("employeeUsernameText", ""));
+        employeesAttribute.setIsAdmin("true");
+        employeesAttribute.setIsMobileSignup("true");
 
         Company company = new Company();
 
         company.setName(instituteSharedPrefs.getString("instituteNameText", ""));
         company.setBanner(instituteSharedPrefs.getString("instituteImageString", ""));
-        company.setDescription(instituteSharedPrefs.getString("jobDescriptionText", ""));
+        company.setDescription(instituteSharedPrefs.getString("instituteDescriptionText", ""));
         company.setEstablishedOn(instituteSharedPrefs.getString("dateOfEstablishmentText", ""));
+        company.setWebsite(instituteSharedPrefs.getString("websiteText", ""));
+//        company.setSubdomain();
+        company.setStreet1(instituteSharedPrefs.getString("address1Text", ""));
+        company.setCity(instituteSharedPrefs.getString("cityText", ""));
+//        company.setState();
+        company.setZipCode(instituteSharedPrefs.getString("zipCodeText", ""));
+        company.setCountry(instituteSharedPrefs.getString("countryText", ""));
 
         listOfEmployeeAttributes = new ArrayList<EmployeesAttribute>();
         listOfEmployeeAttributes.add(employeesAttribute);
@@ -247,7 +260,8 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void populateData(String jsonResponse) {
-
+        instituteSharedPrefsEdit.clear();
+        instituteSharedPrefsEdit.commit();
     }
 
     @Override

@@ -26,119 +26,141 @@ public class Company {
     @Expose
     private String description;
     @Expose
+    private String city;
+    @Expose
+    private String state;
+    @Expose
+    @SerializedName("street_1")
+    private String street1;
+    @Expose
+    private String country;
+    @Expose
+    @SerializedName("zip_code")
+    private String zipCode;
+    @Expose
     @SerializedName("employees_attributes")
     private List<EmployeesAttribute> employeesAttributes = new ArrayList<EmployeesAttribute>();
 
-    /**
-     * @return The name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name The name
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return The website
-     */
     public String getWebsite() {
         return website;
     }
 
-    /**
-     * @param website The website
-     */
     public void setWebsite(String website) {
         this.website = website;
     }
 
-    /**
-     * @return The subdomain
-     */
     public String getSubdomain() {
         return subdomain;
     }
 
-    /**
-     * @param subdomain The subdomain
-     */
     public void setSubdomain(String subdomain) {
         this.subdomain = subdomain;
     }
 
-    /**
-     * @return The establishedOn
-     */
     public String getEstablishedOn() {
         return establishedOn;
     }
 
-    /**
-     * @param establishedOn The established_on
-     */
     public void setEstablishedOn(String establishedOn) {
         this.establishedOn = establishedOn;
     }
 
-    /**
-     * @return The logo
-     */
     public String getLogo() {
         return logo;
     }
 
-    /**
-     * @param logo The logo
-     */
     public void setLogo(String logo) {
         this.logo = logo;
     }
 
-    /**
-     * @return The banner
-     */
     public String getBanner() {
         return banner;
     }
 
-    /**
-     * @param banner The banner
-     */
     public void setBanner(String banner) {
         this.banner = banner;
     }
 
-    /**
-     * @return The description
-     */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * @param description The description
-     */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    /**
-     * @return The employeesAttributes
-     */
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getStreet1() {
+        return street1;
+    }
+
+    public void setStreet1(String street1) {
+        this.street1 = street1;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
     public List<EmployeesAttribute> getEmployeesAttributes() {
         return employeesAttributes;
     }
 
-    /**
-     * @param employeesAttributes The employees_attributes
-     */
     public void setEmployeesAttributes(List<EmployeesAttribute> employeesAttributes) {
         this.employeesAttributes = employeesAttributes;
     }
 
+    @Override
+    public String toString() {
+        return "Company{" +
+                "name='" + name + '\'' +
+                ", website='" + website + '\'' +
+                ", subdomain='" + subdomain + '\'' +
+                ", establishedOn='" + establishedOn + '\'' +
+                ", logo='" + logo + '\'' +
+                ", banner='" + banner + '\'' +
+                ", description='" + description + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", street1='" + street1 + '\'' +
+                ", country='" + country + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", employeesAttributes=" + employeesAttributes +
+                '}';
+    }
 }

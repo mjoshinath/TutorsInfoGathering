@@ -23,139 +23,78 @@ public class EmployeesAttribute {
     @SerializedName("is_mobile_signup")
     private String isMobileSignup;
     @Expose
-    private String city;
+    @SerializedName("primary_contact_number")
+    private String primaryContactNumber;
     @Expose
-    private String street;
-    @Expose
-    private String country;
-    @Expose
-    @SerializedName("zip_code")
-    private String zipCode;
+    @SerializedName("display_name")
+    private String displayName;
 
-    /**
-     * @return The firstName
-     */
     public String getFirstName() {
         return firstName;
     }
 
-    /**
-     * @param firstName The first_name
-     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    /**
-     * @return The lastName
-     */
     public String getLastName() {
         return lastName;
     }
 
-    /**
-     * @param lastName The last_name
-     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    /**
-     * @return The email
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email The email
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * @return The isAdmin
-     */
     public String getIsAdmin() {
         return isAdmin;
     }
 
-    /**
-     * @param isAdmin The is_admin
-     */
     public void setIsAdmin(String isAdmin) {
         this.isAdmin = isAdmin;
     }
 
-    /**
-     * @return The isMobileSignup
-     */
     public String getIsMobileSignup() {
         return isMobileSignup;
     }
 
-    /**
-     * @param isMobileSignup The is_mobile_signup
-     */
     public void setIsMobileSignup(String isMobileSignup) {
         this.isMobileSignup = isMobileSignup;
     }
 
-    /**
-     * @return The city
-     */
-    public String getCity() {
-        return city;
+    public String getPrimaryContactNumber() {
+        return primaryContactNumber;
     }
 
-    /**
-     * @param city The city
-     */
-    public void setCity(String city) {
-        this.city = city;
+    public void setPrimaryContactNumber(String primaryContactNumber) {
+        this.primaryContactNumber = primaryContactNumber;
     }
 
-    /**
-     * @return The street
-     */
-    public String getStreet() {
-        return street;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    /**
-     * @param street The street
-     */
-    public void setStreet(String street) {
-        this.street = street;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
-    /**
-     * @return The country
-     */
-    public String getCountry() {
-        return country;
+    @Override
+    public String toString() {
+        return "EmployeesAttribute{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", isAdmin='" + isAdmin + '\'' +
+                ", isMobileSignup='" + isMobileSignup + '\'' +
+                ", primaryContactNumber='" + primaryContactNumber + '\'' +
+                ", displayName='" + displayName + '\'' +
+                '}';
     }
-
-    /**
-     * @param country The country
-     */
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    /**
-     * @return The zipCode
-     */
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    /**
-     * @param zipCode The zip_code
-     */
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
 }

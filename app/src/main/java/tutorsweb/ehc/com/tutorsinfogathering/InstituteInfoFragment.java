@@ -50,8 +50,8 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     private EditText zipCode;
     private EditText country;
     private EditText username;
-    private EditText jobDescription;
-    private EditText emailId;
+    private EditText instituteDescription;
+    private EditText website;
     private EditText mobileNumber;
     private Button captureImage;
     private Bitmap photo;
@@ -65,12 +65,24 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     private String zipCodeText;
     private String countryText;
     private String dateOfEstablishmentText;
-    private String jobDescriptionText;
+    private String instituteDescriptionText;
     private String usernameText;
-    private String emailIdText;
+    private String websiteText;
     private String mobileNumberText;
     private SharedPreferences instituteSharedPrefs;
     private SharedPreferences.Editor instituteSharedPrefsEdit;
+
+    private EditText employeeFirstName;
+    private EditText employeeLastName;
+    private EditText employeeUsername;
+    private EditText employeeEmail;
+    private EditText employeeContactNumber;
+
+    private String employeeFirstNameText;
+    private String employeeLastNameText;
+    private String employeeUsernameText;
+    private String employeeEmailText;
+    private String employeeContactNumberText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,9 +96,9 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         next = (Button) getActivity().findViewById(R.id.next);
 
         getWidgets(view);
-        getFilledData();
-        maintainSharedPrefs();
         updateUi();
+//        getFilledData();
+//        maintainSharedPrefs();
 
         next.setOnClickListener(this);
         dateOfEstablishment.setOnClickListener(this);
@@ -110,9 +122,11 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         zipCode.setText(instituteSharedPrefs.getString(zipCodeText, ""));
         country.setText(instituteSharedPrefs.getString(countryText, ""));
         dateOfEstablishment.setText(instituteSharedPrefs.getString(dateOfEstablishmentText, ""));
-        jobDescription.setText(instituteSharedPrefs.getString(jobDescriptionText, ""));
+        instituteDescription.setText(instituteSharedPrefs.getString(instituteDescriptionText, ""));
         username.setText(instituteSharedPrefs.getString(usernameText, ""));
-        emailId.setText(instituteSharedPrefs.getString(emailIdText, ""));
+        website.setText(instituteSharedPrefs.getString(websiteText, ""));
+        Log.d("testp", "instituteSharedPrefs" + instituteSharedPrefs.getString(websiteText, ""));
+
         mobileNumber.setText(instituteSharedPrefs.getString(mobileNumberText, ""));
         instituteImage.setImageBitmap(stringToBitMap(instituteSharedPrefs.getString(instituteImageString, "")));
     }
@@ -126,11 +140,17 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         instituteSharedPrefsEdit.putString("zipCodeText", zipCodeText);
         instituteSharedPrefsEdit.putString("countryText", countryText);
         instituteSharedPrefsEdit.putString("dateOfEstablishmentText", dateOfEstablishmentText);
-        instituteSharedPrefsEdit.putString("jobDescriptionText", jobDescriptionText);
+        instituteSharedPrefsEdit.putString("instituteDescriptionText", instituteDescriptionText);
         instituteSharedPrefsEdit.putString("usernameText", usernameText);
-        instituteSharedPrefsEdit.putString("emailIdText", emailIdText);
+        instituteSharedPrefsEdit.putString("websiteText", websiteText);
         instituteSharedPrefsEdit.putString("mobileNumberText", mobileNumberText);
         instituteSharedPrefsEdit.putString("instituteImageString", instituteImageString);
+
+        instituteSharedPrefsEdit.putString("employeeFirstNameText", employeeFirstNameText);
+        instituteSharedPrefsEdit.putString("employeeLastNameText", employeeLastNameText);
+        instituteSharedPrefsEdit.putString("employeeUsernameText", employeeUsernameText);
+        instituteSharedPrefsEdit.putString("employeeEmailText", employeeEmailText);
+        instituteSharedPrefsEdit.putString("employeeContactNumberText", employeeContactNumberText);
 
         instituteSharedPrefsEdit.commit();
     }
@@ -144,10 +164,17 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         zipCodeText = zipCode.getText().toString();
         countryText = country.getText().toString();
         dateOfEstablishmentText = dateOfEstablishment.getText().toString();
-        jobDescriptionText = jobDescription.getText().toString();
+        instituteDescriptionText = instituteDescription.getText().toString();
         usernameText = username.getText().toString();
-        emailIdText = emailId.getText().toString();
+        websiteText = website.getText().toString();
+        Log.d("testp", "websiteText" + websiteText);
         mobileNumberText = mobileNumber.getText().toString();
+
+        employeeFirstNameText = employeeFirstName.getText().toString();
+        employeeLastNameText = employeeLastName.getText().toString();
+        employeeUsernameText = employeeUsername.getText().toString();
+        employeeEmailText = employeeEmail.getText().toString();
+        employeeContactNumberText = employeeContactNumber.getText().toString();
     }
 
     private void getWidgets(View view) {
@@ -159,12 +186,18 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         zipCode = (EditText) view.findViewById(R.id.zip_code);
         country = (EditText) view.findViewById(R.id.country);
         dateOfEstablishment = (EditText) view.findViewById(R.id.date_of_establishment);
-        jobDescription = (EditText) view.findViewById(R.id.job_description);
+        instituteDescription = (EditText) view.findViewById(R.id.institute_description);
         username = (EditText) view.findViewById(R.id.username);
-        emailId = (EditText) view.findViewById(R.id.email_id);
+        website = (EditText) view.findViewById(R.id.website);
         mobileNumber = (EditText) view.findViewById(R.id.mobile_number);
         captureImage = (Button) view.findViewById(R.id.capture_image);
         instituteImage = (ImageView) view.findViewById(R.id.institute_image);
+
+        employeeFirstName = (EditText) view.findViewById(R.id.employee_first_name);
+        employeeLastName = (EditText) view.findViewById(R.id.employee_last_name);
+        employeeUsername = (EditText) view.findViewById(R.id.employee_user_name);
+        employeeEmail = (EditText) view.findViewById(R.id.employee_email);
+        employeeContactNumber = (EditText) view.findViewById(R.id.employee_contact_number);
     }
 
     private void setActionBarProperties() {
@@ -178,6 +211,8 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
+                getFilledData();
+                maintainSharedPrefs();
                 fragmentReplaceMethod();
                 break;
             case R.id.date_of_establishment:

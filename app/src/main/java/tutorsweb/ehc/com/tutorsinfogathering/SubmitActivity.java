@@ -23,7 +23,7 @@ public class SubmitActivity extends Activity implements View.OnClickListener {
         previous = (Button) findViewById(R.id.previous);
         previous.setOnClickListener(this);
 
-        submit = (Button) findViewById(R.id.submit);
+        submit = (Button) findViewById(R.id.next);
         submit.setOnClickListener(this);
 
         setActionBarProperties();
@@ -41,9 +41,9 @@ public class SubmitActivity extends Activity implements View.OnClickListener {
             case R.id.previous:
                 onBackPressed();
                 break;
-            case R.id.submit:
+            /*case R.id.submit:
                 //ToDo posting collected info. to database
-                break;
+                break;*/
         }
     }
 
