@@ -77,7 +77,7 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
             }
         });
 
-        new WebserviceHelper(getApplicationContext()).getData(this);
+        new WebserviceHelper(getApplicationContext()).getData(this, "categories");
 
         setActionBarProperties();
     }
@@ -97,9 +97,10 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
 
     @Override
     public void populateData(String jsonResponse) {
-        ArrayList categoryResponse = new Gson().fromJson(jsonResponse, new TypeToken<List<Category>>() {
-        }.getType());
+        if (jsonResponse.contains("target_person_id"))
+            sharedPrefsEdit.putString("reports", jsonResponse).commit();
         categoryEditor.putString("categories", jsonResponse).commit();
+
     }
 
     @Override

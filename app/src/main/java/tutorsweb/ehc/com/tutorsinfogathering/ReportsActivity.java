@@ -10,12 +10,25 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class ReportsActivity extends Activity {
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+
+import helper.WebServiceCallBack;
+import helper.WebserviceHelper;
+import model.categories.Category;
+import model.categories.reports.Reports;
+
+public class ReportsActivity extends Activity implements WebServiceCallBack {
 
     private ProgressBar circularProgressBar;
     private TextView progress;
     private ActionBar actionBar;
     private SharedPreferences signInCredentialsPrefs;
+    private Reports reports;
+    private String achieved;
+    private String target;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +38,11 @@ public class ReportsActivity extends Activity {
         circularProgressBar = (ProgressBar) findViewById(R.id.tutor_progress_bar);
         progress = (TextView) findViewById(R.id.progress_text_view);
 
-        int progressValue = 30;
+        circularProgressBar.setProgress(Integer.parseInt(achieved));
+        progress.setText("" + achieved);
 
-        circularProgressBar.setProgress(progressValue);
-        progress.setText("" + progressValue);
+        String id = "217";
+        new WebserviceHelper(getApplicationContext()).getData(this, "staff_targets/staff/" + id);
 
         setActionBarProperties();
     }
@@ -51,4 +65,24 @@ public class ReportsActivity extends Activity {
         return (super.onOptionsItemSelected(menuItem));
     }
 
+    @Override
+    public void populateData(String jsonResponse) {
+        if (jsonResponse != null && !jsonResponse.isEmpty()) {
+            reports = new Gson().fromJson(jsonResponse, new TypeToken<ArrayList<Category>>() {
+            }.getType());
+            if (reports.getStatus().equalsIgnoreCase("success")) {
+                if (reports.getData().get(8).toString().equalsIgnoreCase("tutor")) {
+                    achieved = reports.getData().get(9).toString();
+                    target = reports.getData().get(7).toString();
+                }
+            }
+        } else {
+
+        }
+    }
+
+    @Override
+    public void hideProgressBarOnFailure(String response) {
+
+    }
 }

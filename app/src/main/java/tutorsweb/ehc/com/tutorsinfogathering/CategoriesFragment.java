@@ -157,7 +157,7 @@ main_view
             ExpandableListViewAdapter adapter = new ExpandableListViewAdapter(getActivity().getApplicationContext(), categories);
             expListView.setAdapter(adapter);
         } else {
-            new WebserviceHelper(getActivity().getApplicationContext()).getData(this);
+            new WebserviceHelper(getActivity().getApplicationContext()).getData(this, "categories");
         }
 
         setActionBarProperties();

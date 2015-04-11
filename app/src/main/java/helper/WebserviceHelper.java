@@ -42,12 +42,14 @@ public class WebserviceHelper {
         preferences = context.getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
     }
 
-    public void getData(final WebServiceCallBack callBack) {
+    public void getData(final WebServiceCallBack callBack, String type) {
         SharedPreferences categorySharedPref = context.getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
         final SharedPreferences.Editor categoryEditor = categorySharedPref.edit();
         client.addHeader("If-None-Match", categorySharedPref.getString("etag", ""));
-        client.get("http://192.168.1.132:5000/api/v1/categories", new AsyncHttpResponseHandler() {
+        client.get("http://192.168.1.132:5000/api/v1/" + type, new AsyncHttpResponseHandler() {
+            //            192.168.1.132:5000/api/v1/staff_targets/staff/id
             @Override
+
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 String response = new String(bytes);
                 Log.d("test18", "response" + response);
