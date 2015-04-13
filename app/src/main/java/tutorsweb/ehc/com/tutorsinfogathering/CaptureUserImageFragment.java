@@ -152,6 +152,7 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             photo = (Bitmap) data.getExtras().get("data");
             userImage.setImageBitmap(photo);
+//            btn.setImageResource(R.drawable.newimage);
             userImageString = BitMapToString(photo);
             Log.d("test18", "on capture" + userImageString);
             sharedPrefsEdit.putString("userImageString", userImageString);

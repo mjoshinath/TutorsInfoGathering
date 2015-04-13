@@ -173,7 +173,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "companies");
+        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "companies/staff/217");
     }
 
     private String createJSONObject() {
