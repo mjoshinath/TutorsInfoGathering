@@ -24,7 +24,7 @@
                 android:layout_alignTop="@+id/tutor_progress_bar"
                 android:layout_centerVertical="true"
                 android:layout_weight="1"
-                android:text="Id : "
+                android:text="ID : "
                 android:textStyle="bold" />
 
             <TextView

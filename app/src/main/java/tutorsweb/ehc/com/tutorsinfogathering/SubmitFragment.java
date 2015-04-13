@@ -367,8 +367,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         tutor.setYearsOfTeachingExperience(yrsOfTeachingExpText);
         tutor.setTutoringExperience(tutoringExpText);
         tutor.setLanguages(languagesText);
-//        tutor.setAvatar(userImageString);
-//        tutor.setAvatar("iVBORw0KGgoAAAANSUhEUgAAAgQAAAG5CAYAAADxviygAAAgAElEQVR4nOx92Y4jyZGtk8lcqxeNVgwG0Mwd/f+XqD9hgMG8Sa3url4q94");
+        tutor.setAvatar(userImageString);
 
         Address address = new Address();
         address.setCity(cityText);
@@ -404,45 +403,6 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         tutorModel.setTutor(tutor);
 
         return new Gson().toJson(tutorModel);
-    }
-
-    private void setJsonObjectAttributes() {
-        try {
-            jsonObject.put("first_name", firstNameText);
-            jsonObject.put("last_name", lastNameText);
-            jsonObject.put("dob", dateOfBirthText);
-            jsonObject.put("address", addressText);
-//            jsonObject.put("stateText", stateText);
-//            jsonObject.put("cityText", cityText);
-//            jsonObject.put("zipCodeText", zipCodeText);
-//            jsonObject.put("countryText", countryText);
-            jsonObject.put("display_name", userNameText);
-            jsonObject.put("email", emailIdText);
-            jsonObject.put("primary_contact_number", mobileNumberText);
-            jsonObject.put("gender", "male");
-
-//            jsonObject.put("userImageString", userImageString);
-
-//            jsonObject.put("yrsOfTeachingExpText", yrsOfTeachingExpText);
-//            jsonObject.put("tutoringExpText", tutoringExpText);
-            jsonObject.put("languages", languagesText);
-//            jsonObject.put("interestsText", interestsText);
-
-//            jsonObject.put("degreeNameText", degreeNameText);
-//            jsonObject.put("universityNameText", universityNameText);
-//            jsonObject.put("startDateText", startDateText);
-//            jsonObject.put("endDateText", endDateText);
-//            jsonObject.put("startDateWorkExpText", startDateWorkExpText);
-//            jsonObject.put("endDateWorkExpText", endDateWorkExpText);
-//            jsonObject.put("locationText", locationText);
-//            jsonObject.put("locationWorkExpText", locationWorkExpText);
-//            jsonObject.put("jobTitleText", jobTitleText);
-            jsonObject.put("description", jobDescriptionText);
-//            jsonObject.put("fieldOfStudyText", fieldOfStudyText);
-//            jsonObject.put("companyNameText", companyNameText);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

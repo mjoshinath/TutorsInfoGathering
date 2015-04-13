@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Base64;
@@ -43,6 +42,7 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
     private View captureImagePhase;
 
     private static final int CAMERA_REQUEST = 1;
+    private Bitmap photoTemp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -151,9 +151,9 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             photo = (Bitmap) data.getExtras().get("data");
-            userImage.setImageBitmap(photo);
-//            btn.setImageResource(R.drawable.newimage);
-            userImageString = BitMapToString(photo);
+            photoTemp = Bitmap.createScaledBitmap(photo, 300, 360, true);
+            userImage.setImageBitmap(photoTemp);
+            userImageString = BitMapToString(photoTemp);
             Log.d("test18", "on capture" + userImageString);
             sharedPrefsEdit.putString("userImageString", userImageString);
             sharedPrefsEdit.commit();

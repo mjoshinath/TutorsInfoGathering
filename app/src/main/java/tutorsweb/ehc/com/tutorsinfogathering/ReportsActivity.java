@@ -5,14 +5,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import java.util.Iterator;
-
+import helper.Network;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
 import model.categories.reports.Reports;
@@ -41,17 +41,41 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
     private int leadAchieved;
     private int leadTarget;
     private int i;
+    private SharedPreferences.Editor sharedPreferencesEdit;
+    private String targetPersonId;
+    private String month;
+    private String year;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
 
+        sharedPreferences = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
+        sharedPreferencesEdit = sharedPreferences.edit();
+
         getWidgets();
 
         String id = "217";
-        new WebserviceHelper(getApplicationContext()).getData(this, "staff_targets/staff/" + id);
-
+        if (Network.isConnected(getApplicationContext())) {
+            Log.d("test111", "network check...");
+            new WebserviceHelper(getApplicationContext()).getData(this, "staff_targets/staff/" + id);
+        }
+/*         else {
+            Log.d("test111", "network fail...");
+            tutorTarget = Integer.parseInt(sharedPreferences.getString("tutorTarget", ""));
+            tutorAchieved = Integer.parseInt(sharedPreferences.getString("tutorAchieved", ""));
+            instituteTarget = Integer.parseInt(sharedPreferences.getString("instituteTarget", ""));
+            instituteAchieved = Integer.parseInt(sharedPreferences.getString("instituteAchieved", ""));
+            leadTarget = Integer.parseInt(sharedPreferences.getString("leadTarget", ""));
+            leadAchieved = Integer.parseInt(sharedPreferences.getString("leadAchieved", ""));
+            targetPersonId = sharedPreferences.getString("targetPersonId", "");
+            month = sharedPreferences.getString("month", "");
+            year = sharedPreferences.getString("year", "");
+            Log.d("test111", "data" + tutorTarget + "/" + tutorAchieved + "-" + instituteTarget + "/" + instituteAchieved + "-" + leadTarget + "/" + leadAchieved + "-" + targetPersonId + "," + month + "," + year);
+            updateUi();
+        }*/
 
         setActionBarProperties();
     }
@@ -74,23 +98,30 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
     }
 
     private void updateUi() {
-        marketingExecutiveId.setText("ID : " + reports.getData().get(0).getTargetPersonId().toString());
-        reportsFor.setText("Reports for : " + reports.getData().get(0).getMonth() + " " + reports.getData().get(0).getYear());
-
+        if (!Network.isConnected(getApplicationContext())) {
+            marketingExecutiveId.setText("ID : " + targetPersonId);
+            reportsFor.setText("Reports for : " + month + " " + year);
+        } else {
+            marketingExecutiveId.setText("ID : " + reports.getData().get(0).getTargetPersonId().toString());
+            reportsFor.setText("Reports for : " + reports.getData().get(0).getMonth() + " " + reports.getData().get(0).getYear());
+        }
         tutorCircularProgressBar.setProgress(tutorAchieved);
         tutorCircularProgressBar.setMax(tutorTarget);
         tutorTargetTextView.setText("Target : " + tutorTarget);
         tutorProgress.setText("" + tutorAchieved);
+        Log.d("test111", "tutor" + tutorAchieved + "" + tutorTarget);
 
         instituteCircularProgressBar.setProgress(instituteAchieved);
         instituteCircularProgressBar.setMax(instituteTarget);
         instituteTargetTextView.setText("Target : " + instituteTarget);
         instituteProgress.setText("" + instituteAchieved);
+        Log.d("test111", "institute" + instituteAchieved + "" + instituteTarget);
 
         leadCircularProgressBar.setProgress(leadAchieved);
         leadCircularProgressBar.setMax(leadTarget);
         leadTargetTextView.setText("Target : " + leadTarget);
         leadProgress.setText("" + leadAchieved);
+        Log.d("test111", "lead" + leadAchieved + "" + leadTarget);
     }
 
     private void setActionBarProperties() {
@@ -121,6 +152,7 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
             if (reports.getData().get(i).getTargetType().toString().equalsIgnoreCase("tutor")) {
                 tutorAchieved = reports.getData().get(i).getAchieved();
                 tutorTarget = reports.getData().get(i).getTarget();
+                Log.d("test111", "lead" + leadAchieved + "" + leadTarget);
             } else if (reports.getData().get(i).getTargetType().toString().equalsIgnoreCase("lead")) {
                 leadAchieved = reports.getData().get(i).getAchieved();
                 leadTarget = reports.getData().get(i).getTarget();
@@ -131,12 +163,25 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
             i++;
         }
 
+//        reportsSharedPrefs();
         updateUi();
     }
 
+   /* private void reportsSharedPrefs() {
+        sharedPreferencesEdit.putString("tutorAchieved", "" + tutorAchieved);
+        sharedPreferencesEdit.putString("tutorTarget", "" + tutorTarget);
+        sharedPreferencesEdit.putString("instituteAchieved", "" + instituteAchieved);
+        sharedPreferencesEdit.putString("instituteTarget", "" + instituteTarget);
+        sharedPreferencesEdit.putString("leadAchieved", "" + leadAchieved);
+        sharedPreferencesEdit.putString("leadTarget", "" + leadTarget);
+        sharedPreferencesEdit.putString("targetPersonId", "" + reports.getData().get(0).getTargetPersonId());
+        sharedPreferencesEdit.putString("month", "" + reports.getData().get(0).getMonth());
+        sharedPreferencesEdit.putString("year", "" + reports.getData().get(0).getYear());
+        sharedPreferencesEdit.commit();
+    }*/
+
     @Override
     public void hideProgressBarOnFailure(String response) {
-
     }
 
     /*private Bitmap imageResize(int weight, Bitmap bitmapImage) {

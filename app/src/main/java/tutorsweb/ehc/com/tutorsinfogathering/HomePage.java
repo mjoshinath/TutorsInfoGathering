@@ -23,6 +23,7 @@ import java.util.Iterator;
 
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
+import model.categories.InstituteDetails;
 import model.categories.TutorDetails;
 import support.DataBaseHelper;
 
@@ -42,6 +43,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private Button reportsButton;
     private Button documentationButton;
     private Button signUpInstituteButton;
+    private ArrayList<InstituteDetails> multipleInstituteDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,11 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         Log.d("test111", "" + multipleTutorDetails.size());
         if (multipleTutorDetails.size() > 0)
             syncDataButton.setText("Sync Data ( " + multipleTutorDetails.size() + " record(s) )");
+
+        multipleInstituteDetails = dataBaseHelper.getInstituteDetails();
+        Log.d("test111", "" + multipleInstituteDetails.size());
+        if (multipleInstituteDetails.size() > 0)
+            syncDataButton.setText("Sync Data ( " + multipleInstituteDetails.size() + " record(s) )");
 
         setActionBarProperties();
     }
@@ -118,21 +125,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 /*dataBaseHelper = new DataBaseHelper(getApplicationContext());
                 multipleTutorDetails = dataBaseHelper.getTutorDetails();*/
                 Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
-                Iterator<TutorDetails> iterator = multipleTutorDetails.iterator();
-                while (iterator.hasNext()) {
-                    TutorDetails eachTutorDetails = iterator.next();
-                    try {
-                        JSONObject eachTutorDetailsInJsonFormat = new JSONObject(eachTutorDetails.getDetails());
-                        StringEntity entity = null;
-                        entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
-                        Log.d("test08", "entity-" + entity);
-                        new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors?tutor");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
+                if (multipleTutorDetails.isEmpty())
+                    syncDataForInstitute();
+                else
+                    syncDataForTutor();
                 break;
             case R.id.reports:
                 Intent intent1 = new Intent(this, ReportsActivity.class);
@@ -145,14 +141,52 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         }
     }
 
+    private void syncDataForInstitute() {
+        Iterator<InstituteDetails> instituteIterator = multipleInstituteDetails.iterator();
+        while (instituteIterator.hasNext()) {
+            InstituteDetails eachInstituteDetails = instituteIterator.next();
+            try {
+                JSONObject eachInstituteDetailsInJsonFormat = new JSONObject(eachInstituteDetails.getDetails());
+                StringEntity entity = null;
+                entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
+                Log.d("test08", "entity-" + entity);
+                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/217");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void syncDataForTutor() {
+        Iterator<TutorDetails> iterator = multipleTutorDetails.iterator();
+        while (iterator.hasNext()) {
+            TutorDetails eachTutorDetails = iterator.next();
+            try {
+                JSONObject eachTutorDetailsInJsonFormat = new JSONObject(eachTutorDetails.getDetails());
+                StringEntity entity = null;
+                entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
+                Log.d("test08", "entity-" + entity);
+                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/217");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void populateData(String jsonResponse) {
-        dataBaseHelper.delete(Long.parseLong(jsonResponse));
+        dataBaseHelper.deleteTutor(Long.parseLong(jsonResponse));
+        dataBaseHelper.deleteInstitute(Long.parseLong(jsonResponse));
     }
 
     @Override
     public void hideProgressBarOnFailure(String response) {
-        dataBaseHelper.delete(Long.parseLong(response));
+        dataBaseHelper.deleteTutor(Long.parseLong(response));
+        dataBaseHelper.deleteInstitute(Long.parseLong(response));
     }
 
     @Override

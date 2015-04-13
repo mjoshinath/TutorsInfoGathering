@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import model.categories.InstituteDetails;
 import model.categories.TutorDetails;
 import tutorsweb.ehc.com.tutorsinfogathering.R;
 
@@ -23,9 +24,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static final String MARKETING_CREDENTIALS_TABLE_NAME = "tutors_web_marketing_credentials";
     private static final String TUTOR_DETAILS_TABLE_NAME = "tutor_details_tbl";
+    private static final String INSTITUTE_DETAILS_TABLE_NAME = "institute_details_tbl";
+
     private String[] emailIdResource;
     private String[] passwordResource;
     private ArrayList<TutorDetails> tutorDetails = new ArrayList<TutorDetails>();
+    private ArrayList<InstituteDetails> instituteDetails = new ArrayList<InstituteDetails>();
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -36,6 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase tutorsWebDataBase) {
         tutorsWebDataBase.execSQL("CREATE TABLE " + MARKETING_CREDENTIALS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT,password TEXT); ");
         tutorsWebDataBase.execSQL("CREATE TABLE " + TUTOR_DETAILS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, tutorCredentials TEXT); ");
+        tutorsWebDataBase.execSQL("CREATE TABLE " + INSTITUTE_DETAILS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, instituteCredentials TEXT); ");
 
         emailIdResource = context.getResources().getStringArray(R.array.emailIds);
         passwordResource = context.getResources().getStringArray(R.array.passwords);
@@ -52,7 +57,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
 
 
     public long insertMarketingCredentials(String email, String password) {
@@ -106,9 +110,47 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return tutorDetails;
     }
 
-    public void delete(long id) {
+    public void deleteTutor(long id) {
         Log.d("test08", "delete-" + id);
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TUTOR_DETAILS_TABLE_NAME + " WHERE id=" + id);
+    }
+
+    public void deleteInstitute(long id) {
+        Log.d("test08", "delete-" + id);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + INSTITUTE_DETAILS_TABLE_NAME + " WHERE id=" + id);
+    }
+
+    public long insertInstituteDetails(String jsonObjectInStringFormat) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("instituteCredentials", jsonObjectInStringFormat);
+        long rowId = db.insert(INSTITUTE_DETAILS_TABLE_NAME, null, values);
+        db.close();
+        return rowId;
+    }
+
+    public ArrayList<InstituteDetails> getInstituteDetails() {
+        String selectQuery = "SELECT  * FROM " + INSTITUTE_DETAILS_TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = cursor.getCount();
+        Log.d("test08", "count-" + count);
+        if (cursor.moveToFirst()) {
+            do {
+                InstituteDetails instituteDetail = new InstituteDetails();
+                instituteDetail.setId(cursor.getInt(0));
+                instituteDetail.setDetails(cursor.getString(1));
+//                int i = 0;
+                instituteDetails.add(instituteDetail);
+//                i++;
+                Log.d("test08", "tutorDetail-" + instituteDetail);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        Log.d("test08", "tutorDetails-" + tutorDetails);
+        return instituteDetails;
     }
 }

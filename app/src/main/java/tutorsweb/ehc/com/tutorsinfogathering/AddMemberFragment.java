@@ -29,12 +29,14 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import helper.Network;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
 import model.categories.MemberInfo;
 import model.categories.company.Company;
 import model.categories.company.CompanyModel;
 import model.categories.company.EmployeesAttribute;
+import support.DataBaseHelper;
 
 public class AddMemberFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, WebServiceCallBack, TextWatcher {
 
@@ -64,6 +66,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     private String json;
     private JSONObject jsonObject;
     private ArrayList<EmployeesAttribute> listOfEmployeeAttributes;
+    private DataBaseHelper dataBaseHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -147,9 +150,17 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                getFieldsData();
-                maintainSharedPrefs();
                 webServiceCallForInstituteSignUp();
+                /*getFieldsData();
+                maintainSharedPrefs();
+                if (Network.isConnected(getActivity())) {
+                    webServiceCallForInstituteSignUp();
+                } else {
+                    dataBaseHelper = new DataBaseHelper(getActivity());
+                    dataBaseHelper.insertInstituteDetails(json);
+                }
+                instituteSharedPrefsEdit.clear();
+                instituteSharedPrefsEdit.commit();*/
                 break;
             case R.id.previous:
                 getActivity().onBackPressed();
@@ -173,7 +184,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "companies/staff/217");
+        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "institutes/staff/217");
     }
 
     private String createJSONObject() {
@@ -276,6 +287,8 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void hideProgressBarOnFailure(String response) {
+        dataBaseHelper = new DataBaseHelper(getActivity());
+        dataBaseHelper.insertInstituteDetails(json);
     }
 
     @Override

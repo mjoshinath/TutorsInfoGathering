@@ -24,13 +24,6 @@ import java.util.Map;
 
 import tutorsweb.ehc.com.tutorsinfogathering.R;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ehc
- * Date: 16/8/14
- * Time: 11:50 AM
- * To change this template use File | Settings | File Templates.
- */
 public class WebserviceHelper {
     public static AsyncHttpClient client = new AsyncHttpClient();
     RequestParams requestParams = new RequestParams();
@@ -45,11 +38,11 @@ public class WebserviceHelper {
     public void getData(final WebServiceCallBack callBack, String type) {
         SharedPreferences categorySharedPref = context.getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
         final SharedPreferences.Editor categoryEditor = categorySharedPref.edit();
-        client.addHeader("If-None-Match", categorySharedPref.getString("etag", ""));
+        if (type.equalsIgnoreCase("categories"))
+            client.addHeader("If-None-Match", categorySharedPref.getString("etag", ""));
         client.get("http://192.168.1.132:5000/api/v1/" + type, new AsyncHttpResponseHandler() {
             //            192.168.1.132:5000/api/v1/staff_targets/staff/id
             @Override
-
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 String response = new String(bytes);
                 Log.d("test18", "response" + response);
@@ -68,18 +61,6 @@ public class WebserviceHelper {
                 callBack.hideProgressBarOnFailure("");
             }
         });
-    }
-
-    private void setParamsForCall() {
-        /*type = hashMapParams.get(context.getString(R.string.type));
-        switch (type) {
-
-            *//*case BRANDS:
-                requestParams.add(context.getString(R.string.list_type), hashMapParams.get(context.getString(R.string.list_type)));
-                requestParams.add(context.getString(R.string.list_type_value), hashMapParams.get(context.getString(R.string.list_type_value)));
-                requestParams.add(context.getString(R.string.page), hashMapParams.get(context.getString(R.string.page)));
-                break;*//*
-        }*/
     }
 
     public void postData(final WebServiceCallBack callBack, StringEntity entity, final long id, String requestType) {
