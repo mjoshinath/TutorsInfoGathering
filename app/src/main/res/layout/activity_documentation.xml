@@ -7,22 +7,54 @@
     tools:context="tutorsweb.ehc.com.tutorsinfogathering.DocumentationActivity">
 
     <TextView
-        android:id="@+id/first_link"
+        android:id="@+id/tutor_demonstration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Click here to view ppt1"
+        android:text="Tutor"
         android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/second_link"
+        android:id="@+id/institute_demonstration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:gravity="center"
-        android:text="Click here to view ppt2"
+        android:text="Institute"
         android:textSize="16sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/student_demonstration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="Student"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lead_demonstration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="Lead"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/press_demonstration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="Press"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
 </LinearLayout>

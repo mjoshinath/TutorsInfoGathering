@@ -86,5 +86,14 @@
             android:background="@drawable/mybutton"
             android:text="Sync Data"
             android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/tutors_web_site"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/mybutton"
+            android:text="TutorsWeb Site"
+            android:textColor="#000000" />
     </LinearLayout>
 </ScrollView>
