@@ -74,11 +74,12 @@ public class WebserviceHelper {
                         if (response.contains("Email exists"))
                             Toast.makeText(context, "Email already exists", Toast.LENGTH_SHORT).show();
                         else if (response.contains("Successfully created")) {
-                            Toast.makeText(context, "Tutor Successfully Registered", Toast.LENGTH_SHORT).show();
-                            callBack.populateData("" + id);
+                            Toast.makeText(context, "Registration Successful!", Toast.LENGTH_SHORT).show();
+//                            callBack.populateData("" + id);
                         } else {
                             Toast.makeText(context, "Empty Record", Toast.LENGTH_SHORT).show();
                         }
+                        callBack.populateData("" + id);
                     }
 
                     @Override

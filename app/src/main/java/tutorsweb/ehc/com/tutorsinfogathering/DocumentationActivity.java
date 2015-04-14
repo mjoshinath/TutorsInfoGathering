@@ -34,22 +34,8 @@ public class DocumentationActivity extends Activity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.first_link:
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                try {
-                    Uri uri = Uri.fromFile(new File(getAssets().open("temp.ppt").toString()));
-//                    Uri uri = Uri.fromFile(new File(getAssets().open("temp.ppt").toString()));
-                    intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
                 break;
             case R.id.second_link:
-                Intent intent1 = new Intent(Intent.ACTION_VIEW);
-//                intent1.setDataAndType(path2, "application/vnd.ms-powerpoint");
-                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent1);
                 break;
         }
     }

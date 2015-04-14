@@ -161,6 +161,9 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
                 }
                 instituteSharedPrefsEdit.clear();
                 instituteSharedPrefsEdit.commit();*/
+                Intent intent = new Intent(getActivity(), HomePage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             case R.id.previous:
                 getActivity().onBackPressed();

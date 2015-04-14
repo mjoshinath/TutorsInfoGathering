@@ -44,6 +44,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private Button documentationButton;
     private Button signUpInstituteButton;
     private ArrayList<InstituteDetails> multipleInstituteDetails;
+    private int noOfUnsyncRecords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,32 +54,39 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         signInCredentialsPrefs = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
         signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
 
+        getWidgets();
+
+        applyActions();
+
+        dataBaseHelper = new DataBaseHelper(getApplicationContext());
+
+        multipleTutorDetails = dataBaseHelper.getTutorDetails();
+        multipleInstituteDetails = dataBaseHelper.getInstituteDetails();
+
+        if (multipleInstituteDetails.size() > 0 || multipleTutorDetails.size() > 0) {
+            noOfUnsyncRecords = multipleTutorDetails.size() + multipleInstituteDetails.size();
+            syncDataButton.setText("Sync Data (" + noOfUnsyncRecords + " Unsync Record(s) )");
+        }
+
+        setActionBarProperties();
+    }
+
+    private void getWidgets() {
         signUpTutorButton = (Button) findViewById(R.id.signup_tutor);
         addMettingLog = (Button) findViewById(R.id.add_meeting_log);
         syncDataButton = (Button) findViewById(R.id.sync_data);
         reportsButton = (Button) findViewById(R.id.reports);
         documentationButton = (Button) findViewById(R.id.documentation);
         signUpInstituteButton = (Button) findViewById(R.id.signup_institute);
+    }
 
+    private void applyActions() {
         signUpTutorButton.setOnClickListener(this);
         addMettingLog.setOnClickListener(this);
         syncDataButton.setOnClickListener(this);
         reportsButton.setOnClickListener(this);
         documentationButton.setOnClickListener(this);
         signUpInstituteButton.setOnClickListener(this);
-
-        dataBaseHelper = new DataBaseHelper(getApplicationContext());
-        multipleTutorDetails = dataBaseHelper.getTutorDetails();
-        Log.d("test111", "" + multipleTutorDetails.size());
-        if (multipleTutorDetails.size() > 0)
-            syncDataButton.setText("Sync Data ( " + multipleTutorDetails.size() + " record(s) )");
-
-        multipleInstituteDetails = dataBaseHelper.getInstituteDetails();
-        Log.d("test111", "" + multipleInstituteDetails.size());
-        if (multipleInstituteDetails.size() > 0)
-            syncDataButton.setText("Sync Data ( " + multipleInstituteDetails.size() + " record(s) )");
-
-        setActionBarProperties();
     }
 
     private void setActionBarProperties() {
@@ -125,10 +133,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 /*dataBaseHelper = new DataBaseHelper(getApplicationContext());
                 multipleTutorDetails = dataBaseHelper.getTutorDetails();*/
                 Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
-                if (multipleTutorDetails.isEmpty())
-                    syncDataForInstitute();
-                else
+                if (multipleTutorDetails != null)
                     syncDataForTutor();
+                if (multipleInstituteDetails != null)
+                    syncDataForInstitute();
                 break;
             case R.id.reports:
                 Intent intent1 = new Intent(this, ReportsActivity.class);
@@ -145,12 +153,18 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         Iterator<InstituteDetails> instituteIterator = multipleInstituteDetails.iterator();
         while (instituteIterator.hasNext()) {
             InstituteDetails eachInstituteDetails = instituteIterator.next();
+            Log.d("test111", "eachInstituteDetails>----->" + eachInstituteDetails);
             try {
-                JSONObject eachInstituteDetailsInJsonFormat = new JSONObject(eachInstituteDetails.getDetails());
-                StringEntity entity = null;
-                entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
-                Log.d("test08", "entity-" + entity);
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/217");
+                if (eachInstituteDetails.getDetails() == null) {
+                    long tempId = eachInstituteDetails.getId();
+                    dataBaseHelper.deleteInstitute(tempId);
+                } else {
+                    JSONObject eachInstituteDetailsInJsonFormat = new JSONObject(eachInstituteDetails.getDetails());
+                    StringEntity entity = null;
+                    entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
+                    Log.d("test08", "entity-" + entity);
+                    new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/217");
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -185,8 +199,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
     @Override
     public void hideProgressBarOnFailure(String response) {
-        dataBaseHelper.deleteTutor(Long.parseLong(response));
-        dataBaseHelper.deleteInstitute(Long.parseLong(response));
+//        dataBaseHelper.deleteTutor(Long.parseLong(response));
+//        dataBaseHelper.deleteInstitute(Long.parseLong(response));
     }
 
     @Override
