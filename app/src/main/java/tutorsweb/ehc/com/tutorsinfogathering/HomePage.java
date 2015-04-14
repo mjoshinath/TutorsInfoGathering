@@ -45,6 +45,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private Button signUpInstituteButton;
     private ArrayList<InstituteDetails> multipleInstituteDetails;
     private int noOfUnsyncRecords;
+    private Button tutorsWebSiteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         reportsButton = (Button) findViewById(R.id.reports);
         documentationButton = (Button) findViewById(R.id.documentation);
         signUpInstituteButton = (Button) findViewById(R.id.signup_institute);
+        tutorsWebSiteButton = (Button) findViewById(R.id.tutors_web_site);
     }
 
     private void applyActions() {
@@ -87,6 +89,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         reportsButton.setOnClickListener(this);
         documentationButton.setOnClickListener(this);
         signUpInstituteButton.setOnClickListener(this);
+        tutorsWebSiteButton.setOnClickListener(this);
     }
 
     private void setActionBarProperties() {
@@ -145,6 +148,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             case R.id.documentation:
                 Intent intent2 = new Intent(this, DocumentationActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.tutors_web_site:
+                Intent intent4 = new Intent(this, TutorsWebSiteHomePage.class);
+                startActivity(intent4);
                 break;
         }
     }
