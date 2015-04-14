@@ -61,12 +61,12 @@
 
     <string name="title_activity_demonstration">DemonstrationActivity</string>
 
-    <string-array name="tutor">
-        <item>R.drawable.page1</item>
-        <item>R.drawable.page2</item>
-        <item>R.drawable.page3</item>
-        <item>R.drawable.page4</item>
-        <item>R.drawable.page5</item>
-    </string-array>
+    <array name="tutor">
+        <item>@drawable/page1</item>
+        <item>@drawable/page2</item>
+        <item>@drawable/page3</item>
+        <item>@drawable/page4</item>
+        <item>@drawable/page5</item>
+    </array>
 
 </resources>
