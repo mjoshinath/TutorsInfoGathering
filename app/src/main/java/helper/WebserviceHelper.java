@@ -40,7 +40,7 @@ public class WebserviceHelper {
         final SharedPreferences.Editor categoryEditor = categorySharedPref.edit();
         if (type.equalsIgnoreCase("categories"))
             client.addHeader("If-None-Match", categorySharedPref.getString("etag", ""));
-        client.get("http://192.168.1.132:5000/api/v1/" + type, new AsyncHttpResponseHandler() {
+        client.get("http://192.168.1.115:5000/api/v1/" + type, new AsyncHttpResponseHandler() {
             //            192.168.1.132:5000/api/v1/staff_targets/staff/id
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
@@ -65,21 +65,23 @@ public class WebserviceHelper {
 
     public void postData(final WebServiceCallBack callBack, StringEntity entity, final long id, String requestType) {
 
-        client.post(context, "http://192.168.1.132:5000/api/v1/" + requestType, entity, "application/json",
+        client.post(context, "http://192.168.1.115:5000/api/v1/" + requestType, entity, "application/json",
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         String response = new String(bytes);
                         Log.d("test18", "success:" + response);
-                        if (response.contains("Email exists"))
-                            Toast.makeText(context, "Email already exists", Toast.LENGTH_SHORT).show();
-                        else if (response.contains("Successfully created")) {
+                        if (response.contains("Email exists")) {
+                            Toast.makeText(context, "Email Already Exists!", Toast.LENGTH_SHORT).show();
+                            callBack.populateData("" + id);
+                        } else if (response.contains("Successfully created")) {
                             Toast.makeText(context, "Registration Successful!", Toast.LENGTH_SHORT).show();
 //                            callBack.populateData("" + id);
                         } else {
-                            Toast.makeText(context, "Empty Record", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Empty Record!", Toast.LENGTH_SHORT).show();
+                            callBack.populateData("" + id);
                         }
-                        callBack.populateData("" + id);
+
                     }
 
                     @Override

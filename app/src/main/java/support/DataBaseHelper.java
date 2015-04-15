@@ -32,6 +32,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private ArrayList<InstituteDetails> instituteDetails = new ArrayList<InstituteDetails>();
     private String[] userIdResource;
     private int id;
+    private String userId;
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -76,9 +77,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + MARKETING_CREDENTIALS_TABLE_NAME + " where email='" + email + "' and password='" + password + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+        Log.d("test987", "cursor : " + cursor);
         if (cursor.moveToFirst()) {
             do {
-                id = cursor.getColumnIndex("userId");
+//                id = cursor.getColumnIndex("userId");
+                userId = cursor.getString(3);
                 Log.d("test123", "id-->" + id);
             } while (cursor.moveToNext());
         }

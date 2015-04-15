@@ -64,10 +64,15 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         multipleTutorDetails = dataBaseHelper.getTutorDetails();
         multipleInstituteDetails = dataBaseHelper.getInstituteDetails();
 
-        if (multipleInstituteDetails.size() > 0 || multipleTutorDetails.size() > 0) {
-            noOfUnsyncRecords = multipleTutorDetails.size() + multipleInstituteDetails.size();
-            syncDataButton.setText("Sync Data (" + noOfUnsyncRecords + " Unsync Record(s) )");
+        if (multipleInstituteDetails.size() > 0) {
+            noOfUnsyncRecords = noOfUnsyncRecords + multipleInstituteDetails.size();
+//            syncDataButton.setText("Sync Data (" + noOfUnsyncRecords + " Unsync Record(s) )");
         }
+        if (multipleTutorDetails.size() > 0) {
+            noOfUnsyncRecords = noOfUnsyncRecords + multipleTutorDetails.size();
+        }
+        if (noOfUnsyncRecords > 0)
+            syncDataButton.setText("Sync Data (" + noOfUnsyncRecords + " Unsync Record(s) )");
 
         setActionBarProperties();
     }
@@ -170,7 +175,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                     StringEntity entity = null;
                     entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
                     Log.d("test08", "entity-" + entity);
-                    new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/217");
+                    new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/108");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -189,7 +194,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 StringEntity entity = null;
                 entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
                 Log.d("test08", "entity-" + entity);
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/217");
+                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/108");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {

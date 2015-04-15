@@ -1,6 +1,7 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -67,6 +68,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     private JSONObject jsonObject;
     private ArrayList<EmployeesAttribute> listOfEmployeeAttributes;
     private DataBaseHelper dataBaseHelper;
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -187,7 +189,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "institutes/staff/217");
+        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "institutes/staff/108");
     }
 
     private String createJSONObject() {
@@ -289,8 +291,14 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        context = getActivity();
+    }
+
+    @Override
     public void hideProgressBarOnFailure(String response) {
-        dataBaseHelper = new DataBaseHelper(getActivity());
+        dataBaseHelper = new DataBaseHelper(context);
         dataBaseHelper.insertInstituteDetails(json);
     }
 
