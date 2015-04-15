@@ -76,12 +76,11 @@ public class WebserviceHelper {
                             callBack.populateData("" + id);
                         } else if (response.contains("Successfully created")) {
                             Toast.makeText(context, "Registration Successful!", Toast.LENGTH_SHORT).show();
-//                            callBack.populateData("" + id);
+                            callBack.populateData("" + id);
                         } else {
                             Toast.makeText(context, "Empty Record!", Toast.LENGTH_SHORT).show();
                             callBack.populateData("" + id);
                         }
-
                     }
 
                     @Override
