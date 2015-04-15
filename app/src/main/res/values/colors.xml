@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ireg_grey">#B0B6BC</color>
+    <color name="ireg_yellow">#FFCB04</color>
+    <color name="ireg_blue">#32B1D2</color>
+    <color name="ireg_light_grey">#DDDDDD</color>
+</resources>
