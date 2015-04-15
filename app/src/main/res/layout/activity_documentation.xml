@@ -2,59 +2,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="0dp"
+    android:layout_marginLeft="48dp"
+    android:layout_marginRight="48dp"
+    android:layout_marginTop="48dp"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context="tutorsweb.ehc.com.tutorsinfogathering.DocumentationActivity">
 
-    <TextView
+    <Button
         android:id="@+id/tutor_demonstration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/mybutton"
         android:gravity="center"
         android:text="Tutor"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="16sp" />
 
-    <TextView
+    <Button
         android:id="@+id/institute_demonstration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
+        android:background="@drawable/mybutton"
         android:gravity="center"
         android:text="Institute"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="16sp" />
 
-    <TextView
+    <Button
         android:id="@+id/student_demonstration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
+        android:background="@drawable/mybutton"
         android:gravity="center"
         android:text="Student"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="16sp" />
 
-    <TextView
+    <Button
         android:id="@+id/lead_demonstration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
+        android:background="@drawable/mybutton"
         android:gravity="center"
         android:text="Lead"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="16sp" />
 
-    <TextView
+    <Button
         android:id="@+id/press_demonstration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
+        android:background="@drawable/mybutton"
         android:gravity="center"
         android:text="Press"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="16sp" />
 
 </LinearLayout>
