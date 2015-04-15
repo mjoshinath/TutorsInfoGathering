@@ -11,9 +11,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
-public class LeadCapture extends Activity implements AdapterView.OnItemSelectedListener {
+public class LeadCapture extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private WebView webView;
     private ActionBar actionBar;
@@ -23,11 +24,14 @@ public class LeadCapture extends Activity implements AdapterView.OnItemSelectedL
     private ArrayAdapter<CharSequence> interactionAdapter;
     private String typeOfClientSelected;
     private String typeOfInteractionSelected;
+    private Button submit;
 
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lead_capture_layout);
+
+        submit = (Button) findViewById(R.id.submit_lead);
 
         typeOfClient = (Spinner) findViewById(R.id.type_of_client);
         typeOfInteraction = (Spinner) findViewById(R.id.type_of_interaction);
@@ -42,6 +46,7 @@ public class LeadCapture extends Activity implements AdapterView.OnItemSelectedL
 
         typeOfClient.setOnItemSelectedListener(this);
         typeOfInteraction.setOnItemSelectedListener(this);
+        submit.setOnClickListener(this);
 
         setActionBarProperties();
     }
@@ -84,5 +89,13 @@ public class LeadCapture extends Activity implements AdapterView.OnItemSelectedL
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.submit_lead:
+                break;
+        }
     }
 }
