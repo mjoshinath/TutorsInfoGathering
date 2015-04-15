@@ -1,14 +1,18 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class ShowWebView extends Activity {
 
     private WebView webView;
+    private ActionBar actionBar;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -17,49 +21,31 @@ public class ShowWebView extends Activity {
 
         webView = (WebView) findViewById(R.id.webView1);
 
-        startWebView("http://goo.gl/kZA1YL");
+        webView.loadUrl("http://goo.gl/kZA1YL");
+
+        setActionBarProperties();
     }
 
-    private void startWebView(String url) {
-        webView.setWebViewClient(new WebViewClient() {
-            ProgressDialog progressDialog;
+    private void setActionBarProperties() {
+        actionBar = getActionBar();
+        actionBar.setTitle("Lead Capture");
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-
-            public void onLoadResource(WebView view, String url) {
-                if (progressDialog == null) {
-                    progressDialog = new ProgressDialog(ShowWebView.this);
-                    progressDialog.setMessage("Loading...");
-                    progressDialog.show();
-                }
-            }
-
-            public void onPageFinished(WebView view, String url) {
-                try {
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                        progressDialog = null;
-                    }
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            }
-
-        });
-
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(url);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent intent1 = new Intent(this, HomePage.class);
+                startActivity(intent1);
+                break;
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 
     @Override
     public void onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack();
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
     }
 }

@@ -72,7 +72,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#B0B6BC"
+            android:background="@drawable/previous_button_feedback"
             android:text="Previous"
             android:textColor="#000000" />
 
@@ -86,7 +86,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#FFCB04"
+            android:background="@drawable/next_button_feedback"
             android:text="Next"
             android:textColor="#000000" />
     </LinearLayout>

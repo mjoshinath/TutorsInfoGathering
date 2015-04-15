@@ -38,27 +38,6 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     private SharedPreferences.Editor sharedPrefsEditable;
     private String yrsOfTeachingExpText;
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_professional_info);
-
-        profExpSpinner = (Spinner) findViewById(R.id.teaching_exp);
-        adapter = ArrayAdapter.createFromResource(this, R.array.years_of_exp, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        profExpSpinner.setAdapter(adapter);
-
-        previous = (Button) findViewById(R.id.previous);
-        next = (Button) findViewById(R.id.next);
-        yrsOfTeachingExp = (Spinner) findViewById(R.id.teaching_exp);
-        tutoringExp = (EditText) findViewById(R.id.tutoring_exp);
-        languages = (EditText) findViewById(R.id.languages);
-        interests = (EditText) findViewById(R.id.interests);
-
-        previous.setOnClickListener(this);
-        next.setOnClickListener(this);
-    }*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_professional_info, null);
