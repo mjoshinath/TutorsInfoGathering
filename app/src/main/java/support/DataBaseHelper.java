@@ -30,6 +30,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private String[] passwordResource;
     private ArrayList<TutorDetails> tutorDetails = new ArrayList<TutorDetails>();
     private ArrayList<InstituteDetails> instituteDetails = new ArrayList<InstituteDetails>();
+    private String[] userIdResource;
+    private int id;
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,17 +40,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase tutorsWebDataBase) {
-        tutorsWebDataBase.execSQL("CREATE TABLE " + MARKETING_CREDENTIALS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT,password TEXT); ");
+        tutorsWebDataBase.execSQL("CREATE TABLE " + MARKETING_CREDENTIALS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT,password TEXT,userId TEXT); ");
         tutorsWebDataBase.execSQL("CREATE TABLE " + TUTOR_DETAILS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, tutorCredentials TEXT); ");
         tutorsWebDataBase.execSQL("CREATE TABLE " + INSTITUTE_DETAILS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, instituteCredentials TEXT); ");
 
         emailIdResource = context.getResources().getStringArray(R.array.emailIds);
         passwordResource = context.getResources().getStringArray(R.array.passwords);
+        userIdResource = context.getResources().getStringArray(R.array.ids);
 
         for (int i = 0; i < emailIdResource.length; i++) {
             ContentValues values = new ContentValues();
             values.put("email", emailIdResource[i]);
             values.put("password", passwordResource[i]);
+            values.put("userId", userIdResource[i]);
             tutorsWebDataBase.insert(MARKETING_CREDENTIALS_TABLE_NAME, null, values);
         }
     }
@@ -69,9 +73,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public int getAuthentication(String email, String password) {
-        String selectQuery = "SELECT  * FROM " + MARKETING_CREDENTIALS_TABLE_NAME + " where email='" + email + "' and password='" + password + "'";
+        String selectQuery = "SELECT * FROM " + MARKETING_CREDENTIALS_TABLE_NAME + " where email='" + email + "' and password='" + password + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getColumnIndex("userId");
+                Log.d("test123", "id-->" + id);
+            } while (cursor.moveToNext());
+        }
+
         int count = cursor.getCount();
         cursor.close();
         return count;
