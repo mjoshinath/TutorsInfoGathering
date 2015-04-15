@@ -78,7 +78,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public long insertTutorDetails(String jsonObjectInStringFormat) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("tutorCredentials", jsonObjectInStringFormat);
         long rowId = db.insert(TUTOR_DETAILS_TABLE_NAME, null, values);
@@ -122,7 +122,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public long insertInstituteDetails(String jsonObjectInStringFormat) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("instituteCredentials", jsonObjectInStringFormat);
         long rowId = db.insert(INSTITUTE_DETAILS_TABLE_NAME, null, values);

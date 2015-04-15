@@ -29,11 +29,13 @@ public class DocumentationActivity extends Activity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.tutor_demonstration:
                 Intent intent = new Intent(this, DemonstrationActivity.class);
-                intent.putExtra("imageSlidesType", "tutor");
+//                intent.putExtra("imageSlidesType", tutorDemonstration.getText().toString());
+                intent.putExtra("size", getResources().obtainTypedArray(R.array.tutor).length());
                 startActivity(intent);
                 break;
             case R.id.institute_demonstration:
                 break;
+
         }
     }
 }

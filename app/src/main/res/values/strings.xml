@@ -64,6 +64,7 @@
         <item>@drawable/page3</item>
         <item>@drawable/page4</item>
         <item>@drawable/page5</item>
+        <item>@drawable/page6</item>
     </array>
 
     <string name="title_activity_tutors_web_site_home_page">TutorsWebSiteHomePage</string>

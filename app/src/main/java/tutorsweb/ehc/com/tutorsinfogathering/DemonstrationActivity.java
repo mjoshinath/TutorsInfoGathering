@@ -36,7 +36,7 @@ public class DemonstrationActivity extends Activity {
 
         @Override
         public int getCount() {
-            return 5;
+            return getIntent().getIntExtra("size", 0);
         }
     }
 }

@@ -30,10 +30,10 @@ public class DemonstrationFragment extends Fragment {
         view = inflater.inflate(R.layout.demonstration_layout, null);
 
         tutorImagesArray = getResources().obtainTypedArray(R.array.tutor);
-        imageSlidesType = getActivity().getIntent().getStringExtra("imageSlidesType");
+
         imageSlides = (ImageView) view.findViewById(R.id.image_slides);
 
-        imageDrawable=tutorImagesArray.getDrawable(position);
+        imageDrawable = tutorImagesArray.getDrawable(position);
 
         imageSlides.setImageDrawable(imageDrawable);
         return view;
