@@ -77,4 +77,20 @@
 
     <string name="title_activity_tutors_web_site_home_page">TutorsWebSiteHomePage</string>
 
+    <string-array name="type_of_client">
+        <item>Institute</item>
+        <item>Tutor</item>
+        <item>Student</item>
+        <item>Press</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="type_of_interaction">
+        <item>Telephone</item>
+        <item>Email</item>
+        <item>Physical Meeting</item>
+        <item>Live Chat</item>
+        <item>Others</item>
+    </string-array>
+
 </resources>

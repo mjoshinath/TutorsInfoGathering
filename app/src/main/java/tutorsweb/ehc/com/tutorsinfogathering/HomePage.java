@@ -134,7 +134,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 startActivity(intent3);
                 break;
             case R.id.add_meeting_log:
-                Intent webViewIntent = new Intent(this, ShowWebView.class);
+                Intent webViewIntent = new Intent(this, LeadCapture.class);
                 startActivity(webViewIntent);
                 break;
             case R.id.sync_data:

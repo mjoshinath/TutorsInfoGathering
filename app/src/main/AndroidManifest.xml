@@ -31,7 +31,7 @@
             android:label="@string/title_activity_reg_steps_host"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ShowWebView"
+            android:name=".LeadCapture"
             android:label="@string/title_activity_show_web_view"
             android:screenOrientation="portrait" />
         <activity
