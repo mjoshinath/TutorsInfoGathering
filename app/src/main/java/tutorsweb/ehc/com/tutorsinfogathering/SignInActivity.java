@@ -69,13 +69,15 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
         databaseHelper = new DataBaseHelper(getApplicationContext());
 
         signIn.setOnClickListener(this);
+        emailId.setOnClickListener(this);
+        password.setOnClickListener(this);
 
-        emailId.setOnClickListener(new View.OnClickListener() {
+        /*emailId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 errorMsgPopup.setVisibility(View.GONE);
             }
-        });
+        });*/
 
         new WebserviceHelper(getApplicationContext()).getData(this, "categories");
 
@@ -100,7 +102,6 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
         if (jsonResponse.contains("target_person_id"))
             sharedPrefsEdit.putString("reports", jsonResponse).commit();
         categoryEditor.putString("categories", jsonResponse).commit();
-
     }
 
     @Override
@@ -162,7 +163,18 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                     databaseHelper.close();
+                } else {
+                    errorMsgPopup.setVisibility(View.VISIBLE);
+                    emailId.clearFocus();
+                    password.clearFocus();
                 }
+                break;
+            case R.id.email_id:
+                errorMsgPopup.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.password:
+                errorMsgPopup.setVisibility(View.INVISIBLE);
+                break;
         }
     }
 

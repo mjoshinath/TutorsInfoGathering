@@ -181,16 +181,11 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             InstituteDetails eachInstituteDetails = instituteIterator.next();
             Log.d("test111", "eachInstituteDetails>----->" + eachInstituteDetails);
             try {
-                if (eachInstituteDetails.getDetails() == null) {
-                    long tempId = eachInstituteDetails.getId();
-                    dataBaseHelper.deleteInstitute(tempId);
-                } else {
-                    JSONObject eachInstituteDetailsInJsonFormat = new JSONObject(eachInstituteDetails.getDetails());
-                    StringEntity entity = null;
-                    entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
-                    Log.d("test08", "entity-" + entity);
-                    new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/108");
-                }
+                JSONObject eachInstituteDetailsInJsonFormat = new JSONObject(eachInstituteDetails.getDetails());
+                StringEntity entity = null;
+                entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
+                Log.d("test08", "entity-" + entity);
+                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/108");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {

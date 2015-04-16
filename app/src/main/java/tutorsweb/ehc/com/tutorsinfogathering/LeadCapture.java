@@ -70,6 +70,8 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         setInteractionAdapter();
         applyActions();
 
+        dataBaseHelper = new DataBaseHelper(getApplicationContext());
+
         setActionBarProperties();
     }
 
@@ -161,7 +163,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
                     }
                     new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L, "lead_capture/staff/108");
                 } else {
-                    dataBaseHelper = new DataBaseHelper(getApplicationContext());
+//                    dataBaseHelper = new DataBaseHelper(getApplicationContext());
                     dataBaseHelper.insertLeadCaptureDetails(json);
                 }
                 Intent intent = new Intent(this, HomePage.class);
@@ -208,7 +210,6 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
     @Override
     public void populateData(String jsonResponse) {
-        dataBaseHelper.deleteLeadCapture(Long.parseLong(jsonResponse));
         dataBaseHelper.deleteLeadCapture(Long.parseLong(jsonResponse));
     }
 

@@ -58,14 +58,14 @@
             android:textColor="#000000" />
 
         <Button
-            android:id="@+id/reports"
+            android:id="@+id/lead_capture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:background="@drawable/mybutton"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
-            android:text="Reports"
+            android:text="Lead Capture"
             android:textColor="#000000" />
 
         <Button
@@ -79,15 +79,16 @@
             android:text="Documentation"
             android:textColor="#000000" />
 
+
         <Button
-            android:id="@+id/lead_capture"
+            android:id="@+id/tutors_web_site"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:background="@drawable/mybutton"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
-            android:text="Lead Capture"
+            android:text="TutorsWeb Site"
             android:textColor="#000000" />
 
         <Button
@@ -102,14 +103,15 @@
             android:textColor="#000000" />
 
         <Button
-            android:id="@+id/tutors_web_site"
+            android:id="@+id/reports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:background="@drawable/mybutton"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
-            android:text="TutorsWeb Site"
+            android:text="Reports"
             android:textColor="#000000" />
+
     </LinearLayout>
 </ScrollView>
