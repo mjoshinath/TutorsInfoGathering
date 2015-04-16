@@ -85,7 +85,7 @@ public class WebserviceHelper {
 
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                        Log.d("test18", "fail");
+                        Log.d("test18", "fail"+i);
                         callBack.hideProgressBarOnFailure("" + id);
                     }
                 });

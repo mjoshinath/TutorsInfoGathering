@@ -2,13 +2,12 @@ package tutorsweb.ehc.com.tutorsinfogathering;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,7 +16,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-public class LeadCapture extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+import com.google.gson.Gson;
+
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
+
+import helper.Network;
+import helper.WebServiceCallBack;
+import helper.WebserviceHelper;
+import model.categories.lead_capture.LeadCaptureDetails;
+import model.categories.lead_capture.LeadCaptureModel;
+
+public class LeadCapture extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, WebServiceCallBack {
 
     private WebView webView;
     private ActionBar actionBar;
@@ -38,12 +49,14 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     private int needFollowupSelection;
     private RadioButton selectedOptionId;
     private String selectedOptionIdText;
-    private boolean selectedOptionIdValue;
+    private String selectedOptionIdValue;
     private String clientNameText;
     private String addressLeadText;
     private String contactNumberText;
     private String emailLeadText;
     private String notesText;
+    private StringEntity entity;
+    private String json;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +66,8 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
         setClientAdapter();
         setInteractionAdapter();
-
         applyActions();
+
         setActionBarProperties();
     }
 
@@ -65,13 +78,13 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     }
 
     private void setInteractionAdapter() {
-        interactionAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.type_of_interaction, android.R.layout.simple_spinner_item);
+        interactionAdapter = ArrayAdapter.createFromResource(this, R.array.type_of_interaction, android.R.layout.simple_spinner_item);
         interactionAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         typeOfInteraction.setAdapter(interactionAdapter);
     }
 
     private void setClientAdapter() {
-        clientAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.type_of_client, android.R.layout.simple_spinner_item);
+        clientAdapter = ArrayAdapter.createFromResource(this, R.array.type_of_client, android.R.layout.simple_spinner_item);
         clientAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         typeOfClient.setAdapter(clientAdapter);
     }
@@ -113,11 +126,14 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (view.getId()) {
+        Log.d("test888", "onItemSelected");
+        switch (parent.getId()) {
             case R.id.type_of_client:
+                Log.d("test888", "type_of_client");
                 typeOfClientSelected = parent.getItemAtPosition(position).toString();
                 break;
             case R.id.type_of_interaction:
+                Log.d("test888", "type_of_interaction:");
                 typeOfInteractionSelected = parent.getItemAtPosition(position).toString();
                 break;
         }
@@ -133,8 +149,39 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         switch (v.getId()) {
             case R.id.submit_lead:
                 getFieldsData();
+                json = createJsonObject();
+                Log.d("test999", "json--->" + json);
+                if (Network.isConnected(getApplicationContext())) {
+                    try {
+                        entity = new StringEntity(json);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L, "lead_capture/staff/108");
+                } else {
+
+                }
                 break;
         }
+    }
+
+    private String createJsonObject() {
+        LeadCaptureDetails leadCaptureDetails = new LeadCaptureDetails();
+
+        leadCaptureDetails.setClientName(clientNameText);
+        leadCaptureDetails.setAddress(addressLeadText);
+        leadCaptureDetails.setContactNo(contactNumberText);
+        leadCaptureDetails.setEmail(emailLeadText);
+        leadCaptureDetails.setNotes(notesText);
+        leadCaptureDetails.setClientType(typeOfClientSelected);
+        leadCaptureDetails.setInteractionType(typeOfInteractionSelected);
+        Log.d("test999", typeOfClientSelected + " and " + typeOfInteractionSelected);
+        leadCaptureDetails.setFollowUp(selectedOptionIdValue);
+
+        LeadCaptureModel leadCaptureModel = new LeadCaptureModel();
+        leadCaptureModel.setLeadCapture(leadCaptureDetails);
+
+        return new Gson().toJson(leadCaptureModel);
     }
 
     private void getFieldsData() {
@@ -148,8 +195,18 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         selectedOptionId = (RadioButton) findViewById(needFollowupSelection);
         selectedOptionIdText = selectedOptionId.getText().toString();
         if (selectedOptionIdText.equalsIgnoreCase("yes"))
-            selectedOptionIdValue = true;
+            selectedOptionIdValue = "true";
         else
-            selectedOptionIdValue = false;
+            selectedOptionIdValue = "false";
+    }
+
+    @Override
+    public void populateData(String jsonResponse) {
+
+    }
+
+    @Override
+    public void hideProgressBarOnFailure(String response) {
+
     }
 }
