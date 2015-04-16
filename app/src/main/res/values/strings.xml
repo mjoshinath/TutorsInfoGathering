@@ -81,6 +81,7 @@
         <item>Press</item>
         <item>Others</item>
     </string-array>
+
     <string-array name="type_of_interaction">
         <item>Telephone</item>
         <item>Email</item>

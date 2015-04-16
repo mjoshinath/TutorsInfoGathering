@@ -6,27 +6,44 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
 
 public class DocumentationActivity extends Activity implements View.OnClickListener {
+    private Button tutorDemonstration;
+    private Button instituteDemonstration;
+    private Button studentDemonstration;
+    private Button leadDemonstration;
+    private Button pressDemonstration;
 
-    private TextView tutorDemonstration;
-    private TextView instituteDemonstration;
     private ActionBar actionBar;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_documentation);
 
-        tutorDemonstration = (TextView) findViewById(R.id.tutor_demonstration);
-        instituteDemonstration = (TextView) findViewById(R.id.institute_demonstration);
-
-        tutorDemonstration.setOnClickListener(this);
-        instituteDemonstration.setOnClickListener(this);
+        getWidgets();
+        applyActions();
 
         setActionBarProperties();
+    }
+
+    private void getWidgets() {
+        tutorDemonstration = (Button) findViewById(R.id.tutor_demonstration);
+        instituteDemonstration = (Button) findViewById(R.id.institute_demonstration);
+        studentDemonstration = (Button) findViewById(R.id.student_demonstration);
+        leadDemonstration = (Button) findViewById(R.id.lead_demonstration);
+        pressDemonstration = (Button) findViewById(R.id.press_demonstration);
+    }
+
+    private void applyActions() {
+        tutorDemonstration.setOnClickListener(this);
+        instituteDemonstration.setOnClickListener(this);
+        studentDemonstration.setOnClickListener(this);
+        leadDemonstration.setOnClickListener(this);
+        pressDemonstration.setOnClickListener(this);
     }
 
     private void setActionBarProperties() {
@@ -49,16 +66,25 @@ public class DocumentationActivity extends Activity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        intent = new Intent(this, DemonstrationActivity.class);
         switch (v.getId()) {
             case R.id.tutor_demonstration:
-                Intent intent = new Intent(this, DemonstrationActivity.class);
 //                intent.putExtra("imageSlidesType", tutorDemonstration.getText().toString());
                 intent.putExtra("size", getResources().obtainTypedArray(R.array.tutor).length());
-                startActivity(intent);
                 break;
             case R.id.institute_demonstration:
+                intent.putExtra("size", getResources().obtainTypedArray(R.array.tutor).length());
                 break;
-
+            case R.id.student_demonstration:
+                intent.putExtra("size", getResources().obtainTypedArray(R.array.tutor).length());
+                break;
+            case R.id.lead_demonstration:
+                intent.putExtra("size", getResources().obtainTypedArray(R.array.tutor).length());
+                break;
+            case R.id.press_demonstration:
+                intent.putExtra("size", getResources().obtainTypedArray(R.array.tutor).length());
+                break;
         }
+        startActivity(intent);
     }
 }
