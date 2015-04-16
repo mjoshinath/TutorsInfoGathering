@@ -10,7 +10,9 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import model.categories.InstituteDetails;
+import model.categories.LeadCaptureDetailsDBModel;
 import model.categories.TutorDetails;
+import model.categories.lead_capture.LeadCaptureDetails;
 import tutorsweb.ehc.com.tutorsinfogathering.R;
 
 /**
@@ -25,11 +27,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String MARKETING_CREDENTIALS_TABLE_NAME = "tutors_web_marketing_credentials";
     private static final String TUTOR_DETAILS_TABLE_NAME = "tutor_details_tbl";
     private static final String INSTITUTE_DETAILS_TABLE_NAME = "institute_details_tbl";
+    private static final String LEAD_CAPTURE_DETAILS_TABLE_NAME = "lead_capture_details_tbl";
 
     private String[] emailIdResource;
     private String[] passwordResource;
+
     private ArrayList<TutorDetails> tutorDetails = new ArrayList<TutorDetails>();
     private ArrayList<InstituteDetails> instituteDetails = new ArrayList<InstituteDetails>();
+    private ArrayList<LeadCaptureDetailsDBModel> leadCaptureDetails = new ArrayList<LeadCaptureDetailsDBModel>();
+
     private String[] userIdResource;
     private int id;
     private String userId;
@@ -44,6 +50,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         tutorsWebDataBase.execSQL("CREATE TABLE " + MARKETING_CREDENTIALS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT,password TEXT,userId TEXT); ");
         tutorsWebDataBase.execSQL("CREATE TABLE " + TUTOR_DETAILS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, tutorCredentials TEXT); ");
         tutorsWebDataBase.execSQL("CREATE TABLE " + INSTITUTE_DETAILS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, instituteCredentials TEXT); ");
+        tutorsWebDataBase.execSQL("CREATE TABLE " + LEAD_CAPTURE_DETAILS_TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, leadCaptureCredentials TEXT); ");
 
         emailIdResource = context.getResources().getStringArray(R.array.emailIds);
         passwordResource = context.getResources().getStringArray(R.array.passwords);
@@ -165,5 +172,45 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         Log.d("test08", "tutorDetails-" + tutorDetails);
         return instituteDetails;
+    }
+
+    /*Lead Capture Functionality Methods*/
+
+    public void deleteLeadCapture(long id) {
+        Log.d("test08", "delete-" + id);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + LEAD_CAPTURE_DETAILS_TABLE_NAME + " WHERE id=" + id);
+    }
+
+    public long insertLeadCaptureDetails(String jsonObjectInStringFormat) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("leadCaptureCredentials", jsonObjectInStringFormat);
+        long rowId = db.insert(LEAD_CAPTURE_DETAILS_TABLE_NAME, null, values);
+        db.close();
+        return rowId;
+    }
+
+    public ArrayList<LeadCaptureDetailsDBModel> getLeadCaptureDetails() {
+        String selectQuery = "SELECT  * FROM " + LEAD_CAPTURE_DETAILS_TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = cursor.getCount();
+        Log.d("test08", "count-" + count);
+        if (cursor.moveToFirst()) {
+            do {
+                LeadCaptureDetailsDBModel leadCaptureDetailsDBModel = new LeadCaptureDetailsDBModel();
+                leadCaptureDetailsDBModel.setId(cursor.getInt(0));
+                leadCaptureDetailsDBModel.setDetails(cursor.getString(1));
+//                int i = 0;
+                leadCaptureDetails.add(leadCaptureDetailsDBModel);
+//                i++;
+                Log.d("test08", "leadCaptureDetails-" + leadCaptureDetails);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        Log.d("test08", "leadCaptureDetails--->" + leadCaptureDetails);
+        return leadCaptureDetails;
     }
 }

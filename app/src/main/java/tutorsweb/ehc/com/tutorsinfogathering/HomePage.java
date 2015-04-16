@@ -25,30 +25,33 @@ import java.util.Iterator;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
 import model.categories.InstituteDetails;
+import model.categories.LeadCaptureDetailsDBModel;
 import model.categories.TutorDetails;
+import model.categories.lead_capture.LeadCaptureDetails;
 import support.DataBaseHelper;
 
 
 public class HomePage extends Activity implements View.OnClickListener, WebServiceCallBack {
 
     private Button signUpTutorButton;
-    private ActionBar actionBar;
-    private Button addMettingLog;
-
-    private DataBaseHelper dataBaseHelper;
-    private ArrayList<TutorDetails> multipleTutorDetails;
-    private RequestParams requestParams;
     private Button syncDataButton;
-    private SharedPreferences signInCredentialsPrefs;
-    private SharedPreferences.Editor signInCredentialsPrefsEdit;
     private Button reportsButton;
     private Button documentationButton;
     private Button signUpInstituteButton;
-    private ArrayList<InstituteDetails> multipleInstituteDetails;
-    private int noOfUnsyncRecords;
     private Button tutorsWebSiteButton;
+    private Button leadCapture;
+
+    private ActionBar actionBar;
+    private DataBaseHelper dataBaseHelper;
+    private ArrayList<TutorDetails> multipleTutorDetails;
+    private SharedPreferences signInCredentialsPrefs;
+    private SharedPreferences.Editor signInCredentialsPrefsEdit;
+    private ArrayList<InstituteDetails> multipleInstituteDetails;
     private SharedPreferences categorySharedPref;
     private SharedPreferences.Editor categoryEditor;
+    private ArrayList<LeadCaptureDetailsDBModel> multipleLeadCaptureDetails;
+
+    private int noOfUnsyncRecords = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +72,14 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
         multipleTutorDetails = dataBaseHelper.getTutorDetails();
         multipleInstituteDetails = dataBaseHelper.getInstituteDetails();
+        multipleLeadCaptureDetails = dataBaseHelper.getLeadCaptureDetails();
 
-        if (multipleInstituteDetails.size() > 0) {
+        if (multipleInstituteDetails.size() > 0)
             noOfUnsyncRecords = noOfUnsyncRecords + multipleInstituteDetails.size();
-//            syncDataButton.setText("Sync Data (" + noOfUnsyncRecords + " Unsync Record(s) )");
-        }
-        if (multipleTutorDetails.size() > 0) {
+        if (multipleTutorDetails.size() > 0)
             noOfUnsyncRecords = noOfUnsyncRecords + multipleTutorDetails.size();
-        }
+        if (multipleLeadCaptureDetails.size() > 0)
+            noOfUnsyncRecords = noOfUnsyncRecords + multipleLeadCaptureDetails.size();
         if (noOfUnsyncRecords > 0)
             syncDataButton.setText("Sync Data (" + noOfUnsyncRecords + " Unsync Record(s) )");
 
@@ -85,7 +88,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
     private void getWidgets() {
         signUpTutorButton = (Button) findViewById(R.id.signup_tutor);
-        addMettingLog = (Button) findViewById(R.id.add_meeting_log);
+        leadCapture = (Button) findViewById(R.id.lead_capture);
         syncDataButton = (Button) findViewById(R.id.sync_data);
         reportsButton = (Button) findViewById(R.id.reports);
         documentationButton = (Button) findViewById(R.id.documentation);
@@ -95,7 +98,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
     private void applyActions() {
         signUpTutorButton.setOnClickListener(this);
-        addMettingLog.setOnClickListener(this);
+        leadCapture.setOnClickListener(this);
         syncDataButton.setOnClickListener(this);
         reportsButton.setOnClickListener(this);
         documentationButton.setOnClickListener(this);
@@ -142,7 +145,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 Intent intent3 = new Intent(this, InstituteSignUpHostActivity.class);
                 startActivity(intent3);
                 break;
-            case R.id.add_meeting_log:
+            case R.id.lead_capture:
                 Intent webViewIntent = new Intent(this, LeadCapture.class);
                 startActivity(webViewIntent);
                 break;
@@ -154,6 +157,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                     syncDataForTutor();
                 if (multipleInstituteDetails != null)
                     syncDataForInstitute();
+                if (multipleLeadCaptureDetails != null)
+                    syncDataForLeadCapture();
                 break;
             case R.id.reports:
                 Intent intent1 = new Intent(this, ReportsActivity.class);
@@ -212,10 +217,29 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         }
     }
 
+    private void syncDataForLeadCapture() {
+        Iterator<LeadCaptureDetailsDBModel> iterator = multipleLeadCaptureDetails.iterator();
+        while (iterator.hasNext()) {
+            LeadCaptureDetailsDBModel eachLeadCaptureDetails = iterator.next();
+            try {
+                JSONObject eachLeadCaptureDetailsInJsonFormat = new JSONObject(eachLeadCaptureDetails.getDetails());
+                StringEntity entity = null;
+                entity = new StringEntity(eachLeadCaptureDetailsInJsonFormat.toString());
+                Log.d("test888", "eachLeadCaptureDetails.getId()-" + eachLeadCaptureDetails.getId());
+                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachLeadCaptureDetails.getId(), "lead_capture/staff/108");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void populateData(String jsonResponse) {
         dataBaseHelper.deleteTutor(Long.parseLong(jsonResponse));
         dataBaseHelper.deleteInstitute(Long.parseLong(jsonResponse));
+        dataBaseHelper.deleteLeadCapture(Long.parseLong(jsonResponse));
     }
 
     @Override

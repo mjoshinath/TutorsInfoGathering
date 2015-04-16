@@ -27,6 +27,7 @@ import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
 import model.categories.lead_capture.LeadCaptureDetails;
 import model.categories.lead_capture.LeadCaptureModel;
+import support.DataBaseHelper;
 
 public class LeadCapture extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, WebServiceCallBack {
 
@@ -57,6 +58,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     private String notesText;
     private StringEntity entity;
     private String json;
+    private DataBaseHelper dataBaseHelper;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,8 +161,12 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
                     }
                     new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L, "lead_capture/staff/108");
                 } else {
-
+                    dataBaseHelper = new DataBaseHelper(getApplicationContext());
+                    dataBaseHelper.insertLeadCaptureDetails(json);
                 }
+                Intent intent = new Intent(this, HomePage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
         }
     }
@@ -202,7 +208,8 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
     @Override
     public void populateData(String jsonResponse) {
-
+        dataBaseHelper.deleteLeadCapture(Long.parseLong(jsonResponse));
+        dataBaseHelper.deleteLeadCapture(Long.parseLong(jsonResponse));
     }
 
     @Override

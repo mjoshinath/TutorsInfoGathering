@@ -49,7 +49,7 @@
             android:label="@string/title_activity_tutors_web_site_home_page"></activity>
         <activity
             android:name=".SplashScreenActivity"
-            android:label="@string/title_activity_splash_screen"
+            android:label="IReg"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
