@@ -153,6 +153,8 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
                         signInCredentialsPrefsEdit.putString("email", emailId.getText().toString());
                         signInCredentialsPrefsEdit.putString("password", password.getText().toString());
                         signInCredentialsPrefsEdit.commit();
+                        categoryEditor.putBoolean("logDetect", true);
+                        categoryEditor.commit();
                         Intent intent = new Intent(this, HomePage.class);
                         startActivity(intent);
                     } else {
@@ -164,5 +166,9 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        finish();
+    }
 }

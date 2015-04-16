@@ -36,21 +36,18 @@
         <item>joshi@eggheadcreative.com</item>
         <item>staff1@tutorsweb.com</item>
     </string-array>
-
     <string-array name="passwords">
         <item>kalyanehc</item>
         <item>sathishehc</item>
         <item>joshiehc</item>
         <item>testtest1</item>
     </string-array>
-
     <string-array name="ids">
         <item>105</item>
         <item>106</item>
         <item>107</item>
         <item>108</item>
     </string-array>
-
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
@@ -84,7 +81,6 @@
         <item>Press</item>
         <item>Others</item>
     </string-array>
-
     <string-array name="type_of_interaction">
         <item>Telephone</item>
         <item>Email</item>
@@ -92,5 +88,7 @@
         <item>Live Chat</item>
         <item>Others</item>
     </string-array>
+
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
 
 </resources>

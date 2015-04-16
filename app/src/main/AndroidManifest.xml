@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tutorsweb.ehc.com.tutorsinfogathering" >
+    package="tutorsweb.ehc.com.tutorsinfogathering">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,19 +9,13 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <uses-feature android:name="android.hardware.camera" />
 
         <activity
             android:name=".SignInActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".HomePage"
             android:label="@string/title_activity_home_page"
@@ -52,7 +46,16 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".TutorsWebSiteHomePage"
-            android:label="@string/title_activity_tutors_web_site_home_page" >
+            android:label="@string/title_activity_tutors_web_site_home_page"></activity>
+        <activity
+            android:name=".SplashScreenActivity"
+            android:label="@string/title_activity_splash_screen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

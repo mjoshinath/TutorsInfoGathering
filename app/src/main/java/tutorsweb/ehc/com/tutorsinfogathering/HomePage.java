@@ -2,6 +2,7 @@ package tutorsweb.ehc.com.tutorsinfogathering;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -46,11 +47,16 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private ArrayList<InstituteDetails> multipleInstituteDetails;
     private int noOfUnsyncRecords;
     private Button tutorsWebSiteButton;
+    private SharedPreferences categorySharedPref;
+    private SharedPreferences.Editor categoryEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        categorySharedPref = getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
+        categoryEditor = categorySharedPref.edit();
 
         signInCredentialsPrefs = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
         signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
@@ -114,9 +120,12 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         if (id == R.id.logout) {
             signInCredentialsPrefsEdit.clear();
             signInCredentialsPrefsEdit.commit();
-            Intent intent = new Intent(this, SignInActivity.class);
+            categoryEditor.putBoolean("logDetect", false);
+            categoryEditor.commit();
+            /*Intent intent = new Intent(this, SignInActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            startActivity(intent);*/
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -218,6 +227,9 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent intent = new Intent(this, SignInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override
