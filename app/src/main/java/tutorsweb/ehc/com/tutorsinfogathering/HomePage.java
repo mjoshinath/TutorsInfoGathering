@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
 
@@ -22,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import helper.Network;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
 import model.categories.InstituteDetails;
@@ -152,13 +154,19 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             case R.id.sync_data:
                 /*dataBaseHelper = new DataBaseHelper(getApplicationContext());
                 multipleTutorDetails = dataBaseHelper.getTutorDetails();*/
-                Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
-                if (multipleTutorDetails != null)
-                    syncDataForTutor();
-                if (multipleInstituteDetails != null)
-                    syncDataForInstitute();
-                if (multipleLeadCaptureDetails != null)
-                    syncDataForLeadCapture();
+                if (noOfUnsyncRecords == 0) {
+                    Toast.makeText(getApplicationContext(), "No Data available to Sync!", Toast.LENGTH_SHORT).show();
+                } else if (Network.isConnected(getApplicationContext())) {
+                    Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
+                    if (multipleTutorDetails != null)
+                        syncDataForTutor();
+                    if (multipleInstituteDetails != null)
+                        syncDataForInstitute();
+                    if (multipleLeadCaptureDetails != null)
+                        syncDataForLeadCapture();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Network not Connected!", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.reports:
                 Intent intent1 = new Intent(this, ReportsActivity.class);
