@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.loopj.android.http.RequestParams;
-
 import org.apache.http.entity.StringEntity;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,9 +27,7 @@ import helper.WebserviceHelper;
 import model.categories.InstituteDetails;
 import model.categories.LeadCaptureDetailsDBModel;
 import model.categories.TutorDetails;
-import model.categories.lead_capture.LeadCaptureDetails;
 import support.DataBaseHelper;
-
 
 public class HomePage extends Activity implements View.OnClickListener, WebServiceCallBack {
 
@@ -41,7 +37,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private Button documentationButton;
     private Button signUpInstituteButton;
     private Button tutorsWebSiteButton;
-    private Button leadCapture;
+    private Button leadCaptureButton;
 
     private ActionBar actionBar;
     private DataBaseHelper dataBaseHelper;
@@ -53,7 +49,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private SharedPreferences.Editor categoryEditor;
     private ArrayList<LeadCaptureDetailsDBModel> multipleLeadCaptureDetails;
 
-    private int noOfUnsyncRecords = 0;
+    private int noOfUnSyncRecords = 0;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,25 +69,33 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
 
-        multipleTutorDetails = dataBaseHelper.getTutorDetails();
-        multipleInstituteDetails = dataBaseHelper.getInstituteDetails();
-        multipleLeadCaptureDetails = dataBaseHelper.getLeadCaptureDetails();
+        getLocalStorageData();
 
-        if (multipleInstituteDetails.size() > 0)
-            noOfUnsyncRecords = noOfUnsyncRecords + multipleInstituteDetails.size();
-        if (multipleTutorDetails.size() > 0)
-            noOfUnsyncRecords = noOfUnsyncRecords + multipleTutorDetails.size();
-        if (multipleLeadCaptureDetails.size() > 0)
-            noOfUnsyncRecords = noOfUnsyncRecords + multipleLeadCaptureDetails.size();
-        if (noOfUnsyncRecords > 0)
-            syncDataButton.setText("Sync Data (" + noOfUnsyncRecords + " Unsync Record(s) )");
+        setUnSyncDataNotification();
 
         setActionBarProperties();
     }
 
+    private void getLocalStorageData() {
+        multipleTutorDetails = dataBaseHelper.getTutorDetails();
+        multipleInstituteDetails = dataBaseHelper.getInstituteDetails();
+        multipleLeadCaptureDetails = dataBaseHelper.getLeadCaptureDetails();
+    }
+
+    private void setUnSyncDataNotification() {
+        if (multipleInstituteDetails.size() > 0)
+            noOfUnSyncRecords = noOfUnSyncRecords + multipleInstituteDetails.size();
+        if (multipleTutorDetails.size() > 0)
+            noOfUnSyncRecords = noOfUnSyncRecords + multipleTutorDetails.size();
+        if (multipleLeadCaptureDetails.size() > 0)
+            noOfUnSyncRecords = noOfUnSyncRecords + multipleLeadCaptureDetails.size();
+        if (noOfUnSyncRecords > 0)
+            syncDataButton.setText("Sync Data (" + noOfUnSyncRecords + " Unsync Record(s) )");
+    }
+
     private void getWidgets() {
         signUpTutorButton = (Button) findViewById(R.id.signup_tutor);
-        leadCapture = (Button) findViewById(R.id.lead_capture);
+        leadCaptureButton = (Button) findViewById(R.id.lead_capture);
         syncDataButton = (Button) findViewById(R.id.sync_data);
         reportsButton = (Button) findViewById(R.id.reports);
         documentationButton = (Button) findViewById(R.id.documentation);
@@ -100,7 +105,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
     private void applyActions() {
         signUpTutorButton.setOnClickListener(this);
-        leadCapture.setOnClickListener(this);
+        leadCaptureButton.setOnClickListener(this);
         syncDataButton.setOnClickListener(this);
         reportsButton.setOnClickListener(this);
         documentationButton.setOnClickListener(this);
@@ -140,46 +145,53 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.signup_tutor:
-                Intent intent = new Intent(this, RegStepsHostActivity.class);
-                startActivity(intent);
+                intent = new Intent(this, RegStepsHostActivity.class);
                 break;
             case R.id.signup_institute:
-                Intent intent3 = new Intent(this, InstituteSignUpHostActivity.class);
-                startActivity(intent3);
+                intent = new Intent(this, InstituteSignUpHostActivity.class);
                 break;
             case R.id.lead_capture:
-                Intent webViewIntent = new Intent(this, LeadCapture.class);
-                startActivity(webViewIntent);
+                intent = new Intent(this, LeadCapture.class);
                 break;
             case R.id.sync_data:
                 /*dataBaseHelper = new DataBaseHelper(getApplicationContext());
                 multipleTutorDetails = dataBaseHelper.getTutorDetails();*/
-                if (noOfUnsyncRecords == 0) {
-                    Toast.makeText(getApplicationContext(), "No Data available to Sync!", Toast.LENGTH_SHORT).show();
-                } else if (Network.isConnected(getApplicationContext())) {
-                    Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
-                    if (multipleTutorDetails != null)
-                        syncDataForTutor();
-                    if (multipleInstituteDetails != null)
-                        syncDataForInstitute();
-                    if (multipleLeadCaptureDetails != null)
-                        syncDataForLeadCapture();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Network not Connected!", Toast.LENGTH_SHORT).show();
-                }
+                syncLocalStorageDataToServer();
                 break;
             case R.id.reports:
-                Intent intent1 = new Intent(this, ReportsActivity.class);
-                startActivity(intent1);
+                callForReportsActivity();
                 break;
             case R.id.documentation:
-                Intent intent2 = new Intent(this, DocumentationActivity.class);
-                startActivity(intent2);
+                intent = new Intent(this, DocumentationActivity.class);
                 break;
             case R.id.tutors_web_site:
-                Intent intent4 = new Intent(this, TutorsWebSiteHomePage.class);
-                startActivity(intent4);
+                intent = new Intent(this, TutorsWebSiteHomePage.class);
                 break;
+        }
+        startActivity(intent);
+    }
+
+    private void callForReportsActivity() {
+        if (Network.isConnected(getApplicationContext())) {
+            intent = new Intent(this, ReportsActivity.class);
+        } else {
+            Toast.makeText(getApplicationContext(), "Network not Connected!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void syncLocalStorageDataToServer() {
+        if (noOfUnSyncRecords == 0) {
+            Toast.makeText(getApplicationContext(), "No Data available to Sync!", Toast.LENGTH_SHORT).show();
+        } else if (Network.isConnected(getApplicationContext())) {
+            Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
+            if (multipleTutorDetails != null)
+                syncDataForTutor();
+            if (multipleInstituteDetails != null)
+                syncDataForInstitute();
+            if (multipleLeadCaptureDetails != null)
+                syncDataForLeadCapture();
+        } else {
+            Toast.makeText(getApplicationContext(), "Network not Connected!", Toast.LENGTH_SHORT).show();
         }
     }
 
