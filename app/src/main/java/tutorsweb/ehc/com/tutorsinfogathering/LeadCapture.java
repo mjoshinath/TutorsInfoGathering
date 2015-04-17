@@ -3,6 +3,7 @@ package tutorsweb.ehc.com.tutorsinfogathering;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -64,10 +65,18 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     private DataBaseHelper dataBaseHelper;
     private RadioButton yes;
     private RadioButton no;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor sharedPreferencesEdit;
+    private int id;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lead_capture_layout);
+
+        sharedPreferences = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
+        sharedPreferencesEdit = sharedPreferences.edit();
+
+        id = sharedPreferences.getInt("userId", 0);
 
         getWidgets();
 
@@ -220,7 +229,8 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L, "lead_capture/staff/108");
+            new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L, "lead_capture/staff/" + id);
+//            new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L, "lead_capture/staff/108");
         } else {
 //                    dataBaseHelper = new DataBaseHelper(getApplicationContext());
             dataBaseHelper.insertLeadCaptureDetails(json);

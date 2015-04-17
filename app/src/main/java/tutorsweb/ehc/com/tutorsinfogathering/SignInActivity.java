@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -46,6 +47,8 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
     private SharedPreferences categorySharedPref;
     private SharedPreferences.Editor categoryEditor;
     private ProgressBar progressBar;
+    private Cursor cursorObject;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,13 +154,28 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
                 progressBar.setVisibility(View.VISIBLE);
                 emailId.clearFocus();
                 if (doValidation()) {
-                    if (databaseHelper.getAuthentication(emailId.getText().toString(), password.getText().toString()) == 1) {
+                    cursorObject = databaseHelper.getAuthentication(emailId.getText().toString(), password.getText().toString());
+                    if (cursorObject.moveToFirst()) {
+                        do {
+                            id = Integer.parseInt(cursorObject.getString(3));
+                            Log.d("test143", "id-->" + id);
+                        } while (cursorObject.moveToNext());
+                    }
+                    if (cursorObject.getCount() == 1) {
+                        cursorObject.close();
+
+                        signInCredentialsPrefsEdit.putInt("userId", id);
+                        signInCredentialsPrefsEdit.commit();
+
                         progressBar.setVisibility(View.INVISIBLE);
+
                         signInCredentialsPrefsEdit.putString("email", emailId.getText().toString());
                         signInCredentialsPrefsEdit.putString("password", password.getText().toString());
                         signInCredentialsPrefsEdit.commit();
+
                         categoryEditor.putBoolean("logDetect", true);
                         categoryEditor.commit();
+
                         Intent intent = new Intent(this, HomePage.class);
                         startActivity(intent);
                     } else {

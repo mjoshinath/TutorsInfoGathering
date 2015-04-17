@@ -37,7 +37,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private ArrayList<LeadCaptureDetailsDBModel> leadCaptureDetails = new ArrayList<LeadCaptureDetailsDBModel>();
 
     private String[] userIdResource;
-    private int id;
+    public int id;
     private String userId;
 
     public DataBaseHelper(Context context) {
@@ -61,6 +61,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             values.put("email", emailIdResource[i]);
             values.put("password", passwordResource[i]);
             values.put("userId", userIdResource[i]);
+            Log.d("test143", "userId :" + userIdResource[i]);
             tutorsWebDataBase.insert(MARKETING_CREDENTIALS_TABLE_NAME, null, values);
         }
     }
@@ -80,22 +81,28 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return rowId;
     }
 
-    public int getAuthentication(String email, String password) {
+    public Cursor getAuthentication(String email, String password) {
         String selectQuery = "SELECT * FROM " + MARKETING_CREDENTIALS_TABLE_NAME + " where email='" + email + "' and password='" + password + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        Log.d("test987", "cursor : " + cursor);
+        Log.d("test143", "cursor : " + cursor);
+        Log.d("test143", "columnNames : " + cursor.getColumnNames());
+
         if (cursor.moveToFirst()) {
             do {
 //                id = cursor.getColumnIndex("userId");
-                userId = cursor.getString(3);
+                Log.d("test143", "0: " + cursor.getInt(0));
+                Log.d("test143", "1: " + cursor.getString(1));
+                Log.d("test143", "2: " + cursor.getString(2));
+                Log.d("test143", "3: " + cursor.getString(3));
+                id = Integer.parseInt(cursor.getString(3));
                 Log.d("test123", "id-->" + id);
             } while (cursor.moveToNext());
         }
 
         int count = cursor.getCount();
-        cursor.close();
-        return count;
+//        cursor.close();
+        return cursor;
     }
 
     public long insertTutorDetails(String jsonObjectInStringFormat) {

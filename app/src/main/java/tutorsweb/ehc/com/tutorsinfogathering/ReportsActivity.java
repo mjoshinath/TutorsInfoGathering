@@ -16,6 +16,7 @@ import helper.Network;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
 import model.categories.reports.Reports;
+import support.DataBaseHelper;
 
 public class ReportsActivity extends Activity implements WebServiceCallBack {
 
@@ -46,6 +47,8 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
     private String month;
     private String year;
     private SharedPreferences sharedPreferences;
+    private DataBaseHelper dataBaseHelper;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +58,13 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
         sharedPreferences = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
         sharedPreferencesEdit = sharedPreferences.edit();
 
+        id = sharedPreferences.getInt("userId", 0);
+
         getWidgets();
 
-        String id = "108";
         if (Network.isConnected(getApplicationContext())) {
-            Log.d("test111", "network check...");
             new WebserviceHelper(getApplicationContext()).getData(this, "staff_targets/staff/" + id);
+//            new WebserviceHelper(getApplicationContext()).getData(this, "staff_targets/staff/" + id);
         }
 /*         else {
             Log.d("test111", "network fail...");
@@ -98,13 +102,13 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
     }
 
     private void updateUi() {
-        if (!Network.isConnected(getApplicationContext())) {
-            marketingExecutiveId.setText("ID : " + targetPersonId);
+        /*if (!Network.isConnected(getApplicationContext())) {
+            marketingExecutiveId.setText("ID : " + id);
             reportsFor.setText("Reports for : " + month + " " + year);
-        } else {
-            marketingExecutiveId.setText("ID : " + reports.getData().get(0).getTargetPersonId().toString());
-            reportsFor.setText("Reports for : " + reports.getData().get(0).getMonth() + " " + reports.getData().get(0).getYear());
-        }
+        } else {*/
+        marketingExecutiveId.setText("ID : " + id);
+        reportsFor.setText("Reports for : " + reports.getData().get(0).getMonth() + " " + reports.getData().get(0).getYear());
+//        }
         tutorCircularProgressBar.setProgress(tutorAchieved);
         tutorCircularProgressBar.setMax(tutorTarget);
         tutorTargetTextView.setText("Target : " + tutorTarget);

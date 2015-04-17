@@ -69,6 +69,9 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     private ArrayList<EmployeesAttribute> listOfEmployeeAttributes;
     private DataBaseHelper dataBaseHelper;
     private Context context;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor sharedPreferencesEdit;
+    private int id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +79,11 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 
         instituteSharedPrefs = getActivity().getSharedPreferences("instituteSession", Context.MODE_MULTI_PROCESS);
         instituteSharedPrefsEdit = instituteSharedPrefs.edit();
+
+        sharedPreferences = context.getSharedPreferences("signInCredentials", context.MODE_MULTI_PROCESS);
+        sharedPreferencesEdit = sharedPreferences.edit();
+
+        id = sharedPreferences.getInt("userId", 0);
 
         memberTypeSpinner = (Spinner) view.findViewById(R.id.member_type);
         previousButton = (Button) getActivity().findViewById(R.id.previous);
@@ -189,7 +197,8 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "institutes/staff/108");
+        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "institutes/staff/" + id);
+//        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "institutes/staff/108");
     }
 
     private String createJSONObject() {

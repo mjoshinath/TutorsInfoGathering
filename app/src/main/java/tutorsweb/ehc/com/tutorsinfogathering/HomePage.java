@@ -53,6 +53,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
     private int noOfUnSyncRecords = 0;
     private Intent intent;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
         signInCredentialsPrefs = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
         signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
+
+        id = signInCredentialsPrefs.getInt("userId", 0);
 
         getWidgets();
 
@@ -212,7 +215,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 StringEntity entity = null;
                 entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
                 Log.d("test08", "entity-" + entity);
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/108");
+                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/" + id);
+//                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/108");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -230,7 +234,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 StringEntity entity = null;
                 entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
                 Log.d("test08", "entity-" + entity);
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/108");
+                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/" + id);
+//                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/108");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -248,7 +253,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 StringEntity entity = null;
                 entity = new StringEntity(eachLeadCaptureDetailsInJsonFormat.toString());
                 Log.d("test888", "eachLeadCaptureDetails.getId()-" + eachLeadCaptureDetails.getId());
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachLeadCaptureDetails.getId(), "lead_capture/staff/108");
+                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachLeadCaptureDetails.getId(), "lead_capture/staff/" + id);
+//                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachLeadCaptureDetails.getId(), "lead_capture/staff/108");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {

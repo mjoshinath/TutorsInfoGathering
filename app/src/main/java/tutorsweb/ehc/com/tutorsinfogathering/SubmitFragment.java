@@ -134,6 +134,9 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     private String genderSelectedText;
     private List<WorkExperiencesAttribute> workExperiencesAttributeList = new ArrayList<WorkExperiencesAttribute>();
     private List<AcademicDegreesAttribute> academicDegreesAttributeList = new ArrayList<AcademicDegreesAttribute>();
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor sharedPreferencesEdit;
+    private int id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -143,6 +146,11 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
 
         sharedPrefs = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
         sharedPrefsEdit = sharedPrefs.edit();
+
+        sharedPreferences = getActivity().getSharedPreferences("signInCredentials", getActivity().MODE_MULTI_PROCESS);
+        sharedPreferencesEdit = sharedPreferences.edit();
+
+        id = sharedPreferences.getInt("userId", 0);
 
         sharedPrefsEdit.putBoolean("submit", true);
         sharedPrefsEdit.commit();
@@ -335,7 +343,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    new WebserviceHelper(getActivity()).postData(this, entity, 0L, "tutors/staff/108");
+                    new WebserviceHelper(getActivity()).postData(this, entity, 0L, "tutors/staff/" + id);
+//                    new WebserviceHelper(getActivity()).postData(this, entity, 0L, "tutors/staff/108");
                 } else {
                     dataBaseHelper = new DataBaseHelper(getActivity());
                     dataBaseHelper.insertTutorDetails(json);
