@@ -1,7 +1,6 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -11,15 +10,11 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,8 +28,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.Calendar;
 
 import static tutorsweb.ehc.com.tutorsinfogathering.R.*;
@@ -151,10 +144,10 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (doValidation()) {
-                saveFilledDataInSharedPrefs();
-                fragmentReplaceMethod();
-//                }
+                if (doValidation()) {
+                    saveFieldsDataInSharedPrefs();
+                    fragmentReplaceMethod();
+                }
             }
         });
         personnelPhase = getActivity().findViewById(id.phase_personnel);
@@ -178,7 +171,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         mobileNumber.setText(userSharedPreference.getString("mobileNumberText", ""));
     }
 
-    private void saveFilledDataInSharedPrefs() {
+    private void saveFieldsDataInSharedPrefs() {
 
         firstNameText = firstName.getText().toString().trim();
         lastNameText = lastName.getText().toString().trim();

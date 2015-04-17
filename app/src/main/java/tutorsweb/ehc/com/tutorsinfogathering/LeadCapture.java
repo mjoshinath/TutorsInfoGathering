@@ -4,7 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -59,6 +62,8 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     private StringEntity entity;
     private String json;
     private DataBaseHelper dataBaseHelper;
+    private RadioButton yes;
+    private RadioButton no;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +108,8 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         notes = (EditText) findViewById(R.id.notes);
         needFollowup = (RadioGroup) findViewById(R.id.need_followup);
         submit = (Button) findViewById(R.id.submit_lead);
+        yes = (RadioButton) findViewById(R.id.yes);
+        no = (RadioButton) findViewById(R.id.no);
     }
 
     private void setActionBarProperties() {
@@ -152,25 +159,75 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit_lead:
-                getFieldsData();
-                json = createJsonObject();
-                Log.d("test999", "json--->" + json);
-                if (Network.isConnected(getApplicationContext())) {
-                    try {
-                        entity = new StringEntity(json);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L, "lead_capture/staff/108");
-                } else {
-//                    dataBaseHelper = new DataBaseHelper(getApplicationContext());
-                    dataBaseHelper.insertLeadCaptureDetails(json);
+                if (doValidation()) {
+                    getFieldsData();
+                    postingLeadCaptureData();
                 }
-                Intent intent = new Intent(this, HomePage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
                 break;
         }
+    }
+
+    private boolean doValidation() {
+        String emailId = emailLead.getText().toString().trim();
+        String mobileNumber = contactNumber.getText().toString().trim();
+
+        if (mobileNumber.equalsIgnoreCase("")) {
+            contactNumber.setError("Mobile Number Required!");
+            contactNumber.requestFocus();
+            return false;
+        } else {
+            contactNumber.setError(null);
+        }
+
+        if (!Patterns.PHONE.matcher(mobileNumber).matches() && !TextUtils.isEmpty(mobileNumber)) {
+            contactNumber.setError("Invalid Mobile Number");
+            contactNumber.requestFocus();
+            return false;
+        } else {
+            contactNumber.setError(null);
+        }
+
+        if (emailId.equalsIgnoreCase("")) {
+            emailLead.setError("Email Required!");
+            emailLead.requestFocus();
+            return false;
+        } else {
+            emailLead.setError(null);
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches() && !TextUtils.isEmpty(emailId)) {
+            emailLead.setError("Invalid Email");
+            emailLead.requestFocus();
+            return false;
+        } else {
+            emailLead.setError(null);
+        }
+
+        if (!(yes.isChecked() || no.isChecked())) {
+            Toast.makeText(getApplicationContext(), "Need Followup must be Checked!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void postingLeadCaptureData() {
+        json = createJsonObject();
+        Log.d("test999", "json--->" + json);
+        if (Network.isConnected(getApplicationContext())) {
+            try {
+                entity = new StringEntity(json);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L, "lead_capture/staff/108");
+        } else {
+//                    dataBaseHelper = new DataBaseHelper(getApplicationContext());
+            dataBaseHelper.insertLeadCaptureDetails(json);
+        }
+        Intent intent = new Intent(this, HomePage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private String createJsonObject() {
@@ -201,7 +258,9 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
         needFollowupSelection = needFollowup.getCheckedRadioButtonId();
         selectedOptionId = (RadioButton) findViewById(needFollowupSelection);
-        selectedOptionIdText = selectedOptionId.getText().toString();
+        Log.d("test777", "selectedOptionId-->" + selectedOptionId + ",selectedOptionIdText-->" + selectedOptionIdText);
+        if (selectedOptionId != null)
+            selectedOptionIdText = selectedOptionId.getText().toString();
         if (selectedOptionIdText.equalsIgnoreCase("yes"))
             selectedOptionIdValue = "true";
         else

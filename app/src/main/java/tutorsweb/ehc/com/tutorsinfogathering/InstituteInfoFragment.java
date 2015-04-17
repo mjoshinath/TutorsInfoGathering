@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -211,9 +212,11 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                getFilledData();
-                maintainSharedPrefs();
-                fragmentReplaceMethod();
+                if (doValidation()) {
+                    getFilledData();
+                    maintainSharedPrefs();
+                    fragmentReplaceMethod();
+                }
                 break;
             case R.id.date_of_establishment:
                 showDatePickerDialog(v);
@@ -223,6 +226,27 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 break;
         }
+    }
+
+    private boolean doValidation() {
+        String emailId = employeeEmail.getText().toString().trim();
+
+        if (emailId.equalsIgnoreCase("")) {
+            employeeEmail.setError("Email Required!");
+            employeeEmail.requestFocus();
+            return false;
+        } else {
+            employeeEmail.setError(null);
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches() && !TextUtils.isEmpty(emailId)) {
+            employeeEmail.setError("Invalid Email");
+            employeeEmail.requestFocus();
+            return false;
+        } else {
+            employeeEmail.setError(null);
+        }
+        return true;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
