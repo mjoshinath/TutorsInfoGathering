@@ -140,7 +140,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             Intent intent = new Intent(this, SignInActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-//            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -162,8 +161,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 startActivity(intent);
                 break;
             case R.id.sync_data:
-                /*dataBaseHelper = new DataBaseHelper(getApplicationContext());
-                multipleTutorDetails = dataBaseHelper.getTutorDetails();*/
                 syncLocalStorageDataToServer();
                 break;
             case R.id.reports:
@@ -216,7 +213,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
                 Log.d("test08", "entity-" + entity);
                 new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/" + id);
-//                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/108");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -235,7 +231,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
                 Log.d("test08", "entity-" + entity);
                 new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/" + id);
-//                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/108");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -254,7 +249,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 entity = new StringEntity(eachLeadCaptureDetailsInJsonFormat.toString());
                 Log.d("test888", "eachLeadCaptureDetails.getId()-" + eachLeadCaptureDetails.getId());
                 new WebserviceHelper(getApplicationContext()).postData(this, entity, eachLeadCaptureDetails.getId(), "lead_capture/staff/" + id);
-//                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachLeadCaptureDetails.getId(), "lead_capture/staff/108");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -272,8 +266,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
     @Override
     public void hideProgressBarOnFailure(String response) {
-//        dataBaseHelper.deleteTutor(Long.parseLong(response));
-//        dataBaseHelper.deleteInstitute(Long.parseLong(response));
+
     }
 
     @Override
@@ -301,10 +294,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
         AlertDialog alert = builder.create();
         alert.show();
-//        super.onBackPressed();
-        /*Intent intent = new Intent(this, SignInActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);*/
     }
 
     @Override

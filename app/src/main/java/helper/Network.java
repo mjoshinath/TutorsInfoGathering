@@ -9,13 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ehc
- * Date: 24/8/14
- * Time: 12:10 PM
- * To change this template use File | Settings | File Templates.
- */
 public class Network {
     public static NetworkInfo getNetworkInfo(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

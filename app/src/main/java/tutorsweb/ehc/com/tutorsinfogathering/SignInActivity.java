@@ -17,17 +17,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
-import model.categories.Category;
 import support.DataBaseHelper;
-
 
 public class SignInActivity extends Activity implements View.OnClickListener, WebServiceCallBack {
     private EditText emailId;
@@ -73,20 +65,17 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
         updateUi();
         databaseHelper = new DataBaseHelper(getApplicationContext());
 
-        signIn.setOnClickListener(this);
-        emailId.setOnClickListener(this);
-        password.setOnClickListener(this);
-
-        /*emailId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                errorMsgPopup.setVisibility(View.GONE);
-            }
-        });*/
+        applyActions();
 
         new WebserviceHelper(getApplicationContext()).getData(this, "categories");
 
         setActionBarProperties();
+    }
+
+    private void applyActions() {
+        signIn.setOnClickListener(this);
+        emailId.setOnClickListener(this);
+        password.setOnClickListener(this);
     }
 
     private void getWidgets() {
@@ -157,7 +146,7 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
                     cursorObject = databaseHelper.getAuthentication(emailId.getText().toString(), password.getText().toString());
                     if (cursorObject.moveToFirst()) {
                         do {
-                            id = Integer.parseInt(cursorObject.getString(3));
+                            id = Integer.parseInt(cursorObject.getString(cursorObject.getColumnIndex("userId")));
                             Log.d("test143", "id-->" + id);
                         } while (cursorObject.moveToNext());
                     }
@@ -200,7 +189,6 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Exit Confirmation");
         builder.setMessage("Do you want to Exit?");
@@ -208,11 +196,7 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
         builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-//                        dialog.cancel();
-                        Intent startMain = new Intent(Intent.ACTION_MAIN);
-                        startMain.addCategory(Intent.CATEGORY_HOME);
-                        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(startMain);
+                        applicationExit();
                     }
                 });
         builder.setNegativeButton("No",
@@ -224,6 +208,12 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
 
         AlertDialog alert = builder.create();
         alert.show();
-//        finish();
+    }
+
+    private void applicationExit() {
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
     }
 }

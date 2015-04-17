@@ -64,7 +64,6 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
 
         if (Network.isConnected(getApplicationContext())) {
             new WebserviceHelper(getApplicationContext()).getData(this, "staff_targets/staff/" + id);
-//            new WebserviceHelper(getApplicationContext()).getData(this, "staff_targets/staff/" + id);
         }
 /*         else {
             Log.d("test111", "network fail...");
@@ -187,18 +186,4 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
     @Override
     public void hideProgressBarOnFailure(String response) {
     }
-
-    /*private Bitmap imageResize(int weight, Bitmap bitmapImage) {
-        switch (weight) {
-            case 2:
-                return Bitmap.createScaledBitmap(bitmapImage, 180, 180, true);
-            case 3:
-                return Bitmap.createScaledBitmap(bitmapImage, 232, 180, true);
-            case 4:
-                return Bitmap.createScaledBitmap(bitmapImage, 480, 300, true);
-            case 6:
-                return Bitmap.createScaledBitmap(bitmapImage, 480, 300, true);
-        }
-        return bitmapImage;
-    }*/
 }

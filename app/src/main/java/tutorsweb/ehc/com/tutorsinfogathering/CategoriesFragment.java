@@ -44,7 +44,6 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     private HashMap<String, String[]> mainCategoriesAndChilds;
     private HashSet<String> checkedCategories = new HashSet<String>();
     private HashSet<Integer> checkedCategoriesIds = new HashSet<Integer>();
-    //    private String[] mainCategoryNames;
     private ArrayList<String> mainCategoryNames;
     private Button next;
     private ActionBar actionBar;
@@ -69,61 +68,6 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     private SharedPreferences categorySharedPref;
     private SharedPreferences.Editor categoryEditor;
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
-
-        mainCategoryNames = new String[]{"mathematics", "arts_and_humanities", "business", "engineering_and_technology", "foreign_languages", "history", "science", "social_science"};
-        mainCategoriesAndChilds = new HashMap<String, String[]>();
-
-        mainCategoriesAndChilds.put("mathematics", getResources().getStringArray(R.array.mathematics));
-        mainCategoriesAndChilds.put("arts_and_humanities", getResources().getStringArray(R.array.arts_and_humanities));
-        mainCategoriesAndChilds.put("business", getResources().getStringArray(R.array.business));
-        mainCategoriesAndChilds.put("engineering_and_technology", getResources().getStringArray(R.array.engineering_and_technology));
-        mainCategoriesAndChilds.put("foreign_languages", getResources().getStringArray(R.array.foreign_languages));
-        mainCategoriesAndChilds.put("history", getResources().getStringArray(R.array.history));
-        mainCategoriesAndChilds.put("science", getResources().getStringArray(R.array.science));
-        mainCategoriesAndChilds.put("social_science", getResources().getStringArray(R.array.social_science));
-
-        expListView = (ExpandableListView) findViewById(R.id.categories_exp_listview);
-        ExpandableListViewAdapter adapter = new ExpandableListViewAdapter(getApplicationContext(), mainCategoryNames, mainCategoriesAndChilds);
-        expListView.setAdapter(adapter);
-
-        *//*expListView.setDivider(null);
-        expListView.setDividerHeight(0);*//*
-main_view
-        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-
-            }
-        });
-
-        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-
-            }
-        });
-
-        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                return false;
-            }
-        });
-
-        View footer = getLayoutInflater().inflate(R.layout.navigation_footer, null);
-        expListView.addFooterView(footer);
-
-        next = (Button) footer.findViewById(R.id.next);
-        previous = (Button) footer.findViewById(R.id.previous);
-
-        previous.setOnClickListener(this);
-        next.setOnClickListener(this);
-    }*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_categories, null);
@@ -135,19 +79,6 @@ main_view
 
         sharedPrefsEditable.putBoolean("categories", true);
         sharedPrefsEditable.commit();
-
-
-        /*mainCategoryNames = new String[]{"mathematics", "arts_and_humanities", "business", "engineering_and_technology", "foreign_languages", "history", "science", "social_science"};
-        mainCategoriesAndChilds = new HashMap<String, String[]>();
-
-        mainCategoriesAndChilds.put("mathematics", getResources().getStringArray(R.array.mathematics));
-        mainCategoriesAndChilds.put("arts_and_humanities", getResources().getStringArray(R.array.arts_and_humanities));
-        mainCategoriesAndChilds.put("business", getResources().getStringArray(R.array.business));
-        mainCategoriesAndChilds.put("engineering_and_technology", getResources().getStringArray(R.array.engineering_and_technology));
-        mainCategoriesAndChilds.put("foreign_languages", getResources().getStringArray(R.array.foreign_languages));
-        mainCategoriesAndChilds.put("history", getResources().getStringArray(R.array.history));
-        mainCategoriesAndChilds.put("science", getResources().getStringArray(R.array.science));
-        mainCategoriesAndChilds.put("social_science", getResources().getStringArray(R.array.social_science));*/
 
         expListView = (ExpandableListView) view.findViewById(R.id.categories_exp_listview);
         String json = categorySharedPref.getString("categories", "");
@@ -166,19 +97,6 @@ main_view
         setHasOptionsMenu(true);
         nextButton.setOnClickListener(this);
 
-        /*nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (doValidation())
-                if (categoriesCheckedSizes >= 3) {
-                    sharedPrefsEditable.putStringSet("checkedCategories", checkedCategories);
-                    sharedPrefsEditable.commit();
-                    fragmentReplaceMethod();
-                } else {
-                    Toast.makeText(getActivity(), "Select minimum of three categories", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,8 +106,6 @@ main_view
         categoriesPhase = getActivity().findViewById(R.id.phase_categories);
         categoriesPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         categoriesPhase.setClickable(false);
-//        url = "http://192.168.1.124:5000/api/v1/categories";
-//        new WebserviceHelper(getActivity()).getData(this);
 
         return view;
     }
@@ -256,12 +172,6 @@ main_view
 
     }
 
-
-   /* @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }*/
-
     private class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
         private Context context;
@@ -287,7 +197,6 @@ main_view
 
         @Override
         public Category getGroup(int groupPosition) {
-//            Log.d("test18", "groupPosition" + groupPosition);
             return categories.get(groupPosition);
         }
 

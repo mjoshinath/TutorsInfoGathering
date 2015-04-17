@@ -77,25 +77,15 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_member, container, false);
 
-        instituteSharedPrefs = getActivity().getSharedPreferences("instituteSession", Context.MODE_MULTI_PROCESS);
-        instituteSharedPrefsEdit = instituteSharedPrefs.edit();
-
-        sharedPreferences = context.getSharedPreferences("signInCredentials", context.MODE_MULTI_PROCESS);
-        sharedPreferencesEdit = sharedPreferences.edit();
+        getSharedPreferences();
 
         id = sharedPreferences.getInt("userId", 0);
 
-        memberTypeSpinner = (Spinner) view.findViewById(R.id.member_type);
-        previousButton = (Button) getActivity().findViewById(R.id.previous);
-        nextButton = (Button) getActivity().findViewById(R.id.next);
-        addMemberPhase = getActivity().findViewById(R.id.phase_add_member);
-        saveButton = (Button) view.findViewById(R.id.save);
-        addMemberButton = (Button) view.findViewById(R.id.add_member);
+        getWidgetsFromCurrentActivity();
+        getWidgetsFromView();
 
         getWidgets(view);
         updateUi();
-//        getFieldsData();
-//        maintainSharedPrefs();
 
         membersList = new ArrayList<MemberInfo>();
 
@@ -104,21 +94,49 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         nextButton.setText("Submit");
 
         previousButton.setVisibility(View.VISIBLE);
+        applyActions();
+
+        setAdapterForMemberTypeSpinner();
+
+        setHasOptionsMenu(true);
+        setActionBarProperties();
+
+        return view;
+    }
+
+    private void getSharedPreferences() {
+        instituteSharedPrefs = getActivity().getSharedPreferences("instituteSession", Context.MODE_MULTI_PROCESS);
+        instituteSharedPrefsEdit = instituteSharedPrefs.edit();
+
+        sharedPreferences = context.getSharedPreferences("signInCredentials", context.MODE_MULTI_PROCESS);
+        sharedPreferencesEdit = sharedPreferences.edit();
+    }
+
+    private void setAdapterForMemberTypeSpinner() {
+        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.member_type, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        memberTypeSpinner.setAdapter(adapter);
+    }
+
+    private void applyActions() {
         previousButton.setOnClickListener(this);
         nextButton.setOnClickListener(this);
         saveButton.setOnClickListener(this);
         addMemberButton.setOnClickListener(this);
         memberTypeSpinner.setOnItemSelectedListener(this);
         emailId.addTextChangedListener(this);
+    }
 
-        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.member_type, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        memberTypeSpinner.setAdapter(adapter);
+    private void getWidgetsFromCurrentActivity() {
+        previousButton = (Button) getActivity().findViewById(R.id.previous);
+        nextButton = (Button) getActivity().findViewById(R.id.next);
+        addMemberPhase = getActivity().findViewById(R.id.phase_add_member);
+    }
 
-        setHasOptionsMenu(true);
-        setActionBarProperties();
-
-        return view;
+    private void getWidgetsFromView() {
+        memberTypeSpinner = (Spinner) view.findViewById(R.id.member_type);
+        saveButton = (Button) view.findViewById(R.id.save);
+        addMemberButton = (Button) view.findViewById(R.id.add_member);
     }
 
     private void getFieldsData() {
@@ -198,7 +216,6 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
             e.printStackTrace();
         }
         new WebserviceHelper(getActivity()).postData(this, entity, 0L, "institutes/staff/" + id);
-//        new WebserviceHelper(getActivity()).postData(this, entity, 0L, "institutes/staff/108");
     }
 
     private String createJSONObject() {

@@ -55,11 +55,8 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
         sharedPrefsEdit.putBoolean("captureImage", true);
         sharedPrefsEdit.commit();
 
-        next = (Button) getActivity().findViewById(R.id.next);
-        previous = (Button) getActivity().findViewById(R.id.previous);
-        captureImagePhase = (View) getActivity().findViewById(R.id.phase_capture_image);
-        captureImage = (Button) view.findViewById(R.id.capture_image);
-        userImage = (ImageView) view.findViewById(R.id.user_image);
+        getWidgetsFromCurrentActivity();
+        getWidgetsFromView();
 
         captureImagePhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         captureImagePhase.setClickable(false);
@@ -93,6 +90,17 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
         setActionBarProperties();
 
         return view;
+    }
+
+    private void getWidgetsFromCurrentActivity() {
+        next = (Button) getActivity().findViewById(R.id.next);
+        previous = (Button) getActivity().findViewById(R.id.previous);
+        captureImagePhase = (View) getActivity().findViewById(R.id.phase_capture_image);
+    }
+
+    private void getWidgetsFromView() {
+        captureImage = (Button) view.findViewById(R.id.capture_image);
+        userImage = (ImageView) view.findViewById(R.id.user_image);
     }
 
     private void updateUi() {

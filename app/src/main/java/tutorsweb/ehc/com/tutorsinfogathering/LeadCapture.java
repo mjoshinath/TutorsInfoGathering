@@ -230,9 +230,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
                 e.printStackTrace();
             }
             new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L, "lead_capture/staff/" + id);
-//            new WebserviceHelper(getApplicationContext()).postData(this, entity, 0L, "lead_capture/staff/108");
         } else {
-//                    dataBaseHelper = new DataBaseHelper(getApplicationContext());
             dataBaseHelper.insertLeadCaptureDetails(json);
         }
         Intent intent = new Intent(this, HomePage.class);

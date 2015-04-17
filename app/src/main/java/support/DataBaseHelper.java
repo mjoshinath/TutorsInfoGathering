@@ -38,7 +38,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     private String[] userIdResource;
     public int id;
-    private String userId;
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -71,16 +70,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public long insertMarketingCredentials(String email, String password) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("email", email);
-        values.put("password", password);
-        long rowId = db.insert(MARKETING_CREDENTIALS_TABLE_NAME, null, values);
-        db.close();
-        return rowId;
-    }
-
     public Cursor getAuthentication(String email, String password) {
         String selectQuery = "SELECT * FROM " + MARKETING_CREDENTIALS_TABLE_NAME + " where email='" + email + "' and password='" + password + "'";
         SQLiteDatabase db = this.getReadableDatabase();
@@ -90,7 +79,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-//                id = cursor.getColumnIndex("userId");
                 Log.d("test143", "0: " + cursor.getInt(0));
                 Log.d("test143", "1: " + cursor.getString(1));
                 Log.d("test143", "2: " + cursor.getString(2));
@@ -100,8 +88,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-        int count = cursor.getCount();
-//        cursor.close();
         return cursor;
     }
 
@@ -124,11 +110,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 TutorDetails tutorDetail = new TutorDetails();
-                tutorDetail.setId(cursor.getInt(0));
-                tutorDetail.setDetails(cursor.getString(1));
-//                int i = 0;
+                tutorDetail.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                tutorDetail.setDetails(cursor.getString(cursor.getColumnIndex("tutorCredentials")));
                 tutorDetails.add(tutorDetail);
-//                i++;
                 Log.d("test08", "tutorDetail-" + tutorDetail);
             } while (cursor.moveToNext());
         }
@@ -168,11 +152,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 InstituteDetails instituteDetail = new InstituteDetails();
-                instituteDetail.setId(cursor.getInt(0));
-                instituteDetail.setDetails(cursor.getString(1));
-//                int i = 0;
+                instituteDetail.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                instituteDetail.setDetails(cursor.getString(cursor.getColumnIndex("instituteCredentials")));
                 instituteDetails.add(instituteDetail);
-//                i++;
                 Log.d("test08", "tutorDetail-" + instituteDetail);
             } while (cursor.moveToNext());
         }
@@ -180,8 +162,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Log.d("test08", "tutorDetails-" + tutorDetails);
         return instituteDetails;
     }
-
-    /*Lead Capture Functionality Methods*/
 
     public void deleteLeadCapture(long id) {
         Log.d("test08", "delete-" + id);
@@ -208,11 +188,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 LeadCaptureDetailsDBModel leadCaptureDetailsDBModel = new LeadCaptureDetailsDBModel();
-                leadCaptureDetailsDBModel.setId(cursor.getInt(0));
-                leadCaptureDetailsDBModel.setDetails(cursor.getString(1));
-//                int i = 0;
+                leadCaptureDetailsDBModel.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                leadCaptureDetailsDBModel.setDetails(cursor.getString(cursor.getColumnIndex("leadCaptureCredentials")));
                 leadCaptureDetails.add(leadCaptureDetailsDBModel);
-//                i++;
                 Log.d("test08", "leadCaptureDetails-" + leadCaptureDetails);
             } while (cursor.moveToNext());
         }

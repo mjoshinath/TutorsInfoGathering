@@ -92,18 +92,12 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         instituteSharedPrefs = getActivity().getSharedPreferences("instituteSession", Context.MODE_MULTI_PROCESS);
         instituteSharedPrefsEdit = instituteSharedPrefs.edit();
 
-        institutePhase = getActivity().findViewById(R.id.phase_institute);
-        previous = (Button) getActivity().findViewById(R.id.previous);
-        next = (Button) getActivity().findViewById(R.id.next);
+        getWidgets();
 
         getWidgets(view);
         updateUi();
-//        getFilledData();
-//        maintainSharedPrefs();
 
-        next.setOnClickListener(this);
-        dateOfEstablishment.setOnClickListener(this);
-        captureImage.setOnClickListener(this);
+        applyActions();
 
         institutePhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         previous.setVisibility(View.INVISIBLE);
@@ -112,6 +106,18 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         setActionBarProperties();
 
         return view;
+    }
+
+    private void getWidgets() {
+        institutePhase = getActivity().findViewById(R.id.phase_institute);
+        previous = (Button) getActivity().findViewById(R.id.previous);
+        next = (Button) getActivity().findViewById(R.id.next);
+    }
+
+    private void applyActions() {
+        next.setOnClickListener(this);
+        dateOfEstablishment.setOnClickListener(this);
+        captureImage.setOnClickListener(this);
     }
 
     private void updateUi() {

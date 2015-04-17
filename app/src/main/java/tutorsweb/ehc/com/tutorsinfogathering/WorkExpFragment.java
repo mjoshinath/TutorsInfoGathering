@@ -49,14 +49,6 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences userSharedPreference;
     private SharedPreferences.Editor sharedPrefsEditable;
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_work_exp);
-        getWidgets();
-        applyActions();
-    }*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_work_exp, null);
@@ -79,7 +71,6 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (doValidation())
                 saveFilledDataInSharedPrefs();
                 fragmentReplaceMethod();
             }
@@ -187,10 +178,6 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
                 datePickerView = v;
                 break;
             case R.id.next:
-//                if (doValidation()) {
-//                    Intent intent = new Intent(getActivity(), SubmitFragment.class);
-//                    startActivity(intent);
-//                }
                 break;
             case R.id.previous:
                 getActivity().onBackPressed();
@@ -332,11 +319,6 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
         }
         return true;
     }
-
-    /*@Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }*/
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();

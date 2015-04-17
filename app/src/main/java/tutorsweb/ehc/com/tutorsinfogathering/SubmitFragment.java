@@ -161,22 +161,21 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         setActionBarProperties();
         setHasOptionsMenu(true);
 
-        submit = (Button) getActivity().findViewById(R.id.next);
-        previous = (Button) getActivity().findViewById(R.id.previous);
+        getActivityWidgets();
 
         submit.setText("Submit");
         submit.setOnClickListener(this);
         previous.setOnClickListener(this);
-        /*previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });*/
-        submitPhase = getActivity().findViewById(R.id.phase_submit);
+
         submitPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         submitPhase.setClickable(false);
         return view;
+    }
+
+    private void getActivityWidgets() {
+        submit = (Button) getActivity().findViewById(R.id.next);
+        previous = (Button) getActivity().findViewById(R.id.previous);
+        submitPhase = getActivity().findViewById(R.id.phase_submit);
     }
 
     private void getSharedPrefsData() {
@@ -274,7 +273,6 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
             while (iterator.hasNext()) {
                 categoriesString.append(iterator.next().toString() + ", ");
             }
-//            String string = new String(categoriesString);
             categories.setText(categoriesString);
         }
 
@@ -344,17 +342,13 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
                         e.printStackTrace();
                     }
                     new WebserviceHelper(getActivity()).postData(this, entity, 0L, "tutors/staff/" + id);
-//                    new WebserviceHelper(getActivity()).postData(this, entity, 0L, "tutors/staff/108");
                 } else {
                     dataBaseHelper = new DataBaseHelper(getActivity());
                     dataBaseHelper.insertTutorDetails(json);
                     sharedPrefsEdit.clear();
                     sharedPrefsEdit.commit();
                 }
-//                Toast.makeText(getActivity(), "Tutor Successfully Registered", Toast.LENGTH_SHORT).show();
 
-                /*sharedPrefsEdit.clear();
-                sharedPrefsEdit.commit();*/
                 Intent intent = new Intent(getActivity(), HomePage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -363,8 +357,6 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     }
 
     public String createJSONObject() {
-//        jsonObject = new JSONObject();
-//        setJsonObjectAttributes();
         Tutor tutor = new Tutor();
         tutor.setFirstName(firstNameText);
         tutor.setLastName(lastNameText);

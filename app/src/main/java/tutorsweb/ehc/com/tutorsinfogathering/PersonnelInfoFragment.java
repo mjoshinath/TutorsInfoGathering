@@ -80,35 +80,6 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private ArrayAdapter<CharSequence> adapter;
     private String genderSelected;
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(layout.pager_host_layout);
-
-        mainView = (LinearLayout) findViewById(id.main_view);
-        LayoutInflater layoutInflater =
-                (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View addView = layoutInflater.inflate(layout.activity_personnel_info, null);
-        next = (Button) findViewById(id.next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (doValidation()) {
-                    intent = new Intent(getApplicationContext(), CategoriesFragment.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        mainView.addView(addView);
-        currentPhase = findViewById(id.phase_personnel);
-        currentPhase.setVisibility(View.VISIBLE);
-
-        getWidgets(mainView);
-        applyActions();
-        setActionBarProperties();
-    }*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(layout.activity_personnel_info, null);
@@ -119,28 +90,14 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         sharedPrefsEditable.putBoolean("personnel", true);
         sharedPrefsEditable.commit();
 
-        next = (Button) getActivity().findViewById(id.next);
-        previous = (Button) getActivity().findViewById(id.previous);
+        getWidgetsFromActivity();
         getWidgets(view);
         setHasOptionsMenu(true);
         applyActions();
         setActionBarProperties();
 
         updateUi();
-        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.gender, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        gender.setAdapter(adapter);
-        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                genderSelected = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        setAdapterForGenderSpinner();
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,6 +112,28 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         personnelPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         previous.setVisibility(View.INVISIBLE);
         return view;
+    }
+
+    private void setAdapterForGenderSpinner() {
+        adapter = ArrayAdapter.createFromResource(getActivity(), array.gender, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        gender.setAdapter(adapter);
+        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                genderSelected = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void getWidgetsFromActivity() {
+        next = (Button) getActivity().findViewById(id.next);
+        previous = (Button) getActivity().findViewById(id.previous);
     }
 
     private void updateUi() {
@@ -266,24 +245,6 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
 
         }
     }
-
-    /*public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
-            userImage.setImageBitmap(photo);
-            Log.d("photo", "" + photo.toString());
-
-            userImageString = BitMapToString(photo);
-        }
-    }*/
-
-    /*public String BitMapToString(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String temp = Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }*/
 
     private void fragmentReplaceMethod() {
         fragmentMngr = getFragmentManager();
