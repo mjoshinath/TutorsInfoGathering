@@ -168,7 +168,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 break;
             case R.id.reports:
                 callForReportsActivity();
-                startActivity(intent);
                 break;
             case R.id.documentation:
                 intent = new Intent(this, DocumentationActivity.class);
@@ -184,6 +183,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private void callForReportsActivity() {
         if (Network.isConnected(getApplicationContext())) {
             intent = new Intent(this, ReportsActivity.class);
+            startActivity(intent);
         } else {
             Toast.makeText(getApplicationContext(), "Network not Connected!", Toast.LENGTH_SHORT).show();
         }
