@@ -146,12 +146,15 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         switch (view.getId()) {
             case R.id.signup_tutor:
                 intent = new Intent(this, RegStepsHostActivity.class);
+                startActivity(intent);
                 break;
             case R.id.signup_institute:
                 intent = new Intent(this, InstituteSignUpHostActivity.class);
+                startActivity(intent);
                 break;
             case R.id.lead_capture:
                 intent = new Intent(this, LeadCapture.class);
+                startActivity(intent);
                 break;
             case R.id.sync_data:
                 /*dataBaseHelper = new DataBaseHelper(getApplicationContext());
@@ -160,15 +163,17 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 break;
             case R.id.reports:
                 callForReportsActivity();
+                startActivity(intent);
                 break;
             case R.id.documentation:
                 intent = new Intent(this, DocumentationActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tutors_web_site:
                 intent = new Intent(this, TutorsWebSiteHomePage.class);
+                startActivity(intent);
                 break;
         }
-        startActivity(intent);
     }
 
     private void callForReportsActivity() {
