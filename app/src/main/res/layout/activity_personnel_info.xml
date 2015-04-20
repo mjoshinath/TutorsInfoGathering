@@ -24,14 +24,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="First Name" />
+                android:text="First Name"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/first_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -44,14 +46,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Last Name" />
+                android:text="Last Name"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/last_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,14 +68,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Username" />
+                android:text="Username"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/username"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -84,7 +90,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Date of Birth" />
+                android:text="Date of Birth"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/date_of_birth"
@@ -92,7 +99,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
                 android:focusable="false"
-                android:hint="dd/mm/yyyy" />
+                android:hint="dd/mm/yyyy"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,7 +113,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Gender" />
+                android:text="Gender"
+                android:textSize="@dimen/text_size" />
 
             <Spinner
                 android:id="@+id/gender"
@@ -121,17 +130,20 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/email_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Email" />
+                android:text="Email *"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/email_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -142,17 +154,20 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/mobile_no_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Mobile Number" />
+                android:text="Mobile Number *"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/mobile_number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -165,7 +180,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Address" />
+                android:text="Address"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/address"
@@ -173,7 +189,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
                 android:inputType="text"
-                android:lines="3" />
+                android:lines="3"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -186,14 +203,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="City" />
+                android:text="City"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/city"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -206,14 +225,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="State" />
+                android:text="State"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/state"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -226,14 +247,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Zipcode" />
+                android:text="Zipcode"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/zip_code"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -246,14 +269,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Country" />
+                android:text="Country"
+                android:textSize="@dimen/text_size" />
 
             <EditText
                 android:id="@+id/country"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <!--<LinearLayout

@@ -118,8 +118,8 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     }
 
     private void setAdapterForMemberTypeSpinner() {
-        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.member_type, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.member_type, R.layout.simple_spinner_dropdown);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         memberTypeSpinner.setAdapter(adapter);
     }
 
@@ -170,7 +170,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         firstName = (EditText) view.findViewById(R.id.first_name);
         lastName = (EditText) view.findViewById(R.id.last_name);
         emailId = (EditText) view.findViewById(R.id.email);
-        
+
         emailIdTextView = (TextView) view.findViewById(R.id.add_member_email_text_view);
 
         Spannable emailSpannable = new SpannableString(emailIdTextView.getText().toString());

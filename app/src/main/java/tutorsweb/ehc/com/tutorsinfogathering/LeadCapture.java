@@ -104,13 +104,13 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     }
 
     private void setInteractionAdapter() {
-        interactionAdapter = ArrayAdapter.createFromResource(this, R.array.type_of_interaction, android.R.layout.simple_spinner_item);
+        interactionAdapter = ArrayAdapter.createFromResource(this, R.array.type_of_interaction, R.layout.simple_spinner_dropdown);
         interactionAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         typeOfInteraction.setAdapter(interactionAdapter);
     }
 
     private void setClientAdapter() {
-        clientAdapter = ArrayAdapter.createFromResource(this, R.array.type_of_client, android.R.layout.simple_spinner_item);
+        clientAdapter = ArrayAdapter.createFromResource(this, R.array.type_of_client, R.layout.simple_spinner_dropdown);
         clientAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         typeOfClient.setAdapter(clientAdapter);
     }

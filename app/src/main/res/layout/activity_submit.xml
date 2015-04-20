@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="Personnel Information"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <View
@@ -38,13 +39,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="User Image" />
+                android:text="User Image"
+                android:textSize="@dimen/text_size" />
 
             <ImageView
                 android:id="@+id/user_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,13 +61,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="First Name" />
+                android:text="First Name"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,13 +83,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Last Name" />
+                android:text="Last Name"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -98,13 +105,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Username" />
+                android:text="Username"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -118,13 +127,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Date of Birth" />
+                android:text="Date of Birth"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/date_of_birth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -138,13 +149,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Gender" />
+                android:text="Gender"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -158,13 +171,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Email" />
+                android:text="Email"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/email_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -178,13 +193,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Mobile Number" />
+                android:text="Mobile Number"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/mobile_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -198,13 +215,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Address" />
+                android:text="Address"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -218,13 +237,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="City" />
+                android:text="City"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -238,13 +259,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="State" />
+                android:text="State"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -258,13 +281,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Pincode" />
+                android:text="Pincode"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/zip_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -278,13 +303,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Country" />
+                android:text="Country"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -298,13 +325,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Photo" />
+                android:text="Photo"
+                android:textSize="@dimen/text_size" />
 
             <ImageView
                 android:id="@+id/photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <TextView
@@ -312,6 +341,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="Categories"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <View
@@ -332,13 +362,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Categories Chosen" />
+                android:text="Categories Chosen"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <TextView
@@ -346,6 +378,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="Professional Experience"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <View
@@ -366,13 +399,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Years of Teaching Experience" />
+                android:text="Years of Teaching Experience"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/years_of_teaching_exp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -386,13 +421,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tutoring Experience" />
+                android:text="Tutoring Experience"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/tutoring_exp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -406,13 +443,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Languages" />
+                android:text="Languages"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/languages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -426,13 +465,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Interests" />
+                android:text="Interests"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/interests"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <TextView
@@ -440,6 +481,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="Work Experience"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <View
@@ -454,6 +496,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="Most recent Education"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -467,13 +510,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Degree Name" />
+                android:text="Degree Name"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/degree_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -487,13 +532,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="University/College/School Name" />
+                android:text="University/College/School Name"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/university_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -507,13 +554,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Start Date" />
+                android:text="Start Date"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/start_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -527,13 +576,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="End Date" />
+                android:text="End Date"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/end_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -547,13 +598,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Field of Study" />
+                android:text="Field of Study"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/field_of_study"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -567,13 +620,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Location" />
+                android:text="Location"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <TextView
@@ -581,6 +636,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="Most recent Work Experience"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -594,13 +650,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Company Name" />
+                android:text="Company Name"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/company_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -614,13 +672,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Job Title" />
+                android:text="Job Title"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/job_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -634,13 +694,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Start Date" />
+                android:text="Start Date"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/start_date_work_exp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -654,13 +716,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="End Date" />
+                android:text="End Date"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/end_date_work_exp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -674,13 +738,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Location" />
+                android:text="Location"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/location_work_exp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -694,13 +760,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Job Description" />
+                android:text="Job Description"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/job_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <!--<RelativeLayout

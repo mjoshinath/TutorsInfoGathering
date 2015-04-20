@@ -4,4 +4,5 @@
     <color name="ireg_yellow">#FFCB04</color>
     <color name="ireg_blue">#32B1D2</color>
     <color name="ireg_light_grey">#DDDDDD</color>
+    <color name="white">#FFFFFF</color>
 </resources>

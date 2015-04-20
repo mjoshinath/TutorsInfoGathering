@@ -22,5 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/capture_image_button_feedback"
-        android:text="Capture Image" />
+        android:text="Capture Image"
+        android:textSize="@dimen/text_size"/>
 </RelativeLayout>

@@ -25,6 +25,7 @@
                 android:layout_centerVertical="true"
                 android:layout_weight="1"
                 android:text="ID : "
+                android:textSize="@dimen/text_size"
                 android:textStyle="bold" />
 
             <TextView
@@ -35,6 +36,7 @@
                 android:layout_centerVertical="true"
                 android:layout_weight="1"
                 android:text="Reports For : "
+                android:textSize="@dimen/text_size"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -53,6 +55,7 @@
             android:layout_alignTop="@+id/tutor_progress_bar"
             android:layout_centerVertical="true"
             android:text="Tutor Signup"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -88,6 +91,7 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="Target :"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
 
@@ -105,6 +109,7 @@
             android:layout_alignTop="@+id/institute_progress_bar"
             android:layout_centerVertical="true"
             android:text="Institute Signup"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -140,6 +145,7 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="Target :"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <View
@@ -156,6 +162,7 @@
             android:layout_alignTop="@+id/lead_progress_bar"
             android:layout_centerVertical="true"
             android:text="Lead Capture"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -191,6 +198,7 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="Target :"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
     </LinearLayout>

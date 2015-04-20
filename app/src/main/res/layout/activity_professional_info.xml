@@ -2,17 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     android:paddingBottom="0dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:background="#FFFFFF"
     tools:context="tutorsweb.ehc.com.tutorsinfogathering.ProfessionalInfoFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         android:weightSum="5">
 
@@ -21,13 +22,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:paddingBottom="8dp"
-            android:text="Years of Teaching Experience" />
+            android:text="Years of Teaching Experience"
+            android:textSize="@dimen/text_size" />
 
         <Spinner
             android:id="@+id/teaching_exp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3.5" />
+            android:layout_weight="3.5"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,14 +44,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:paddingBottom="8dp"
-            android:text="Tutoring Experience" />
+            android:text="Tutoring Experience"
+            android:textSize="@dimen/text_size" />
 
         <EditText
             android:id="@+id/tutoring_exp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3.5"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 
     <LinearLayout
@@ -61,14 +66,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:text="Languages" />
+            android:text="Languages"
+            android:textSize="@dimen/text_size" />
 
         <EditText
             android:id="@+id/languages"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3.5"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 
     <LinearLayout
@@ -81,14 +88,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:text="Interests" />
+            android:text="Interests"
+            android:textSize="@dimen/text_size" />
 
         <EditText
             android:id="@+id/interests"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3.5"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 
     <!--<RelativeLayout

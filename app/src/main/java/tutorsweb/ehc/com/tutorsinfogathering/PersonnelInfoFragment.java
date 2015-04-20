@@ -121,8 +121,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     }
 
     private void setAdapterForGenderSpinner() {
-        adapter = ArrayAdapter.createFromResource(getActivity(), array.gender, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter = ArrayAdapter.createFromResource(getActivity(), array.gender, layout.simple_spinner_dropdown);
+        adapter.setDropDownViewResource(layout.simple_spinner_dropdown);
         gender.setAdapter(adapter);
         gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

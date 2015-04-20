@@ -49,8 +49,8 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         sharedPrefsEditable.commit();
 
         profExpSpinner = (Spinner) view.findViewById(R.id.teaching_exp);
-        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.years_of_exp, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.years_of_exp, R.layout.simple_spinner_dropdown);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         profExpSpinner.setAdapter(adapter);
 
         previous = (Button) getActivity().findViewById(R.id.previous);
