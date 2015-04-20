@@ -41,6 +41,7 @@ import model.categories.MemberInfo;
 import model.categories.company.Company;
 import model.categories.company.CompanyModel;
 import model.categories.company.EmployeesAttribute;
+import model.categories.company.Member;
 import support.DataBaseHelper;
 
 public class AddMemberFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, WebServiceCallBack, TextWatcher {
@@ -54,7 +55,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     private ActionBar actionBar;
     private Button saveButton;
     private Button addMemberButton;
-    private ArrayList<MemberInfo> membersList;
+    private ArrayList<Member> membersList;
     private EditText firstName;
     private EditText lastName;
     private EditText emailId;
@@ -92,7 +93,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         getWidgets(view);
         updateUi();
 
-        membersList = new ArrayList<MemberInfo>();
+        membersList = new ArrayList<Member>();
 
         addMemberPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
 
@@ -254,6 +255,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 //        company.setState();
         company.setZipCode(instituteSharedPrefs.getString("zipCodeText", ""));
         company.setCountry(instituteSharedPrefs.getString("countryText", ""));
+        company.setMembers(membersList);
 
         listOfEmployeeAttributes = new ArrayList<EmployeesAttribute>();
         listOfEmployeeAttributes.add(employeesAttribute);
@@ -267,13 +269,15 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     }
 
     private void addNewMember() {
-        MemberInfo memberInfo = new MemberInfo();
-        memberInfo.setFirstName(firstName.getText().toString());
-        memberInfo.setLastName(lastName.getText().toString());
-        memberInfo.setEmailId(emailId.getText().toString());
-        memberInfo.setMemberType(selectedMemberType);
+        Member member = new Member();
+        member.setFirstName(firstName.getText().toString());
+        member.setLastName(lastName.getText().toString());
+        member.setEmail(emailId.getText().toString());
+//        member.setContactNo();
+        member.setType(selectedMemberType);
+
         if (!(emailId.getText().toString().equals(""))) {
-            membersList.add(memberInfo);
+            membersList.add(member);
             Toast.makeText(getActivity(), "Member Saved", Toast.LENGTH_SHORT).show();
             isDataSaved = true;
         }

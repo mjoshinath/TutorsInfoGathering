@@ -40,6 +40,8 @@ public class Company {
     @Expose
     @SerializedName("employees_attributes")
     private List<EmployeesAttribute> employeesAttributes = new ArrayList<EmployeesAttribute>();
+    @Expose
+    private List<Member> members = new ArrayList<Member>();
 
     public String getName() {
         return name;
@@ -145,6 +147,14 @@ public class Company {
         this.employeesAttributes = employeesAttributes;
     }
 
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member> members) {
+        this.members = members;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -161,6 +171,7 @@ public class Company {
                 ", country='" + country + '\'' +
                 ", zipCode='" + zipCode + '\'' +
                 ", employeesAttributes=" + employeesAttributes +
+                ", members=" + members +
                 '}';
     }
 }
