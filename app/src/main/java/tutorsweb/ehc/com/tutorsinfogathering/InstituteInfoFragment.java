@@ -15,7 +15,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +29,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
@@ -84,6 +88,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     private String employeeUsernameText;
     private String employeeEmailText;
     private String employeeContactNumberText;
+    private TextView emailIdTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -205,6 +210,13 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         employeeUsername = (EditText) view.findViewById(R.id.employee_user_name);
         employeeEmail = (EditText) view.findViewById(R.id.employee_email);
         employeeContactNumber = (EditText) view.findViewById(R.id.employee_contact_number);
+
+        emailIdTextView= (TextView) view.findViewById(R.id.email_id_text_view);
+
+        Spannable emailSpannable = new SpannableString(emailIdTextView.getText().toString());
+        int emailStarLoc = emailIdTextView.getText().toString().indexOf("*");
+        emailSpannable.setSpan(new ForegroundColorSpan(Color.RED), emailStarLoc, emailStarLoc + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        emailIdTextView.setText(emailSpannable);
     }
 
     private void setActionBarProperties() {

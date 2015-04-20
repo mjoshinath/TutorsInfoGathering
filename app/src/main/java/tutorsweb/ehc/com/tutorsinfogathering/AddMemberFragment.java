@@ -9,8 +9,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -72,6 +76,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor sharedPreferencesEdit;
     private int id;
+    private TextView emailIdTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -165,6 +170,13 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         firstName = (EditText) view.findViewById(R.id.first_name);
         lastName = (EditText) view.findViewById(R.id.last_name);
         emailId = (EditText) view.findViewById(R.id.email);
+        
+        emailIdTextView = (TextView) view.findViewById(R.id.add_member_email_text_view);
+
+        Spannable emailSpannable = new SpannableString(emailIdTextView.getText().toString());
+        int emailIdLoc = emailIdTextView.getText().toString().indexOf("*");
+        emailSpannable.setSpan(new ForegroundColorSpan(Color.RED), emailIdLoc, emailIdLoc + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        emailIdTextView.setText(emailSpannable);
     }
 
     private void setActionBarProperties() {

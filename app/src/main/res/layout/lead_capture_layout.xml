@@ -99,10 +99,11 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/contact_number_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Contact Number" />
+                android:text="Contact Number *" />
 
             <EditText
                 android:id="@+id/contact_number"
@@ -120,10 +121,11 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/email_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Email" />
+                android:text="Email *" />
 
             <EditText
                 android:id="@+id/email_lead"
@@ -158,14 +160,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/need_followup_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Need Followup" />
+                android:text="Need Followup *" />
 
             <RadioGroup
                 android:id="@+id/need_followup"

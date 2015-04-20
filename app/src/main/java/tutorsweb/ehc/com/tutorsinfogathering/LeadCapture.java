@@ -4,8 +4,12 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
@@ -18,6 +22,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -68,6 +73,9 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor sharedPreferencesEdit;
     private int id;
+    private TextView emailTextView;
+    private TextView needFollowupTextView;
+    private TextView contactNumberTextView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +127,25 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         submit = (Button) findViewById(R.id.submit_lead);
         yes = (RadioButton) findViewById(R.id.yes);
         no = (RadioButton) findViewById(R.id.no);
+
+        emailTextView = (TextView) findViewById(R.id.email_text_view);
+        contactNumberTextView = (TextView) findViewById(R.id.contact_number_text_view);
+        needFollowupTextView = (TextView) findViewById(R.id.need_followup_text_view);
+
+        Spannable emailSpannable = new SpannableString(emailTextView.getText().toString());
+        int emailStarLoc = emailTextView.getText().toString().indexOf("*");
+        emailSpannable.setSpan(new ForegroundColorSpan(Color.RED), emailStarLoc, emailStarLoc + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        emailTextView.setText(emailSpannable);
+
+        Spannable contactNumberSpannable = new SpannableString(contactNumberTextView.getText().toString());
+        int contactStarIndex = contactNumberTextView.getText().toString().indexOf("*");
+        contactNumberSpannable.setSpan(new ForegroundColorSpan(Color.RED), contactStarIndex, contactStarIndex + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        contactNumberTextView.setText(contactNumberSpannable);
+
+        Spannable needFollowUpSpannable = new SpannableString(needFollowupTextView.getText().toString());
+        int needFollowUpStarIndex = needFollowupTextView.getText().toString().indexOf("*");
+        needFollowUpSpannable.setSpan(new ForegroundColorSpan(Color.RED), needFollowUpStarIndex, needFollowUpStarIndex + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        needFollowupTextView.setText(needFollowUpSpannable);
     }
 
     private void setActionBarProperties() {

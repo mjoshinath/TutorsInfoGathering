@@ -12,7 +12,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -27,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -79,6 +83,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private Spinner gender;
     private ArrayAdapter<CharSequence> adapter;
     private String genderSelected;
+    private TextView emailIdTextView;
+    private TextView mobileNoTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -213,6 +219,19 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         captureImage = (Button) view.findViewById(id.capture_image);
         userImage = (ImageView) view.findViewById(id.user_image);
         gender = (Spinner) view.findViewById(id.gender);
+
+        emailIdTextView = (TextView) view.findViewById(id.email_text_view);
+        mobileNoTextView = (TextView) view.findViewById(id.mobile_no_text_view);
+
+        Spannable emailSpannable = new SpannableString(emailIdTextView.getText().toString());
+        int emailIdLoc = emailIdTextView.getText().toString().indexOf("*");
+        emailSpannable.setSpan(new ForegroundColorSpan(Color.RED), emailIdLoc, emailIdLoc + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        emailIdTextView.setText(emailSpannable);
+
+        Spannable mobileSpannable = new SpannableString(mobileNoTextView.getText().toString());
+        int mobileStarLoc = mobileNoTextView.getText().toString().indexOf("*");
+        mobileSpannable.setSpan(new ForegroundColorSpan(Color.RED), mobileStarLoc, mobileStarLoc + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        mobileNoTextView.setText(mobileSpannable);
     }
 
     private void setActionBarProperties() {
