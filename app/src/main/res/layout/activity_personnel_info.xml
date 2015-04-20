@@ -21,6 +21,7 @@
             android:weightSum="5">
 
             <TextView
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -29,6 +30,7 @@
 
             <EditText
                 android:id="@+id/first_name"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -43,6 +45,7 @@
             android:weightSum="5">
 
             <TextView
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -51,6 +54,7 @@
 
             <EditText
                 android:id="@+id/last_name"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -65,14 +69,17 @@
             android:weightSum="5">
 
             <TextView
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Username"
-                android:textSize="@dimen/text_size" />
+                android:text="User Name"
+                android:textSize="@dimen/text_size"
+                android:typeface="sans" />
 
             <EditText
                 android:id="@+id/username"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -83,10 +90,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="5">
 
             <TextView
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -95,6 +104,7 @@
 
             <EditText
                 android:id="@+id/date_of_birth"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -110,6 +120,7 @@
             android:weightSum="5">
 
             <TextView
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -131,6 +142,7 @@
 
             <TextView
                 android:id="@+id/email_text_view"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -139,6 +151,7 @@
 
             <EditText
                 android:id="@+id/email_id"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -155,6 +168,7 @@
 
             <TextView
                 android:id="@+id/mobile_no_text_view"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -163,6 +177,7 @@
 
             <EditText
                 android:id="@+id/mobile_number"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -177,6 +192,7 @@
             android:weightSum="5">
 
             <TextView
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -185,6 +201,7 @@
 
             <EditText
                 android:id="@+id/address"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -200,6 +217,7 @@
             android:weightSum="5">
 
             <TextView
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -208,6 +226,7 @@
 
             <EditText
                 android:id="@+id/city"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -222,6 +241,7 @@
             android:weightSum="5">
 
             <TextView
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -230,6 +250,7 @@
 
             <EditText
                 android:id="@+id/state"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -244,6 +265,7 @@
             android:weightSum="5">
 
             <TextView
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -252,6 +274,7 @@
 
             <EditText
                 android:id="@+id/zip_code"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -266,6 +289,7 @@
             android:weightSum="5">
 
             <TextView
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -274,6 +298,7 @@
 
             <EditText
                 android:id="@+id/country"
+                style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
@@ -319,6 +344,7 @@
 
         <Button
             android:id="@+id/next"
+            style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

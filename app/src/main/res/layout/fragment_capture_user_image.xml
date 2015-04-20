@@ -18,10 +18,11 @@
 
     <Button
         android:id="@+id/capture_image"
+        style="@style/TextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/capture_image_button_feedback"
         android:text="Capture Image"
-        android:textSize="@dimen/text_size"/>
+        android:textSize="@dimen/text_size" />
 </RelativeLayout>

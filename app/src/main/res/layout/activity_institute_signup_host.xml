@@ -69,13 +69,14 @@
 
         <Button
             android:id="@+id/previous"
+            style="@style/TextStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/previous_button_feedback"
             android:text="Previous"
             android:textColor="#000000"
-            android:textSize="@dimen/text_size"/>
+            android:textSize="@dimen/text_size" />
 
         <View
             android:layout_width="0.5dp"
@@ -84,12 +85,13 @@
 
         <Button
             android:id="@+id/next"
+            style="@style/TextStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/next_button_feedback"
             android:text="Next"
             android:textColor="#000000"
-            android:textSize="@dimen/text_size"/>
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 </LinearLayout>
