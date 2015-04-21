@@ -271,22 +271,6 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         String instituteName = this.instituteName.getText().toString().trim();
         String websiteName = website.getText().toString().trim();
 
-        if (emailId.equalsIgnoreCase("")) {
-            employeeEmail.setError("Email Required!");
-            employeeEmail.requestFocus();
-            return false;
-        } else {
-            employeeEmail.setError(null);
-        }
-
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches() && !TextUtils.isEmpty(emailId)) {
-            employeeEmail.setError("Invalid Email");
-            employeeEmail.requestFocus();
-            return false;
-        } else {
-            employeeEmail.setError(null);
-        }
-
         if (instituteName.equalsIgnoreCase("")) {
             this.instituteName.setError("Institute Name Required!");
             this.instituteName.requestFocus();
@@ -310,7 +294,22 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         } else {
             website.setError(null);
         }
-        
+
+        if (emailId.equalsIgnoreCase("")) {
+            employeeEmail.setError("Email Required!");
+            employeeEmail.requestFocus();
+            return false;
+        } else {
+            employeeEmail.setError(null);
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches() && !TextUtils.isEmpty(emailId)) {
+            employeeEmail.setError("Invalid Email");
+            employeeEmail.requestFocus();
+            return false;
+        } else {
+            employeeEmail.setError(null);
+        }
         return true;
     }
 

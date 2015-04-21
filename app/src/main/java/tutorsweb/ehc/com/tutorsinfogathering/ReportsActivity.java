@@ -106,7 +106,8 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
             reportsFor.setText("Reports for : " + month + " " + year);
         } else {*/
         marketingExecutiveId.setText("ID : " + id);
-        reportsFor.setText("Reports for : " + reports.getData().get(0).getMonth() + " " + reports.getData().get(0).getYear());
+        if (reports.getData().size() != 0)
+            reportsFor.setText("Reports for : " + reports.getData().get(0).getMonth() + " " + reports.getData().get(0).getYear());
 //        }
         tutorCircularProgressBar.setProgress(tutorAchieved);
         tutorCircularProgressBar.setMax(tutorTarget);

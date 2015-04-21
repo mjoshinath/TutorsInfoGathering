@@ -173,7 +173,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:text="Mobile Number *"
-                android:textSize="@dimen/text_size" />
+                android:textSize="@dimen/text_size"
+                android:inputType="phone"/>
 
             <EditText
                 android:id="@+id/mobile_number"
