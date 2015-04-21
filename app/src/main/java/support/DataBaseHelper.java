@@ -92,7 +92,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public long insertTutorDetails(String jsonObjectInStringFormat) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("tutorCredentials", jsonObjectInStringFormat);
         long rowId = db.insert(TUTOR_DETAILS_TABLE_NAME, null, values);

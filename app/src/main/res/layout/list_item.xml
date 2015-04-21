@@ -11,6 +11,7 @@
         style="@style/TextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checked="false"
         android:paddingBottom="8dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"

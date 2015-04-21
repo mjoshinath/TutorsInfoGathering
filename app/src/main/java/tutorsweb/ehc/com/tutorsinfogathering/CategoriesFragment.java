@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +30,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
@@ -181,7 +181,6 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
         public ExpandableListViewAdapter(Context applicationContext, ArrayList<Category> categoryResponse) {
             categories = categoryResponse;
             context = applicationContext;
-
         }
 
         @Override
@@ -228,7 +227,6 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
                 LayoutInflater infalInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.list_group, null);
             }
-
             lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
 //            lblListHeader.setTypeface(null, Typeface.BOLD);
             lblListHeader.setText(category.getName());
@@ -249,17 +247,22 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
                 convertView = infalInflater.inflate(R.layout.list_item, null);
             }
             CheckBox txtListChild = (CheckBox) convertView.findViewById(R.id.lblListItem);
+
             txtListChild.setText(subCategory.getName());
+            txtListChild.setChecked(userSharedPreference.getBoolean(txtListChild.getText().toString().trim(), false));
             txtListChild.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         checkedCategories.add(buttonView.getText().toString().trim());
                         checkedCategoriesIds.add(subCategory.getId());
+                        sharedPrefsEditable.putBoolean(buttonView.getText().toString().trim(), true);
                     } else {
                         checkedCategories.remove(buttonView.getText().toString().trim());
                         checkedCategoriesIds.remove(subCategory.getId());
+                        sharedPrefsEditable.putBoolean(buttonView.getText().toString().trim(), false);
                     }
+                    sharedPrefsEditable.commit();
                     Log.d("test18", "checkedCategories :" + checkedCategories);
                     categoriesCheckedSizes = checkedCategories.size();
                 }
