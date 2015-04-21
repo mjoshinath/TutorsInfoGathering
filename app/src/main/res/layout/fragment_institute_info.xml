@@ -36,11 +36,12 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/institute_name_text_view"
                 style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Institute Name"
+                android:text="Institute Name *"
                 android:textSize="@dimen/text_size" />
 
             <EditText
@@ -355,11 +356,12 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/website_text_view"
                 style="@style/TextStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Website"
+                android:text="Website *"
                 android:textSize="@dimen/text_size" />
 
             <EditText

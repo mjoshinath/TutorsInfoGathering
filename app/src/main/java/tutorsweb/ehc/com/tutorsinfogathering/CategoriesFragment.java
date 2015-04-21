@@ -230,7 +230,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
             }
 
             lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
-            lblListHeader.setTypeface(null, Typeface.BOLD);
+//            lblListHeader.setTypeface(null, Typeface.BOLD);
             lblListHeader.setText(category.getName());
             return convertView;
         }

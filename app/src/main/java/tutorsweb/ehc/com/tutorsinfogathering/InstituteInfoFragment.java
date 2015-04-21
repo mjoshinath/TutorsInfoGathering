@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -88,7 +89,10 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     private String employeeUsernameText;
     private String employeeEmailText;
     private String employeeContactNumberText;
+
     private TextView emailIdTextView;
+    private TextView instituteNameTextView;
+    private TextView websiteTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -211,12 +215,28 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         employeeEmail = (EditText) view.findViewById(R.id.employee_email);
         employeeContactNumber = (EditText) view.findViewById(R.id.employee_contact_number);
 
-        emailIdTextView= (TextView) view.findViewById(R.id.email_id_text_view);
+        emailIdTextView = (TextView) view.findViewById(R.id.email_id_text_view);
+        instituteNameTextView = (TextView) view.findViewById(R.id.institute_name_text_view);
+        websiteTextView = (TextView) view.findViewById(R.id.website_text_view);
 
+        setMandatoryFieldsStarColors();
+    }
+
+    private void setMandatoryFieldsStarColors() {
         Spannable emailSpannable = new SpannableString(emailIdTextView.getText().toString());
         int emailStarLoc = emailIdTextView.getText().toString().indexOf("*");
         emailSpannable.setSpan(new ForegroundColorSpan(Color.RED), emailStarLoc, emailStarLoc + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         emailIdTextView.setText(emailSpannable);
+
+        Spannable instituteSpannable = new SpannableString(instituteNameTextView.getText().toString());
+        int instituteNameStarLoc = instituteNameTextView.getText().toString().indexOf("*");
+        instituteSpannable.setSpan(new ForegroundColorSpan(Color.RED), instituteNameStarLoc, instituteNameStarLoc + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        instituteNameTextView.setText(instituteSpannable);
+
+        Spannable websiteSpannable = new SpannableString(websiteTextView.getText().toString());
+        int websiteStarLoc = websiteTextView.getText().toString().indexOf("*");
+        websiteSpannable.setSpan(new ForegroundColorSpan(Color.RED), websiteStarLoc, websiteStarLoc + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        websiteTextView.setText(websiteSpannable);
     }
 
     private void setActionBarProperties() {
@@ -248,6 +268,8 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
 
     private boolean doValidation() {
         String emailId = employeeEmail.getText().toString().trim();
+        String instituteName = this.instituteName.getText().toString().trim();
+        String websiteName = website.getText().toString().trim();
 
         if (emailId.equalsIgnoreCase("")) {
             employeeEmail.setError("Email Required!");
@@ -264,6 +286,31 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         } else {
             employeeEmail.setError(null);
         }
+
+        if (instituteName.equalsIgnoreCase("")) {
+            this.instituteName.setError("Institute Name Required!");
+            this.instituteName.requestFocus();
+            return false;
+        } else {
+            this.instituteName.setError(null);
+        }
+
+        if (websiteName.equalsIgnoreCase("")) {
+            website.setError("Website URL Required!");
+            website.requestFocus();
+            return false;
+        } else {
+            website.setError(null);
+        }
+
+        if (!Patterns.WEB_URL.matcher(websiteName).matches() && !TextUtils.isEmpty(websiteName)) {
+            website.setError("Invalid Website URL!");
+            website.requestFocus();
+            return false;
+        } else {
+            website.setError(null);
+        }
+        
         return true;
     }
 

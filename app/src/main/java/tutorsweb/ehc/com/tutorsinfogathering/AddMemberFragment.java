@@ -78,6 +78,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     private SharedPreferences.Editor sharedPreferencesEdit;
     private int id;
     private TextView emailIdTextView;
+    private EditText contactNo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -171,6 +172,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         firstName = (EditText) view.findViewById(R.id.first_name);
         lastName = (EditText) view.findViewById(R.id.last_name);
         emailId = (EditText) view.findViewById(R.id.email);
+        contactNo = (EditText) view.findViewById(R.id.contact_no);
 
         emailIdTextView = (TextView) view.findViewById(R.id.add_member_email_text_view);
 
@@ -273,7 +275,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         member.setFirstName(firstName.getText().toString());
         member.setLastName(lastName.getText().toString());
         member.setEmail(emailId.getText().toString());
-//        member.setContactNo();
+        member.setContactNo(contactNo.getText().toString());
         member.setType(selectedMemberType);
 
         if (!(emailId.getText().toString().equals(""))) {
@@ -289,6 +291,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         firstName.setText("");
         lastName.setText("");
         emailId.setText("");
+        contactNo.setText("");
     }
 
     @Override
