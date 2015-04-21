@@ -58,7 +58,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_home_page_grid_view);
 
         categorySharedPref = getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
         categoryEditor = categorySharedPref.edit();
