@@ -34,8 +34,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="0dp"
-            android:weightSum="6"
-            >
+            android:weightSum="6">
 
             <View
                 android:id="@+id/phase_personnel"

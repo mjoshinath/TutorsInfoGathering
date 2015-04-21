@@ -1,18 +1,19 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="16dp"
+    android:weightSum="8.5"
     tools:context="tutorsweb.ehc.com.tutorsinfogathering.CaptureUserImageFragment">
 
     <ImageView
         android:id="@+id/user_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/capture_image"
+        android:layout_height="0dp"
         android:layout_marginBottom="16dp"
+        android:layout_weight="7.5"
         android:background="@drawable/user_default_picture"
         android:fitsSystemWindows="true" />
 
@@ -20,9 +21,9 @@
         android:id="@+id/capture_image"
         style="@style/TextStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@drawable/capture_image_button_feedback"
         android:text="Capture Image"
         android:textSize="@dimen/text_size" />
-</RelativeLayout>
+</LinearLayout>
