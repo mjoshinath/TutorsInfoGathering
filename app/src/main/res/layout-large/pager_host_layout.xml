@@ -23,12 +23,17 @@
         android:orientation="vertical"
         android:weightSum="0.5">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"></View>
+
         <LinearLayout
             android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:layout_weight="0.2"
             android:orientation="horizontal"
             android:paddingLeft="16dp"
