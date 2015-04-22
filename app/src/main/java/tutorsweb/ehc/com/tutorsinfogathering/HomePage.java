@@ -9,10 +9,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.entity.StringEntity;
@@ -54,6 +57,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private int noOfUnSyncRecords = 0;
     private Intent intent;
     private int id;
+    private TextView toastTextView;
+    private View toastView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
         signInCredentialsPrefs = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
         signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
+
+        toastView = setToastLayout();
 
         id = signInCredentialsPrefs.getInt("userId", 0);
 
@@ -182,13 +189,14 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             intent = new Intent(this, ReportsActivity.class);
             startActivity(intent);
         } else {
-            Toast.makeText(getApplicationContext(), "Network not Connected!", Toast.LENGTH_SHORT).show();
+            toastTextView.setText("Network not Connected!");
+            toastMessageProperties(toastView);
         }
     }
 
     private void syncLocalStorageDataToServer() {
         if (noOfUnSyncRecords == 0) {
-            Toast.makeText(getApplicationContext(), "No Data available to Sync!", Toast.LENGTH_SHORT).show();
+            toastTextView.setText("No Data available to Sync!");
         } else if (Network.isConnected(getApplicationContext())) {
             Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
             if (multipleTutorDetails != null)
@@ -198,8 +206,9 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             if (multipleLeadCaptureDetails != null)
                 syncDataForLeadCapture();
         } else {
-            Toast.makeText(getApplicationContext(), "Network not Connected!", Toast.LENGTH_SHORT).show();
+            toastTextView.setText("Network not Connected!");
         }
+        toastMessageProperties(toastView);
     }
 
     private void syncDataForInstitute() {
@@ -267,6 +276,21 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     @Override
     public void hideProgressBarOnFailure(String response) {
 
+    }
+
+    private View setToastLayout() {
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View layout = inflater.inflate(R.layout.toast_view, null);
+        toastTextView = (TextView) layout.findViewById(R.id.toast_message_text_view);
+        return layout;
+    }
+
+    private void toastMessageProperties(View layout) {
+        Toast toast = new Toast(getApplicationContext());
+        toast.setView(layout);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM, 0, 36);
+        toast.show();
     }
 
     @Override
