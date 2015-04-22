@@ -187,4 +187,11 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
     @Override
     public void hideProgressBarOnFailure(String response) {
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HomePage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }
