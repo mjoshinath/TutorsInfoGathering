@@ -159,8 +159,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                Intent intent1 = new Intent(this, HomePage.class);
-                startActivity(intent1);
+                onBackPressed();
                 break;
         }
         return (super.onOptionsItemSelected(menuItem));
@@ -168,7 +167,10 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
+        Intent intent = new Intent(this, HomePage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override

@@ -95,7 +95,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         if (multipleLeadCaptureDetails.size() > 0)
             noOfUnSyncRecords = noOfUnSyncRecords + multipleLeadCaptureDetails.size();
         if (noOfUnSyncRecords > 0)
-            syncDataButton.setText("Sync Data (" + noOfUnSyncRecords + " Unsync Record(s) )");
+            syncDataButton.setText("Sync Data ( " + noOfUnSyncRecords + " Unsync Record(s) )");
     }
 
     private void getWidgets() {
