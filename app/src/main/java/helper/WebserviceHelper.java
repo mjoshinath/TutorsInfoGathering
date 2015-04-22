@@ -8,6 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -29,6 +34,7 @@ public class WebserviceHelper {
     RequestParams requestParams = new RequestParams();
     Context context;
     SharedPreferences preferences;
+    private TextView toastTextView;
 
     public WebserviceHelper(Context context) {
         this.context = context;
@@ -64,7 +70,7 @@ public class WebserviceHelper {
     }
 
     public void postData(final WebServiceCallBack callBack, StringEntity entity, final long id, String requestType) {
-
+        final View layout = setToastLayout();
         client.post(context, "http://192.168.1.115:5000/api/v1/" + requestType, entity, "application/json",
                 new AsyncHttpResponseHandler() {
                     @Override
@@ -72,15 +78,16 @@ public class WebserviceHelper {
                         String response = new String(bytes);
                         Log.d("test18", "success:" + response);
                         if (response.contains("Email exists")) {
-                            Toast.makeText(context, "Email Already Exists!", Toast.LENGTH_SHORT).show();
+                            toastTextView.setText("Email exists");
                             callBack.populateData("" + id);
                         } else if (response.contains("Successfully created")) {
-                            Toast.makeText(context, "Registration Successful!", Toast.LENGTH_SHORT).show();
+                            toastTextView.setText("Registration Successful!");
                             callBack.populateData("" + id);
                         } else {
-                            Toast.makeText(context, "Empty Record!", Toast.LENGTH_SHORT).show();
+                            toastTextView.setText("Empty Record!");
                             callBack.populateData("" + id);
                         }
+                        toastMessageProperties(layout);
                     }
 
                     @Override
@@ -89,5 +96,20 @@ public class WebserviceHelper {
                         callBack.hideProgressBarOnFailure("" + id);
                     }
                 });
+    }
+
+    private View setToastLayout() {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View layout = inflater.inflate(R.layout.toast_view, null);
+        toastTextView = (TextView) layout.findViewById(R.id.toast_message_text_view);
+        return layout;
+    }
+
+    private void toastMessageProperties(View layout) {
+        Toast toast = new Toast(context);
+        toast.setView(layout);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM, 0, 36);
+        toast.show();
     }
 }
