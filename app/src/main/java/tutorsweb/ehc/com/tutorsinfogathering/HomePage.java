@@ -349,13 +349,18 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 Log.d("test321", "syncDataCount" + syncDataCount);
                 Log.d("test321", "hai test");
             }
-            count = dataBaseHelper.getRecordsCountFromDB();
-            publishProgress(count);
+//            count = dataBaseHelper.getRecordsCountFromDB();
+//            publishProgress(count);
             return "";
         }
 
         @Override
         protected void onPostExecute(String result) {
+            count = dataBaseHelper.getRecordsCountFromDB();
+            if (count > 0)
+                syncDataButton.setText("Sync Data ( " + count + " Unsync Record(s) )");
+            else
+                syncDataButton.setText("Sync Data");
             homeProgressBar.setVisibility(View.INVISIBLE);
             homeLayout.setEnabled(true);
             Log.d("test321", "onPostExecute");
@@ -372,10 +377,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         @Override
         protected void onProgressUpdate(Long... values) {
             Log.d("test321", "onProgressUpdate" + values[0]);
-            if (values[0] > 0)
+            /*if (values[0] > 0)
                 syncDataButton.setText("Sync Data ( " + values[0] + " Unsync Record(s) )");
             else
-                syncDataButton.setText("Sync Data");
+                syncDataButton.setText("Sync Data");*/
         }
     }
 }
