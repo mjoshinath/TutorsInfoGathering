@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +62,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private int id;
     private TextView toastTextView;
     private View toastView;
+    private long count;
+    private int syncDataCount = 0;
+    private ProgressBar homeProgressBar;
+    private RelativeLayout homeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +110,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             noOfUnSyncRecords = noOfUnSyncRecords + multipleLeadCaptureDetails.size();
         if (noOfUnSyncRecords > 0)
             syncDataButton.setText("Sync Data ( " + noOfUnSyncRecords + " Unsync Record(s) )");
+        syncDataCount = noOfUnSyncRecords;
     }
 
     private void getWidgets() {
@@ -113,6 +121,9 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         documentationButton = (Button) findViewById(R.id.documentation);
         signUpInstituteButton = (Button) findViewById(R.id.signup_institute);
         tutorsWebSiteButton = (Button) findViewById(R.id.tutors_web_site);
+
+        homeProgressBar = (ProgressBar) findViewById(R.id.home_progress_bar);
+        homeLayout = (RelativeLayout) findViewById(R.id.home_layout);
     }
 
     private void applyActions() {
@@ -169,6 +180,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 break;
             case R.id.sync_data:
                 syncLocalStorageDataToServer();
+                new BackgroundOperation().execute("");
                 break;
             case R.id.reports:
                 callForReportsActivity();
@@ -271,11 +283,14 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         dataBaseHelper.deleteTutor(Long.parseLong(jsonResponse));
         dataBaseHelper.deleteInstitute(Long.parseLong(jsonResponse));
         dataBaseHelper.deleteLeadCapture(Long.parseLong(jsonResponse));
+//        count = dataBaseHelper.getRecordsCountFromDB();
+        syncDataCount = syncDataCount - 1;
+//        new BackgroundOperation().execute("");
     }
 
     @Override
     public void hideProgressBarOnFailure(String response) {
-
+        syncDataCount = syncDataCount - 1;
     }
 
     private View setToastLayout() {
@@ -323,5 +338,44 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private class BackgroundOperation extends AsyncTask<String, Long, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            Log.d("test321", "doInBackground");
+            while (syncDataCount != 0) {
+                Log.d("test321", "syncDataCount" + syncDataCount);
+                Log.d("test321", "hai test");
+            }
+            count = dataBaseHelper.getRecordsCountFromDB();
+            publishProgress(count);
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            homeProgressBar.setVisibility(View.INVISIBLE);
+            homeLayout.setEnabled(true);
+            Log.d("test321", "onPostExecute");
+        }
+
+        @Override
+        protected void onPreExecute() {
+            homeLayout.setEnabled(false);
+            homeProgressBar.setEnabled(false);
+            homeProgressBar.setVisibility(View.VISIBLE);
+            Log.d("test321", "onPreExecute");
+        }
+
+        @Override
+        protected void onProgressUpdate(Long... values) {
+            Log.d("test321", "onProgressUpdate" + values[0]);
+            if (values[0] > 0)
+                syncDataButton.setText("Sync Data ( " + values[0] + " Unsync Record(s) )");
+            else
+                syncDataButton.setText("Sync Data");
+        }
     }
 }

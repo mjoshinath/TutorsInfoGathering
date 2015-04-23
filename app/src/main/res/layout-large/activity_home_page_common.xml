@@ -5,153 +5,166 @@
     android:padding="24dp"
     android:scrollbars="none">
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
+        android:id="@+id/home_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="0dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:paddingTop="12dp"
-        tools:context="tutorsweb.ehc.com.tutorsinfogathering.HomePage">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/home_progress_bar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="18dp"
-            android:paddingLeft="36dp"
-            android:paddingRight="36dp"
-            android:paddingTop="18dp"
-            android:src="@drawable/change" />
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="Welcome"
-            android:textSize="16sp"
-            android:visibility="gone" />
-
-        <LinearLayout
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="24dp"
             android:orientation="vertical"
-            android:weightSum="4">
+            android:paddingBottom="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="12dp"
+            tools:context="tutorsweb.ehc.com.tutorsinfogathering.HomePage">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="18dp"
+                android:paddingLeft="36dp"
+                android:paddingRight="36dp"
+                android:paddingTop="18dp"
+                android:src="@drawable/change" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Welcome"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_height="match_parent"
+                android:layout_margin="24dp"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/signup_tutor"
+                        style="@style/TextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/mybutton"
+                        android:padding="12dp"
+                        android:text="Signup Tutor"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_size" />
+
+                    <Button
+                        android:id="@+id/signup_institute"
+                        style="@style/TextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/mybutton"
+                        android:padding="12dp"
+                        android:text="Signup Institute"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/lead_capture"
+                        style="@style/TextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/mybutton"
+                        android:text="Lead Capture"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_size" />
+
+                    <Button
+                        android:id="@+id/documentation"
+                        style="@style/TextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/mybutton"
+                        android:text="Documentation"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/tutors_web_site"
+                        style="@style/TextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/mybutton"
+                        android:text="TutorsWeb Site"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_size" />
+
+                    <Button
+                        android:id="@+id/reports"
+                        style="@style/TextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/mybutton"
+                        android:text="Reports"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_size" />
+                </LinearLayout>
 
                 <Button
-                    android:id="@+id/signup_tutor"
+                    android:id="@+id/sync_data"
                     style="@style/TextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/mybutton"
-                    android:padding="12dp"
-                    android:text="Signup Tutor"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/text_size" />
-
-                <Button
-                    android:id="@+id/signup_institute"
-                    style="@style/TextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/mybutton"
-                    android:padding="12dp"
-                    android:text="Signup Institute"
+                    android:text="Sync Data"
                     android:textColor="#000000"
                     android:textSize="@dimen/text_size" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <Button
-                    android:id="@+id/lead_capture"
-                    style="@style/TextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/mybutton"
-                    android:text="Lead Capture"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/text_size" />
-
-                <Button
-                    android:id="@+id/documentation"
-                    style="@style/TextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/mybutton"
-                    android:text="Documentation"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/text_size" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <Button
-                    android:id="@+id/tutors_web_site"
-                    style="@style/TextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/mybutton"
-                    android:text="TutorsWeb Site"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/text_size" />
-
-                <Button
-                    android:id="@+id/reports"
-                    style="@style/TextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/mybutton"
-                    android:text="Reports"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/text_size" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/sync_data"
-                style="@style/TextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/mybutton"
-                android:text="Sync Data"
-                android:textColor="#000000"
-                android:textSize="@dimen/text_size" />
         </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

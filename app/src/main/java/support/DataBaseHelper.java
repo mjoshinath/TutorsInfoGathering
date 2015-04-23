@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -197,5 +198,28 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         Log.d("test08", "leadCaptureDetails--->" + leadCaptureDetails);
         return leadCaptureDetails;
+    }
+
+    /*public int getRecordsCountFromDB() {
+        int tutorDetailsCount = getTutorDetails().size();
+        int instituteDetailsCount = getInstituteDetails().size();
+        int leadCaptureDetailsCount = getLeadCaptureDetails().size();
+
+        Log.d("test08", "delete-" + id);
+        return tutorDetailsCount + instituteDetailsCount + leadCaptureDetailsCount;
+    }*/
+
+    public long getRecordsCountFromDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT COUNT(*) FROM " + TUTOR_DETAILS_TABLE_NAME;
+        String sql1 = "SELECT COUNT(*) FROM " + INSTITUTE_DETAILS_TABLE_NAME;
+        String sql2 = "SELECT COUNT(*) FROM " + LEAD_CAPTURE_DETAILS_TABLE_NAME;
+        SQLiteStatement statement = db.compileStatement(sql);
+        SQLiteStatement statement1 = db.compileStatement(sql1);
+        SQLiteStatement statement2 = db.compileStatement(sql2);
+        long count = statement.simpleQueryForLong();
+        long count1 = statement1.simpleQueryForLong();
+        long count2 = statement2.simpleQueryForLong();
+        return count + count1 + count2;
     }
 }
