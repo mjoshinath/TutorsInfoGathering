@@ -70,7 +70,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private RelativeLayout homeLayout;
     private ProgressDialog dialog;
     private AlertDialog dataSyncAlert;
-    private AlertDialog.Builder builder1;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -300,6 +300,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     @Override
     public void hideProgressBarOnFailure(String response) {
         syncDataCount = syncDataCount - 1;
+        dataSyncAlert.dismiss();
     }
 
     private View setToastLayout() {
@@ -354,7 +355,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         protected String doInBackground(String... params) {
             Log.d("test321", "doInBackground");
             while (syncDataCount != 0) {
-//                Log.d("test321", "syncDataCount" + syncDataCount);
             }
             return "";
         }
@@ -378,20 +378,16 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 toastMessageProperties(toastView);
             }
             noOfUnSyncRecords = (int) count;
-           /* try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
+
             Log.d("test321", "onPostExecute");
         }
 
         @Override
         protected void onPreExecute() {
-            builder1 = new AlertDialog.Builder(HomePage.this);
-            builder1.setMessage("Processing...");
-            builder1.setCancelable(false);
-            dataSyncAlert = builder1.create();
+            builder = new AlertDialog.Builder(HomePage.this);
+            builder.setMessage("Processing...");
+            builder.setCancelable(false);
+            dataSyncAlert = builder.create();
             dataSyncAlert.show();
             Log.d("test321", "onPreExecute");
         }

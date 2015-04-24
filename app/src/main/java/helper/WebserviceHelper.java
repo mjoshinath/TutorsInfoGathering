@@ -106,6 +106,8 @@ public class WebserviceHelper {
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
                         Log.d("test18", "fail" + i);
+                        toastTextView.setText("Internal Server Error!");
+                        toastMessageProperties(layout);
                         callBack.hideProgressBarOnFailure("" + id);
                     }
                 });
