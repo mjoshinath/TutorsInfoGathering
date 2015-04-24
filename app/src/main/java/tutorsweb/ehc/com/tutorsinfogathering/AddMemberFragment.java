@@ -14,6 +14,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,6 +80,8 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     private int id;
     private TextView emailIdTextView;
     private EditText contactNo;
+    private TextView toastTextView;
+    private View toastView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,6 +90,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         getSharedPreferences();
 
         id = sharedPreferences.getInt("userId", 0);
+        toastView = setToastLayout();
 
         getWidgetsFromCurrentActivity();
         getWidgetsFromView();
@@ -282,7 +286,9 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 
         if (!(emailId.getText().toString().equals(""))) {
             membersList.add(member);
-            Toast.makeText(getActivity(), "Member Saved", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "Member Saved", Toast.LENGTH_SHORT).show();
+            toastTextView.setText("Member Saved!");
+            toastMessageProperties(toastView);
             isDataSaved = true;
         }
         saveButton.setEnabled(false);
@@ -364,5 +370,20 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() && !TextUtils.isEmpty(email)) {
             saveButton.setEnabled(true);
         }
+    }
+
+    private View setToastLayout() {
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View layout = inflater.inflate(R.layout.toast_view, null);
+        toastTextView = (TextView) layout.findViewById(R.id.toast_message_text_view);
+        return layout;
+    }
+
+    private void toastMessageProperties(View layout) {
+        Toast toast = new Toast(getActivity());
+        toast.setView(layout);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM, 0, 300);
+        toast.show();
     }
 }
