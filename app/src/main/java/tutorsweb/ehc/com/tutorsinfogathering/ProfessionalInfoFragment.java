@@ -21,21 +21,25 @@ import android.widget.Spinner;
 
 public class ProfessionalInfoFragment extends Fragment implements View.OnClickListener {
 
-    private Spinner profExpSpinner;
-    private ArrayAdapter<CharSequence> adapter;
-    private Button next;
-    private Button previous;
     private ActionBar actionBar;
     private EditText tutoringExp;
     private EditText languages;
-    private Spinner yrsOfTeachingExp;
     private EditText interests;
+    private Spinner yrsOfTeachingExp;
+    private Spinner profExpSpinner;
+    private Button next;
     private View view;
-    private FragmentManager fragmentMngr;
-    private FragmentTransaction fragmentTransaction;
     private View professionalPhase;
+
+    private Button previous;
+
+    private ArrayAdapter<CharSequence> adapter;
+    private FragmentManager fragmentMngr;
+
+    private FragmentTransaction fragmentTransaction;
     private SharedPreferences userSharedPreference;
     private SharedPreferences.Editor sharedPrefsEditable;
+
     private String yrsOfTeachingExpText;
 
     @Override
@@ -48,10 +52,7 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         sharedPrefsEditable.putBoolean("professional", true);
         sharedPrefsEditable.commit();
 
-        profExpSpinner = (Spinner) view.findViewById(R.id.teaching_exp);
-        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.years_of_exp, R.layout.simple_spinner_dropdown);
-        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
-        profExpSpinner.setAdapter(adapter);
+        setProfExpAdapter();
 
         previous = (Button) getActivity().findViewById(R.id.previous);
         next = (Button) getActivity().findViewById(R.id.next);
@@ -60,6 +61,26 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         updateUi();
 
         setHasOptionsMenu(true);
+
+        yrsOfTeachingExpSpinnerAction();
+        next.setOnClickListener(this);
+        previous.setOnClickListener(this);
+
+        setActionBarProperties();
+        professionalPhase = getActivity().findViewById(R.id.phase_professional);
+        professionalPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        professionalPhase.setClickable(false);
+        return view;
+    }
+
+    private void setProfExpAdapter() {
+        profExpSpinner = (Spinner) view.findViewById(R.id.teaching_exp);
+        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.years_of_exp, R.layout.simple_spinner_dropdown);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        profExpSpinner.setAdapter(adapter);
+    }
+
+    private void yrsOfTeachingExpSpinnerAction() {
         yrsOfTeachingExp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -71,26 +92,6 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
 
             }
         });
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (doValidation())
-                saveFilledDataInSharedPrefs();
-                fragmentReplaceMethod();
-            }
-        });
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-
-        setActionBarProperties();
-        professionalPhase = getActivity().findViewById(R.id.phase_professional);
-        professionalPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
-        professionalPhase.setClickable(false);
-        return view;
     }
 
     private void updateUi() {
@@ -138,6 +139,7 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
         switch (v.getId()) {
             case R.id.next:
                 if (doValidation()) {
+                    saveFilledDataInSharedPrefs();
                     fragmentReplaceMethod();
                 }
                 break;

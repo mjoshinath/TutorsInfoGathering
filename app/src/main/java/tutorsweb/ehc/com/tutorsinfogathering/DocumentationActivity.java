@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-
 public class DocumentationActivity extends Activity implements View.OnClickListener {
     private Button tutorDemonstration;
     private Button instituteDemonstration;

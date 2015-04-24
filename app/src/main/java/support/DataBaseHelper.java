@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import model.categories.InstituteDetails;
 import model.categories.LeadCaptureDetailsDBModel;
 import model.categories.TutorDetails;
-import model.categories.lead_capture.LeadCaptureDetails;
+
 import tutorsweb.ehc.com.tutorsinfogathering.R;
 
 /**

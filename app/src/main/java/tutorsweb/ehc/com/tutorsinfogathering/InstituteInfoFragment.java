@@ -60,8 +60,17 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     private EditText website;
     private EditText mobileNumber;
     private Button captureImage;
-    private Bitmap photo;
     private ImageView instituteImage;
+    private EditText employeeFirstName;
+    private EditText employeeLastName;
+    private EditText employeeUsername;
+    private EditText employeeEmail;
+    private EditText employeeContactNumber;
+    private TextView emailIdTextView;
+    private TextView instituteNameTextView;
+    private TextView websiteTextView;
+
+    private Bitmap photo;
     private String instituteImageString;
     private String instituteNameText;
     private String address1Text;
@@ -75,24 +84,14 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     private String usernameText;
     private String websiteText;
     private String mobileNumberText;
-    private SharedPreferences instituteSharedPrefs;
-    private SharedPreferences.Editor instituteSharedPrefsEdit;
-
-    private EditText employeeFirstName;
-    private EditText employeeLastName;
-    private EditText employeeUsername;
-    private EditText employeeEmail;
-    private EditText employeeContactNumber;
-
     private String employeeFirstNameText;
     private String employeeLastNameText;
     private String employeeUsernameText;
     private String employeeEmailText;
     private String employeeContactNumberText;
 
-    private TextView emailIdTextView;
-    private TextView instituteNameTextView;
-    private TextView websiteTextView;
+    private SharedPreferences instituteSharedPrefs;
+    private SharedPreferences.Editor instituteSharedPrefsEdit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

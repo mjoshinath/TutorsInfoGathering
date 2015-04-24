@@ -12,11 +12,7 @@ import android.widget.Button;
 
 public class RegStepsHostActivity extends Activity implements View.OnClickListener {
 
-    private FragmentManager fragmentMngr;
-    private FragmentTransaction fragmentTransaction;
     private ActionBar actionBar;
-    private SharedPreferences sharedPrefs;
-    private SharedPreferences.Editor sharedPrefEdit;
     private View phasePersonnel;
     private View phaseCategories;
     private View phaseProfessional;
@@ -24,6 +20,12 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
     private View phaseSubmit;
     private View phaseCaptureImage;
     private Button previousButton;
+
+    private FragmentManager fragmentMngr;
+    private FragmentTransaction fragmentTransaction;
+
+    private SharedPreferences sharedPrefs;
+    private SharedPreferences.Editor sharedPrefEdit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,5 +123,4 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
         }
         fragmentTransaction.commit();
     }
-
 }

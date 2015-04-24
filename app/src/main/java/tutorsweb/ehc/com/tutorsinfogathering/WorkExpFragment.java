@@ -1,7 +1,6 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -23,17 +22,13 @@ import android.widget.EditText;
 
 import java.util.Calendar;
 
-
 public class WorkExpFragment extends Fragment implements View.OnClickListener {
 
+    private ActionBar actionBar;
     private EditText startDate;
     private EditText endDate;
-    private Button next;
     private EditText startDateWorkExp;
     private EditText endDateWorkExp;
-    private Button previous;
-    private ActionBar actionBar;
-    private View datePickerView;
     private EditText degreeName;
     private EditText universityName;
     private EditText fieldOfStudy;
@@ -42,10 +37,15 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
     private EditText jobTitle;
     private EditText jobDescription;
     private EditText locationWorkExp;
+    private View datePickerView;
     private View view;
+    private View workExpPhase;
+    private Button next;
+    private Button previous;
+
     private FragmentManager fragmentMngr;
     private FragmentTransaction fragmentTransaction;
-    private View workExpPhase;
+
     private SharedPreferences userSharedPreference;
     private SharedPreferences.Editor sharedPrefsEditable;
 
@@ -68,19 +68,9 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
         previous = (Button) getActivity().findViewById(R.id.previous);
         setHasOptionsMenu(true);
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveFilledDataInSharedPrefs();
-                fragmentReplaceMethod();
-            }
-        });
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        next.setOnClickListener(this);
+        previous.setOnClickListener(this);
+
         workExpPhase = getActivity().findViewById(R.id.phase_work_exp);
         workExpPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         workExpPhase.setClickable(false);
@@ -178,6 +168,8 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
                 datePickerView = v;
                 break;
             case R.id.next:
+                saveFilledDataInSharedPrefs();
+                fragmentReplaceMethod();
                 break;
             case R.id.previous:
                 getActivity().onBackPressed();

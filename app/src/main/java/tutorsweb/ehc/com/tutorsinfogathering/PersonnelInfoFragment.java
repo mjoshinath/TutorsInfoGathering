@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -38,9 +37,8 @@ import static tutorsweb.ehc.com.tutorsinfogathering.R.*;
 
 public class PersonnelInfoFragment extends Fragment implements View.OnClickListener {
 
-    private static final int PICTURE_REQUEST_CODE = 1;
-    private Button next;
     private ActionBar actionBar;
+    private Button next;
     private EditText firstName;
     private EditText lastName;
     private EditText emailId;
@@ -52,21 +50,22 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private EditText zipCode;
     private EditText country;
     private EditText userName;
-    private boolean valid;
     private Button captureImage;
-    private String fileName;
     private ImageView userImage;
-    private LinearLayout mainView;
-    private Intent intent;
-    private View currentPhase;
+    private Button previous;
+    private View personnelPhase;
     private View view;
+    private TextView emailIdTextView;
+    private TextView mobileNoTextView;
+    private Spinner gender;
+    private ArrayAdapter<CharSequence> adapter;
+
     private FragmentManager fragmentMngr;
     private FragmentTransaction fragmentTransaction;
-    private Button previous;
-    private Button home;
-    private View personnelPhase;
+
     private SharedPreferences userSharedPreference;
     private SharedPreferences.Editor sharedPrefsEditable;
+
     private String firstNameText;
     private String lastNameText;
     private String emailIdText;
@@ -78,13 +77,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private String zipCodeText;
     private String countryText;
     private String userNameText;
-
-    private static final int CAMERA_REQUEST = 1;
-    private Spinner gender;
-    private ArrayAdapter<CharSequence> adapter;
     private String genderSelected;
-    private TextView emailIdTextView;
-    private TextView mobileNoTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,15 +97,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
 
         updateUi();
         setAdapterForGenderSpinner();
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (doValidation()) {
-                    saveFieldsDataInSharedPrefs();
-                    fragmentReplaceMethod();
-                }
-            }
-        });
+
         personnelPhase = getActivity().findViewById(id.phase_personnel);
         personnelPhase.setClickable(false);
         personnelPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
@@ -252,16 +237,11 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
                 Log.d("test18", "home");
                 break;
             case id.next:
-                fragmentReplaceMethod();
-                /*if (doValidation()) {
+                if (doValidation()) {
+                    saveFieldsDataInSharedPrefs();
                     fragmentReplaceMethod();
-                }*/
+                }
                 break;
-            case id.capture_image:
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                break;
-
         }
     }
 

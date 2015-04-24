@@ -29,14 +29,15 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.zip.Inflater;
 
 import helper.Network;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
+
 import model.categories.InstituteDetails;
 import model.categories.LeadCaptureDetailsDBModel;
 import model.categories.TutorDetails;
+
 import support.DataBaseHelper;
 
 public class HomePage extends Activity implements View.OnClickListener, WebServiceCallBack {
@@ -50,14 +51,17 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private Button leadCaptureButton;
 
     private ActionBar actionBar;
+
     private DataBaseHelper dataBaseHelper;
+
     private ArrayList<TutorDetails> multipleTutorDetails;
+    private ArrayList<InstituteDetails> multipleInstituteDetails;
+    private ArrayList<LeadCaptureDetailsDBModel> multipleLeadCaptureDetails;
+
     private SharedPreferences signInCredentialsPrefs;
     private SharedPreferences.Editor signInCredentialsPrefsEdit;
-    private ArrayList<InstituteDetails> multipleInstituteDetails;
     private SharedPreferences categorySharedPref;
     private SharedPreferences.Editor categoryEditor;
-    private ArrayList<LeadCaptureDetailsDBModel> multipleLeadCaptureDetails;
 
     private int noOfUnSyncRecords = 0;
     private Intent intent;
@@ -68,7 +72,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private int syncDataCount = 0;
     private ProgressBar homeProgressBar;
     private RelativeLayout homeLayout;
-    private ProgressDialog dialog;
     private AlertDialog dataSyncAlert;
     private AlertDialog.Builder builder;
 

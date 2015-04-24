@@ -15,40 +15,37 @@ import com.google.gson.Gson;
 import helper.Network;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
+
 import model.categories.reports.Reports;
-import support.DataBaseHelper;
 
 public class ReportsActivity extends Activity implements WebServiceCallBack {
 
-    private ProgressBar tutorCircularProgressBar;
-    private TextView progress;
     private ActionBar actionBar;
-    private SharedPreferences signInCredentialsPrefs;
+    private ProgressBar tutorCircularProgressBar;
+    private ProgressBar instituteCircularProgressBar;
+    private ProgressBar leadCircularProgressBar;
     private TextView tutorProgress;
     private TextView tutorTargetTextView;
-    private Reports reports;
-    private int tutorAchieved;
-    private int tutorTarget;
     private TextView marketingExecutiveId;
     private TextView reportsFor;
-    private ProgressBar instituteCircularProgressBar;
     private TextView instituteProgress;
     private TextView instituteTargetTextView;
-    private ProgressBar leadCircularProgressBar;
     private TextView leadProgress;
     private TextView leadTargetTextView;
+
+    private Reports reports;
+
+    private int tutorAchieved;
+    private int tutorTarget;
     private int instituteTarget;
     private int instituteAchieved;
     private int leadAchieved;
     private int leadTarget;
     private int i;
-    private SharedPreferences.Editor sharedPreferencesEdit;
-    private String targetPersonId;
-    private String month;
-    private String year;
-    private SharedPreferences sharedPreferences;
-    private DataBaseHelper dataBaseHelper;
     private int id;
+
+    private SharedPreferences.Editor sharedPreferencesEdit;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,20 +62,6 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
         if (Network.isConnected(getApplicationContext())) {
             new WebserviceHelper(getApplicationContext()).getData(this, "staff_targets/staff/" + id);
         }
-/*         else {
-            Log.d("test111", "network fail...");
-            tutorTarget = Integer.parseInt(sharedPreferences.getString("tutorTarget", ""));
-            tutorAchieved = Integer.parseInt(sharedPreferences.getString("tutorAchieved", ""));
-            instituteTarget = Integer.parseInt(sharedPreferences.getString("instituteTarget", ""));
-            instituteAchieved = Integer.parseInt(sharedPreferences.getString("instituteAchieved", ""));
-            leadTarget = Integer.parseInt(sharedPreferences.getString("leadTarget", ""));
-            leadAchieved = Integer.parseInt(sharedPreferences.getString("leadAchieved", ""));
-            targetPersonId = sharedPreferences.getString("targetPersonId", "");
-            month = sharedPreferences.getString("month", "");
-            year = sharedPreferences.getString("year", "");
-            Log.d("test111", "data" + tutorTarget + "/" + tutorAchieved + "-" + instituteTarget + "/" + instituteAchieved + "-" + leadTarget + "/" + leadAchieved + "-" + targetPersonId + "," + month + "," + year);
-            updateUi();
-        }*/
 
         setActionBarProperties();
     }
@@ -101,14 +84,11 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
     }
 
     private void updateUi() {
-        /*if (!Network.isConnected(getApplicationContext())) {
-            marketingExecutiveId.setText("ID : " + id);
-            reportsFor.setText("Reports for : " + month + " " + year);
-        } else {*/
         marketingExecutiveId.setText("ID : " + id);
+
         if (reports.getData().size() != 0)
             reportsFor.setText("Reports for : " + reports.getData().get(0).getMonth() + " " + reports.getData().get(0).getYear());
-//        }
+
         tutorCircularProgressBar.setProgress(tutorAchieved);
         tutorCircularProgressBar.setMax(tutorTarget);
         tutorTargetTextView.setText("Target : " + tutorTarget);
@@ -167,22 +147,8 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
             i++;
         }
 
-//        reportsSharedPrefs();
         updateUi();
     }
-
-   /* private void reportsSharedPrefs() {
-        sharedPreferencesEdit.putString("tutorAchieved", "" + tutorAchieved);
-        sharedPreferencesEdit.putString("tutorTarget", "" + tutorTarget);
-        sharedPreferencesEdit.putString("instituteAchieved", "" + instituteAchieved);
-        sharedPreferencesEdit.putString("instituteTarget", "" + instituteTarget);
-        sharedPreferencesEdit.putString("leadAchieved", "" + leadAchieved);
-        sharedPreferencesEdit.putString("leadTarget", "" + leadTarget);
-        sharedPreferencesEdit.putString("targetPersonId", "" + reports.getData().get(0).getTargetPersonId());
-        sharedPreferencesEdit.putString("month", "" + reports.getData().get(0).getMonth());
-        sharedPreferencesEdit.putString("year", "" + reports.getData().get(0).getYear());
-        sharedPreferencesEdit.commit();
-    }*/
 
     @Override
     public void hideProgressBarOnFailure(String response) {

@@ -5,37 +5,31 @@ package helper;
  */
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 import tutorsweb.ehc.com.tutorsinfogathering.R;
 
 public class WebserviceHelper {
     public static AsyncHttpClient client = new AsyncHttpClient();
+
     private final SharedPreferences signInCredentialsPrefs;
     private final SharedPreferences.Editor signInCredentialsPrefsEdit;
-    RequestParams requestParams = new RequestParams();
+
     Context context;
     SharedPreferences preferences;
+
     private TextView toastTextView;
 
     public WebserviceHelper(Context context) {

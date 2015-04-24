@@ -26,45 +26,34 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
 import model.categories.Category;
 import model.categories.SubCategory;
 
-
 public class CategoriesFragment extends Fragment implements View.OnClickListener, WebServiceCallBack {
 
     private ExpandableListView expListView;
-    private HashMap<String, String[]> mainCategoriesAndChilds;
     private HashSet<String> checkedCategories = new HashSet<String>();
     private HashSet<Integer> checkedCategoriesIds = new HashSet<Integer>();
-    private ArrayList<String> mainCategoryNames;
-    private Button next;
     private ActionBar actionBar;
     private View view;
     private FragmentManager fragmentMngr;
     private FragmentTransaction fragmentTransaction;
+    private View categoriesPhase;
+    private int categoriesCheckedSizes;
+
+    ArrayList<Category> categoryResponse;
+
     private Button nextButton;
     private Button previous;
-    private View categoriesPhase;
+
     private SharedPreferences userSharedPreference;
     private SharedPreferences.Editor sharedPrefsEditable;
-    private int categoriesCheckedSizes;
-    private Iterator<String> iterator;
-    private StringBuffer categoriesString = new StringBuffer();
-    private String categoriesStringTemp;
-    private String url;
-    private SubCategory subCategoriesResponse;
-    private Integer id;
-    private String name;
-    private String response;
-    ArrayList<Category> categoryResponse;
+
     private SharedPreferences categorySharedPref;
     private SharedPreferences.Editor categoryEditor;
 
@@ -72,15 +61,30 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_categories, null);
 
-        userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
-        categorySharedPref = getActivity().getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
-        categoryEditor = categorySharedPref.edit();
-        sharedPrefsEditable = userSharedPreference.edit();
+        getSharedPreferences();
 
         sharedPrefsEditable.putBoolean("categories", true);
         sharedPrefsEditable.commit();
 
         expListView = (ExpandableListView) view.findViewById(R.id.categories_exp_listview);
+        getCategoriesData();
+
+        setActionBarProperties();
+        nextButton = (Button) getActivity().findViewById(R.id.next);
+        previous = (Button) getActivity().findViewById(R.id.previous);
+        setHasOptionsMenu(true);
+
+        nextButton.setOnClickListener(this);
+        previous.setOnClickListener(this);
+
+        categoriesPhase = getActivity().findViewById(R.id.phase_categories);
+        categoriesPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        categoriesPhase.setClickable(false);
+
+        return view;
+    }
+
+    private void getCategoriesData() {
         String json = categorySharedPref.getString("categories", "");
         if (json != null && !json.isEmpty()) {
             ArrayList<Category> categories = new Gson().fromJson(json, new TypeToken<ArrayList<Category>>() {
@@ -90,24 +94,13 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
         } else {
             new WebserviceHelper(getActivity().getApplicationContext()).getData(this, "categories");
         }
+    }
 
-        setActionBarProperties();
-        nextButton = (Button) getActivity().findViewById(R.id.next);
-        previous = (Button) getActivity().findViewById(R.id.previous);
-        setHasOptionsMenu(true);
-        nextButton.setOnClickListener(this);
-
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-        categoriesPhase = getActivity().findViewById(R.id.phase_categories);
-        categoriesPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
-        categoriesPhase.setClickable(false);
-
-        return view;
+    private void getSharedPreferences() {
+        userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        sharedPrefsEditable = userSharedPreference.edit();
+        categorySharedPref = getActivity().getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
+        categoryEditor = categorySharedPref.edit();
     }
 
     private void fragmentReplaceMethod() {
@@ -144,9 +137,6 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
                 sharedPrefsEditable.putStringSet("checkedCategories", checkedCategories);
                 sharedPrefsEditable.commit();
                 fragmentReplaceMethod();
-                Log.d("test18", "next called");
-                    /*Intent intent = new Intent(this, ProfessionalInfoFragment.class);
-                    startActivity(intent);*/
 //                } else {
                 Toast.makeText(getActivity(), "Select minimum of three categories", Toast.LENGTH_SHORT);
 //                }
@@ -190,7 +180,6 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            Log.d("test18", "childCount" + categories.get(groupPosition).getSubCategories().size());
             return categories.get(groupPosition).getSubCategories().size();
         }
 
@@ -228,7 +217,6 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
                 convertView = infalInflater.inflate(R.layout.list_group, null);
             }
             lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
-//            lblListHeader.setTypeface(null, Typeface.BOLD);
             lblListHeader.setText(category.getName());
             return convertView;
         }

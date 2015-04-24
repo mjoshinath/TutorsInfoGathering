@@ -62,34 +62,21 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
         captureImagePhase.setClickable(false);
 
         previous.setVisibility(View.VISIBLE);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentReplaceMethod();
-            }
-        });
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+
+        applyActions();
+        updateUi();
 
         setHasOptionsMenu(true);
-
-        captureImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            }
-        });
-
-        updateUi();
 
         setActionBarProperties();
 
         return view;
+    }
+
+    private void applyActions() {
+        next.setOnClickListener(this);
+        previous.setOnClickListener(this);
+        captureImage.setOnClickListener(this);
     }
 
     private void getWidgetsFromCurrentActivity() {
@@ -152,6 +139,12 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
             case R.id.capture_image:
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                break;
+            case R.id.next:
+                fragmentReplaceMethod();
+                break;
+            case R.id.previous:
+                getActivity().onBackPressed();
                 break;
         }
     }

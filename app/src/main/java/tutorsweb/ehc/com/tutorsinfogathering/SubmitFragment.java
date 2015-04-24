@@ -51,12 +51,11 @@ import support.DataBaseHelper;
 
 public class SubmitFragment extends Fragment implements View.OnClickListener, WebServiceCallBack {
 
+    private ActionBar actionBar;
     private Button previous;
     private Button submit;
-    private ActionBar actionBar;
     private View view;
     private View submitPhase;
-    private SharedPreferences sharedPrefs;
     private TextView firstName;
     private TextView lastName;
     private TextView emailId;
@@ -84,19 +83,11 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     private TextView companyName;
     private TextView jobTitle;
     private TextView jobDescription;
-    private SharedPreferences.Editor sharedPrefsEdit;
-    private ImageView userImage;
-    private String userImageStringFormat;
-    private Bitmap userImageInBitFormat;
     private TextView categories;
-    private Set<String> categoriesSet;
-    private Object category;
-    private StringBuilder categoriesString = new StringBuilder();
-    private Iterator<String> iterator;
+    private TextView gender;
+    private ImageView userImage;
 
-    private AsyncHttpClient asyncHttpClient;
-    private RequestParams requestParams;
-    private String url;
+    private Bitmap userImageInBitFormat;
 
     private String firstNameText;
     private String lastNameText;
@@ -126,17 +117,23 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     private String companyNameText;
     private String emailIdText;
     private String mobileNumberText;
-    private JSONObject jsonObject;
+    private String genderSelectedText;
+    private int id;
 
     private DataBaseHelper dataBaseHelper;
-    private String json;
-    private TextView gender;
-    private String genderSelectedText;
+
+    private Set<String> categoriesSet;
     private List<WorkExperiencesAttribute> workExperiencesAttributeList = new ArrayList<WorkExperiencesAttribute>();
     private List<AcademicDegreesAttribute> academicDegreesAttributeList = new ArrayList<AcademicDegreesAttribute>();
+    private StringBuilder categoriesString = new StringBuilder();
+    private Iterator<String> iterator;
+
+    private String json;
+
+    private SharedPreferences sharedPrefs;
+    private SharedPreferences.Editor sharedPrefsEdit;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor sharedPreferencesEdit;
-    private int id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

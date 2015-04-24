@@ -14,7 +14,6 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,30 +33,36 @@ import java.io.UnsupportedEncodingException;
 import helper.Network;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
+
 import model.categories.lead_capture.LeadCaptureDetails;
 import model.categories.lead_capture.LeadCaptureModel;
+
 import support.DataBaseHelper;
 
 public class LeadCapture extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, WebServiceCallBack {
-
-    private WebView webView;
-    private ActionBar actionBar;
-    private Spinner typeOfClient;
-    private Spinner typeOfInteraction;
-    private ArrayAdapter<CharSequence> clientAdapter;
-    private ArrayAdapter<CharSequence> interactionAdapter;
-    private String typeOfClientSelected;
-    private String typeOfInteractionSelected;
-
     private Button submit;
     private EditText clientName;
     private EditText addressLead;
     private EditText contactNumber;
     private EditText emailLead;
     private EditText notes;
+    private TextView emailTextView;
+    private TextView needFollowupTextView;
+    private TextView contactNumberTextView;
     private RadioGroup needFollowup;
-    private int needFollowupSelection;
     private RadioButton selectedOptionId;
+    private RadioButton yes;
+    private RadioButton no;
+    private ActionBar actionBar;
+    private Spinner typeOfClient;
+    private Spinner typeOfInteraction;
+
+    private ArrayAdapter<CharSequence> clientAdapter;
+    private ArrayAdapter<CharSequence> interactionAdapter;
+
+    private String typeOfClientSelected;
+    private String typeOfInteractionSelected;
+    private int needFollowupSelection;
     private String selectedOptionIdText;
     private String selectedOptionIdValue;
     private String clientNameText;
@@ -67,15 +72,12 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     private String notesText;
     private StringEntity entity;
     private String json;
+    private int id;
+
     private DataBaseHelper dataBaseHelper;
-    private RadioButton yes;
-    private RadioButton no;
+
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor sharedPreferencesEdit;
-    private int id;
-    private TextView emailTextView;
-    private TextView needFollowupTextView;
-    private TextView contactNumberTextView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,7 +169,6 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
         Intent intent = new Intent(this, HomePage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

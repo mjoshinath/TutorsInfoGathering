@@ -19,27 +19,27 @@ import android.widget.ProgressBar;
 
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
+
 import support.DataBaseHelper;
 
 public class SignInActivity extends Activity implements View.OnClickListener, WebServiceCallBack {
+    private ActionBar actionBar;
     private EditText emailId;
     private EditText password;
     private Button signIn;
-    private String email;
-    private String passwordString;
-    private ActionBar actionBar;
-    private String[] emailIdResource;
-    private String[] passwordResource;
+    private ProgressBar progressBar;
+    private LinearLayout errorMsgPopup;
+
     private DataBaseHelper databaseHelper;
+    private Cursor cursorObject;
+
     private SharedPreferences signInCredentialsPrefs;
     private SharedPreferences.Editor signInCredentialsPrefsEdit;
-    private LinearLayout errorMsgPopup;
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor sharedPrefsEdit;
     private SharedPreferences categorySharedPref;
     private SharedPreferences.Editor categoryEditor;
-    private ProgressBar progressBar;
-    private Cursor cursorObject;
+
     private int id;
 
     @Override
@@ -142,41 +142,7 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
             case R.id.sign_in:
                 progressBar.setVisibility(View.VISIBLE);
                 emailId.clearFocus();
-                if (doValidation()) {
-                    cursorObject = databaseHelper.getAuthentication(emailId.getText().toString(), password.getText().toString());
-                    if (cursorObject.moveToFirst()) {
-                        do {
-                            id = Integer.parseInt(cursorObject.getString(cursorObject.getColumnIndex("userId")));
-                            Log.d("test143", "id-->" + id);
-                        } while (cursorObject.moveToNext());
-                    }
-                    if (cursorObject.getCount() == 1) {
-                        cursorObject.close();
-
-                        signInCredentialsPrefsEdit.putInt("userId", id);
-                        signInCredentialsPrefsEdit.commit();
-
-                        progressBar.setVisibility(View.INVISIBLE);
-
-                        signInCredentialsPrefsEdit.putString("email", emailId.getText().toString());
-                        signInCredentialsPrefsEdit.putString("password", password.getText().toString());
-                        signInCredentialsPrefsEdit.commit();
-
-                        categoryEditor.putBoolean("logDetect", true);
-                        categoryEditor.commit();
-
-                        Intent intent = new Intent(this, HomePage.class);
-                        startActivity(intent);
-                    } else {
-                        errorMsgPopup.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-                    databaseHelper.close();
-                } else {
-                    errorMsgPopup.setVisibility(View.VISIBLE);
-                    emailId.clearFocus();
-                    password.clearFocus();
-                }
+                getValidationAndAuthentication();
                 break;
             case R.id.email_id:
                 errorMsgPopup.setVisibility(View.INVISIBLE);
@@ -184,6 +150,44 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
             case R.id.password:
                 errorMsgPopup.setVisibility(View.INVISIBLE);
                 break;
+        }
+    }
+
+    private void getValidationAndAuthentication() {
+        if (doValidation()) {
+            cursorObject = databaseHelper.getAuthentication(emailId.getText().toString(), password.getText().toString());
+            if (cursorObject.moveToFirst()) {
+                do {
+                    id = Integer.parseInt(cursorObject.getString(cursorObject.getColumnIndex("userId")));
+                    Log.d("test143", "id-->" + id);
+                } while (cursorObject.moveToNext());
+            }
+            if (cursorObject.getCount() == 1) {
+                cursorObject.close();
+
+                signInCredentialsPrefsEdit.putInt("userId", id);
+                signInCredentialsPrefsEdit.commit();
+
+                progressBar.setVisibility(View.INVISIBLE);
+
+                signInCredentialsPrefsEdit.putString("email", emailId.getText().toString());
+                signInCredentialsPrefsEdit.putString("password", password.getText().toString());
+                signInCredentialsPrefsEdit.commit();
+
+                categoryEditor.putBoolean("logDetect", true);
+                categoryEditor.commit();
+
+                Intent intent = new Intent(this, HomePage.class);
+                startActivity(intent);
+            } else {
+                errorMsgPopup.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+            databaseHelper.close();
+        } else {
+            errorMsgPopup.setVisibility(View.VISIBLE);
+            emailId.clearFocus();
+            password.clearFocus();
         }
     }
 
