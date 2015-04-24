@@ -211,6 +211,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     }
 
     private void syncLocalStorageDataToServer() {
+        Log.d("test1234", "noOfUnSyncRecords-->" + noOfUnSyncRecords);
         if (noOfUnSyncRecords == 0) {
             toastTextView.setText("No Data available to Sync!");
             toastMessageProperties(toastView);
@@ -376,6 +377,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 toastTextView.setText("Process Completed Successfully!");
                 toastMessageProperties(toastView);
             }
+            noOfUnSyncRecords = (int) count;
            /* try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
