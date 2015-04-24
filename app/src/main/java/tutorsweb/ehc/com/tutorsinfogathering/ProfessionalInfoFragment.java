@@ -138,10 +138,10 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                if (doValidation()) {
-                    saveFilledDataInSharedPrefs();
-                    fragmentReplaceMethod();
-                }
+//                if (doValidation()) {
+                saveFilledDataInSharedPrefs();
+                fragmentReplaceMethod();
+//                }
                 break;
             case R.id.previous:
                 getActivity().onBackPressed();
