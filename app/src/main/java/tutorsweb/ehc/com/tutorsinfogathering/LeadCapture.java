@@ -250,6 +250,8 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     }
 
     private void postingLeadCaptureData() {
+        sharedPreferencesEdit.putBoolean("process", true);
+        sharedPreferencesEdit.commit();
         json = createJsonObject();
         Log.d("test999", "json--->" + json);
         if (Network.isConnected(getApplicationContext())) {

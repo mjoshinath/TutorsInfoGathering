@@ -332,6 +332,8 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
                 getActivity().onBackPressed();
                 break;
             case R.id.next:
+                sharedPreferencesEdit.putBoolean("process", true);
+                sharedPreferencesEdit.commit();
                 Log.d("test18", "called");
                 json = createJSONObject();
                 if (Network.isConnected(getActivity())) {

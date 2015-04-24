@@ -193,6 +193,8 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
+                sharedPreferencesEdit.putBoolean("process", true);
+                sharedPreferencesEdit.commit();
                 webServiceCallForInstituteSignUp();
                 /*getFieldsData();
                 maintainSharedPrefs();

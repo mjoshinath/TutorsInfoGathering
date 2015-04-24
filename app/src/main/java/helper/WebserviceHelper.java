@@ -83,26 +83,24 @@ public class WebserviceHelper {
                         String response = new String(bytes);
                         Log.d("test18", "success:" + response);
                         if (response.contains("Email exists")) {
-                            if (!(signInCredentialsPrefs.getString("process", "").equalsIgnoreCase("syncdata"))) {
+                            if (signInCredentialsPrefs.getBoolean("process", false)) {
                                 toastTextView.setText("Email exists");
                                 toastMessageProperties(layout);
                             }
                             callBack.populateData("" + id);
                         } else if (response.contains("Successfully created")) {
-                            if (!(signInCredentialsPrefs.getString("process", "").equalsIgnoreCase("syncdata"))) {
+                            if (signInCredentialsPrefs.getBoolean("process", false)) {
                                 toastTextView.setText("Registration Successful!");
                                 toastMessageProperties(layout);
                             }
                             callBack.populateData("" + id);
                         } else {
-                            if (!(signInCredentialsPrefs.getString("process", "").equalsIgnoreCase("syncdata"))) {
+                            if (signInCredentialsPrefs.getBoolean("process", false)) {
                                 toastTextView.setText("Empty Record!");
                                 toastMessageProperties(layout);
                             }
                             callBack.populateData("" + id);
                         }
-                        signInCredentialsPrefsEdit.putString("process", "");
-                        signInCredentialsPrefsEdit.commit();
                     }
 
                     @Override

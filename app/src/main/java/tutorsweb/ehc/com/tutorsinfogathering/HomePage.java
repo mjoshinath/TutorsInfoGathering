@@ -215,7 +215,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             toastTextView.setText("No Data available to Sync!");
             toastMessageProperties(toastView);
         } else if (Network.isConnected(getApplicationContext())) {
-            signInCredentialsPrefsEdit.putString("process", "syncdata");
+            signInCredentialsPrefsEdit.putBoolean("process", false);
             signInCredentialsPrefsEdit.commit();
 
             Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
@@ -366,14 +366,16 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            dataSyncAlert.dismiss();
             if (count > 0) {
                 syncDataButton.setText("Sync Data ( " + count + " Unsync Record(s) )");
+                toastTextView.setText("Processed Incompletely!");
+                toastMessageProperties(toastView);
             } else {
                 syncDataButton.setText("Sync Data");
+                toastTextView.setText("Process Completed Successfully!");
+                toastMessageProperties(toastView);
             }
-            dataSyncAlert.dismiss();
-            toastTextView.setText("Process Completed!");
-            toastMessageProperties(toastView);
            /* try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
