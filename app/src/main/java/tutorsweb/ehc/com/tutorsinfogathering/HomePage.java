@@ -3,6 +3,7 @@ package tutorsweb.ehc.com.tutorsinfogathering;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.zip.Inflater;
 
 import helper.Network;
 import helper.WebServiceCallBack;
@@ -66,6 +68,9 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private int syncDataCount = 0;
     private ProgressBar homeProgressBar;
     private RelativeLayout homeLayout;
+    private ProgressDialog dialog;
+    private AlertDialog dataSyncAlert;
+    private AlertDialog.Builder builder1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +185,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 break;
             case R.id.sync_data:
                 syncLocalStorageDataToServer();
-                new BackgroundOperation().execute("");
                 break;
             case R.id.reports:
                 callForReportsActivity();
@@ -209,7 +213,11 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private void syncLocalStorageDataToServer() {
         if (noOfUnSyncRecords == 0) {
             toastTextView.setText("No Data available to Sync!");
+            toastMessageProperties(toastView);
         } else if (Network.isConnected(getApplicationContext())) {
+            signInCredentialsPrefsEdit.putString("process", "syncdata");
+            signInCredentialsPrefsEdit.commit();
+
             Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
             if (multipleTutorDetails != null)
                 syncDataForTutor();
@@ -217,10 +225,12 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 syncDataForInstitute();
             if (multipleLeadCaptureDetails != null)
                 syncDataForLeadCapture();
+
+            new BackgroundOperation().execute("");
         } else {
             toastTextView.setText("Network not Connected!");
+            toastMessageProperties(toastView);
         }
-        toastMessageProperties(toastView);
     }
 
     private void syncDataForInstitute() {
@@ -283,9 +293,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         dataBaseHelper.deleteTutor(Long.parseLong(jsonResponse));
         dataBaseHelper.deleteInstitute(Long.parseLong(jsonResponse));
         dataBaseHelper.deleteLeadCapture(Long.parseLong(jsonResponse));
-//        count = dataBaseHelper.getRecordsCountFromDB();
         syncDataCount = syncDataCount - 1;
-//        new BackgroundOperation().execute("");
     }
 
     @Override
@@ -317,7 +325,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-//                        dialog.cancel();
                         Intent startMain = new Intent(Intent.ACTION_MAIN);
                         startMain.addCategory(Intent.CATEGORY_HOME);
                         startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -346,41 +353,48 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         protected String doInBackground(String... params) {
             Log.d("test321", "doInBackground");
             while (syncDataCount != 0) {
-                Log.d("test321", "syncDataCount" + syncDataCount);
-                Log.d("test321", "hai test");
+//                Log.d("test321", "syncDataCount" + syncDataCount);
             }
-//            count = dataBaseHelper.getRecordsCountFromDB();
-//            publishProgress(count);
             return "";
         }
 
         @Override
         protected void onPostExecute(String result) {
             count = dataBaseHelper.getRecordsCountFromDB();
-            if (count > 0)
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (count > 0) {
                 syncDataButton.setText("Sync Data ( " + count + " Unsync Record(s) )");
-            else
+            } else {
                 syncDataButton.setText("Sync Data");
-            homeProgressBar.setVisibility(View.INVISIBLE);
-            homeLayout.setEnabled(true);
+            }
+            dataSyncAlert.dismiss();
+            toastTextView.setText("Process Completed!");
+            toastMessageProperties(toastView);
+           /* try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
             Log.d("test321", "onPostExecute");
         }
 
         @Override
         protected void onPreExecute() {
-            homeLayout.setEnabled(false);
-            homeProgressBar.setEnabled(false);
-            homeProgressBar.setVisibility(View.VISIBLE);
+            builder1 = new AlertDialog.Builder(HomePage.this);
+            builder1.setMessage("Processing...");
+            builder1.setCancelable(false);
+            dataSyncAlert = builder1.create();
+            dataSyncAlert.show();
             Log.d("test321", "onPreExecute");
         }
 
         @Override
         protected void onProgressUpdate(Long... values) {
-            Log.d("test321", "onProgressUpdate" + values[0]);
-            /*if (values[0] > 0)
-                syncDataButton.setText("Sync Data ( " + values[0] + " Unsync Record(s) )");
-            else
-                syncDataButton.setText("Sync Data");*/
+
         }
     }
 }

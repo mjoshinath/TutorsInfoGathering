@@ -31,6 +31,8 @@ import tutorsweb.ehc.com.tutorsinfogathering.R;
 
 public class WebserviceHelper {
     public static AsyncHttpClient client = new AsyncHttpClient();
+    private final SharedPreferences signInCredentialsPrefs;
+    private final SharedPreferences.Editor signInCredentialsPrefsEdit;
     RequestParams requestParams = new RequestParams();
     Context context;
     SharedPreferences preferences;
@@ -39,6 +41,9 @@ public class WebserviceHelper {
     public WebserviceHelper(Context context) {
         this.context = context;
         preferences = context.getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+
+        signInCredentialsPrefs = context.getSharedPreferences("signInCredentials", Context.MODE_MULTI_PROCESS);
+        signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
     }
 
     public void getData(final WebServiceCallBack callBack, String type) {
@@ -46,7 +51,7 @@ public class WebserviceHelper {
         final SharedPreferences.Editor categoryEditor = categorySharedPref.edit();
         if (type.equalsIgnoreCase("categories"))
             client.addHeader("If-None-Match", categorySharedPref.getString("etag", ""));
-        client.get("http://192.168.1.115:5000/api/v1/" + type, new AsyncHttpResponseHandler() {
+        client.get("http://192.168.1.117:5000/api/v1/" + type, new AsyncHttpResponseHandler() {
             //            192.168.1.132:5000/api/v1/staff_targets/staff/id
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
@@ -71,23 +76,33 @@ public class WebserviceHelper {
 
     public void postData(final WebServiceCallBack callBack, StringEntity entity, final long id, String requestType) {
         final View layout = setToastLayout();
-        client.post(context, "http://192.168.1.115:5000/api/v1/" + requestType, entity, "application/json",
+        client.post(context, "http://192.168.1.117:5000/api/v1/" + requestType, entity, "application/json",
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         String response = new String(bytes);
                         Log.d("test18", "success:" + response);
                         if (response.contains("Email exists")) {
-                            toastTextView.setText("Email exists");
+                            if (!(signInCredentialsPrefs.getString("process", "").equalsIgnoreCase("syncdata"))) {
+                                toastTextView.setText("Email exists");
+                                toastMessageProperties(layout);
+                            }
                             callBack.populateData("" + id);
                         } else if (response.contains("Successfully created")) {
-                            toastTextView.setText("Registration Successful!");
+                            if (!(signInCredentialsPrefs.getString("process", "").equalsIgnoreCase("syncdata"))) {
+                                toastTextView.setText("Registration Successful!");
+                                toastMessageProperties(layout);
+                            }
                             callBack.populateData("" + id);
                         } else {
-                            toastTextView.setText("Empty Record!");
+                            if (!(signInCredentialsPrefs.getString("process", "").equalsIgnoreCase("syncdata"))) {
+                                toastTextView.setText("Empty Record!");
+                                toastMessageProperties(layout);
+                            }
                             callBack.populateData("" + id);
                         }
-                        toastMessageProperties(layout);
+                        signInCredentialsPrefsEdit.putString("process", "");
+                        signInCredentialsPrefsEdit.commit();
                     }
 
                     @Override
