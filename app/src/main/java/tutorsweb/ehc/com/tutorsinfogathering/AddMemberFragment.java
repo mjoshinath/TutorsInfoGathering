@@ -199,17 +199,17 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
             case R.id.next:
                 sharedPreferencesEdit.putBoolean("process", true);
                 sharedPreferencesEdit.commit();
-                webServiceCallForInstituteSignUp();
-                /*getFieldsData();
+                getFieldsData();
                 maintainSharedPrefs();
+                json = createJSONObject();
                 if (Network.isConnected(getActivity())) {
                     webServiceCallForInstituteSignUp();
                 } else {
                     dataBaseHelper = new DataBaseHelper(getActivity());
                     dataBaseHelper.insertInstituteDetails(json);
+                    instituteSharedPrefsEdit.clear();
+                    instituteSharedPrefsEdit.commit();
                 }
-                instituteSharedPrefsEdit.clear();
-                instituteSharedPrefsEdit.commit();*/
                 Intent intent = new Intent(getActivity(), HomePage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -230,7 +230,6 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     }
 
     private void webServiceCallForInstituteSignUp() {
-        json = createJSONObject();
         try {
             entity = new StringEntity(json);
         } catch (UnsupportedEncodingException e) {
