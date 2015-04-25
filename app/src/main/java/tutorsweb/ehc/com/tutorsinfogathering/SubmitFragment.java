@@ -1,6 +1,7 @@
 package tutorsweb.ehc.com.tutorsinfogathering;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -134,11 +135,12 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     private SharedPreferences.Editor sharedPrefsEdit;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor sharedPreferencesEdit;
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_submit, null);
-
+//           context=getActivity();
         getWidgets(view);
 
         sharedPrefs = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
@@ -423,10 +425,15 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         sharedPrefsEdit.clear();
         sharedPrefsEdit.commit();
     }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        context = getActivity();
+    }
 
     @Override
     public void hideProgressBarOnFailure(String response) {
-        dataBaseHelper = new DataBaseHelper(getActivity());
+        dataBaseHelper = new DataBaseHelper(context);
         dataBaseHelper.insertTutorDetails(json);
     }
 }

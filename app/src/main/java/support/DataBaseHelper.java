@@ -93,7 +93,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public long insertTutorDetails(String jsonObjectInStringFormat) {
-        SQLiteDatabase db = this.getWritableDatabase();
+//        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("tutorCredentials", jsonObjectInStringFormat);
         long rowId = db.insert(TUTOR_DETAILS_TABLE_NAME, null, values);
@@ -126,12 +127,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Log.d("test08", "delete-" + id);
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TUTOR_DETAILS_TABLE_NAME + " WHERE id=" + id);
+        db.close();
     }
 
     public void deleteInstitute(long id) {
         Log.d("test08", "delete-" + id);
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + INSTITUTE_DETAILS_TABLE_NAME + " WHERE id=" + id);
+        db.close();
     }
 
     public long insertInstituteDetails(String jsonObjectInStringFormat) {
@@ -168,6 +171,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Log.d("test08", "delete-" + id);
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + LEAD_CAPTURE_DETAILS_TABLE_NAME + " WHERE id=" + id);
+        db.close();
     }
 
     public long insertLeadCaptureDetails(String jsonObjectInStringFormat) {
