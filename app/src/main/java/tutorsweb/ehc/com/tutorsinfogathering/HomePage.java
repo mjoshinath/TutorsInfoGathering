@@ -151,11 +151,11 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         actionBar.setTitle("IReg");
     }
 
-    @Override
+  /*  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_page, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -211,6 +211,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private void callForReportsActivity() {
         if (Network.isConnected(getApplicationContext())) {
             intent = new Intent(this, ReportsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else {
             toastTextView.setText("Network not Connected!");

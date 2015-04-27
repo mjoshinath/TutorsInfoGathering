@@ -76,7 +76,7 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
 
     private void getActionBarProperties() {
         actionBar = getActionBar();
-        actionBar.setTitle("RegEzee");
+//        actionBar.setTitle("RegEzee");
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }

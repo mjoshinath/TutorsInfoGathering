@@ -39,4 +39,12 @@ public class TutorsWebSiteHomePage extends Activity {
         }
         return (super.onOptionsItemSelected(menuItem));
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        Intent intent = new Intent(this, HomePage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }
