@@ -19,6 +19,7 @@
         <activity
             android:name=".HomePage"
             android:label="@string/title_activity_home_page"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RegStepsHostActivity"

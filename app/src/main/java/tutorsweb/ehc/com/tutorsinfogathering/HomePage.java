@@ -100,6 +100,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
         setUnSyncDataNotification();
 
+        new UpdateUi().execute("");
+
         setActionBarProperties();
     }
 
@@ -176,14 +178,17 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         switch (view.getId()) {
             case R.id.signup_tutor:
                 intent = new Intent(this, RegStepsHostActivity.class);
+                finish();
                 startActivity(intent);
                 break;
             case R.id.signup_institute:
                 intent = new Intent(this, InstituteSignUpHostActivity.class);
+                finish();
                 startActivity(intent);
                 break;
             case R.id.lead_capture:
                 intent = new Intent(this, LeadCapture.class);
+                finish();
                 startActivity(intent);
                 break;
             case R.id.sync_data:
@@ -394,10 +399,30 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             dataSyncAlert.show();
             Log.d("test321", "onPreExecute");
         }
+    }
+
+    private class UpdateUi extends AsyncTask<String, Long, String> {
 
         @Override
-        protected void onProgressUpdate(Long... values) {
+        protected String doInBackground(String... params) {
+            Log.d("test12345", "doback");
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            count = dataBaseHelper.getRecordsCountFromDB();
+            return "" + count;
+        }
 
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("test12345", "" + s);
+            if (count > 0)
+                syncDataButton.setText("Sync Data ( " + s + " Unsync Record(s) )");
+            else
+                syncDataButton.setText("Sync Data");
         }
     }
 }
