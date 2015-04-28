@@ -49,16 +49,17 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_capture_user_image, container, false);
 
-        sharedPrefs = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        sharedPrefs = getActivity().getSharedPreferences(getActivity().getString(R.string.session), Context.MODE_MULTI_PROCESS);
         sharedPrefsEdit = sharedPrefs.edit();
 
-        sharedPrefsEdit.putBoolean("captureImage", true);
+        sharedPrefsEdit.putBoolean(getActivity().getString(R.string.captureImage), true);
         sharedPrefsEdit.commit();
 
         getWidgetsFromCurrentActivity();
         getWidgetsFromView();
 
-        captureImagePhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        captureImagePhase.setBackgroundColor(getResources().getColor(R.color.ireg_yellow));
+//        captureImagePhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         captureImagePhase.setClickable(false);
 
         previous.setVisibility(View.VISIBLE);
@@ -91,7 +92,7 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
     }
 
     private void updateUi() {
-        userImageStringFormat = sharedPrefs.getString("userImageString", "");
+        userImageStringFormat = sharedPrefs.getString(getActivity().getString(R.string.userImageString), "");
         userImageInBitFormat = stringToBitMap(userImageStringFormat);
         userImage.setImageBitmap(userImageInBitFormat);
     }
@@ -109,7 +110,7 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
 
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
-        actionBar.setTitle("Capture Tutor Picture");
+        actionBar.setTitle(getActivity().getString(R.string.capture_tutor_picture_title));
     }
 
     @Override
@@ -128,7 +129,7 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
     private void fragmentReplaceMethod() {
         fragmentMngr = getFragmentManager();
         fragmentTransaction = fragmentMngr.beginTransaction();
-        fragmentTransaction.addToBackStack("CaptureImage");
+        fragmentTransaction.addToBackStack(getActivity().getString(R.string.CaptureImage));
         fragmentTransaction.replace(R.id.main_view, new CategoriesFragment());
         fragmentTransaction.commit();
     }
@@ -151,12 +152,11 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
+            photo = (Bitmap) data.getExtras().get(getActivity().getString(R.string.data));
             photoTemp = Bitmap.createScaledBitmap(photo, 300, 360, true);
             userImage.setImageBitmap(photoTemp);
             userImageString = BitMapToString(photoTemp);
-            Log.d("test18", "on capture" + userImageString);
-            sharedPrefsEdit.putString("userImageString", userImageString);
+            sharedPrefsEdit.putString(getActivity().getString(R.string.userImageString), userImageString);
             sharedPrefsEdit.commit();
         }
     }
@@ -172,7 +172,8 @@ public class CaptureUserImageFragment extends Fragment implements View.OnClickLi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        captureImagePhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        captureImagePhase.setBackgroundColor(getResources().getColor(R.color.ireg_grey));
+//        captureImagePhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
         captureImagePhase.setClickable(true);
     }
 

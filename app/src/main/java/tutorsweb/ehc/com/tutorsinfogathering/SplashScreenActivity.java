@@ -18,10 +18,10 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen_layout);
 
-        categoriesCredentialsPrefs = getSharedPreferences("categories", MODE_MULTI_PROCESS);
+        categoriesCredentialsPrefs = getSharedPreferences(getString(R.string.categories), MODE_MULTI_PROCESS);
         categoriesCredentialsPrefsEdit = categoriesCredentialsPrefs.edit();
 
-        logDetect = categoriesCredentialsPrefs.getBoolean("logDetect", false);
+        logDetect = categoriesCredentialsPrefs.getBoolean(getString(R.string.logDetect), false);
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

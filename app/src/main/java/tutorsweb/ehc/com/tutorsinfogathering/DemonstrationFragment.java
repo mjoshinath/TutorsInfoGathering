@@ -43,7 +43,7 @@ public class DemonstrationFragment extends Fragment {
 
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
-        actionBar.setTitle("Demonstration");
+        actionBar.setTitle(getActivity().getString(R.string.demonstration_title));
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }

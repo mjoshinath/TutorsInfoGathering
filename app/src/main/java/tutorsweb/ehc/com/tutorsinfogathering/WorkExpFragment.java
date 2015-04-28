@@ -53,58 +53,62 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_work_exp, null);
 
-        userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        userSharedPreference = getActivity().getSharedPreferences(getActivity().getString(R.string.session), Context.MODE_MULTI_PROCESS);
         sharedPrefsEditable = userSharedPreference.edit();
 
-        sharedPrefsEditable.putBoolean("workExp", true);
+        sharedPrefsEditable.putBoolean(getActivity().getString(R.string.workExp), true);
         sharedPrefsEditable.commit();
 
         getWidgets();
         updateUi();
         applyActions();
         setActionBarProperties();
-
-        next = (Button) getActivity().findViewById(R.id.next);
-        previous = (Button) getActivity().findViewById(R.id.previous);
+        getWidgetsFromActivity();
         setHasOptionsMenu(true);
 
         next.setOnClickListener(this);
         previous.setOnClickListener(this);
 
-        workExpPhase = getActivity().findViewById(R.id.phase_work_exp);
-        workExpPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        workExpPhase.setBackgroundColor(getResources().getColor(R.color.ireg_yellow));
+//        workExpPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         workExpPhase.setClickable(false);
         return view;
     }
 
+    private void getWidgetsFromActivity() {
+        next = (Button) getActivity().findViewById(R.id.next);
+        previous = (Button) getActivity().findViewById(R.id.previous);
+        workExpPhase = getActivity().findViewById(R.id.phase_work_exp);
+    }
+
     private void updateUi() {
-        startDate.setText(userSharedPreference.getString("startDateText", ""));
-        endDate.setText(userSharedPreference.getString("endDateText", ""));
-        startDateWorkExp.setText(userSharedPreference.getString("startDateWorkExpText", ""));
-        endDateWorkExp.setText(userSharedPreference.getString("endDateWorkExpText", ""));
-        degreeName.setText(userSharedPreference.getString("degreeNameText", ""));
-        universityName.setText(userSharedPreference.getString("universityNameText", ""));
-        fieldOfStudy.setText(userSharedPreference.getString("fieldOfStudyText", ""));
-        location.setText(userSharedPreference.getString("locationText", ""));
-        companyName.setText(userSharedPreference.getString("companyNameText", ""));
-        jobTitle.setText(userSharedPreference.getString("jobTitleText", ""));
-        locationWorkExp.setText(userSharedPreference.getString("locationWorkExpText", ""));
-        jobDescription.setText(userSharedPreference.getString("jobDescriptionText", ""));
+        startDate.setText(userSharedPreference.getString(getActivity().getString(R.string.startDateText), ""));
+        endDate.setText(userSharedPreference.getString(getActivity().getString(R.string.endDateText), ""));
+        startDateWorkExp.setText(userSharedPreference.getString(getActivity().getString(R.string.startDateWorkExpText), ""));
+        endDateWorkExp.setText(userSharedPreference.getString(getActivity().getString(R.string.endDateWorkExpText), ""));
+        degreeName.setText(userSharedPreference.getString(getActivity().getString(R.string.degreeNameText), ""));
+        universityName.setText(userSharedPreference.getString(getActivity().getString(R.string.universityNameText), ""));
+        fieldOfStudy.setText(userSharedPreference.getString(getActivity().getString(R.string.fieldOfStudyText), ""));
+        location.setText(userSharedPreference.getString(getActivity().getString(R.string.locationText), ""));
+        companyName.setText(userSharedPreference.getString(getActivity().getString(R.string.companyNameText), ""));
+        jobTitle.setText(userSharedPreference.getString(getActivity().getString(R.string.jobTitleText), ""));
+        locationWorkExp.setText(userSharedPreference.getString(getActivity().getString(R.string.locationWorkExpText), ""));
+        jobDescription.setText(userSharedPreference.getString(getActivity().getString(R.string.jobDescriptionText), ""));
     }
 
     private void saveFilledDataInSharedPrefs() {
-        sharedPrefsEditable.putString("startDateText", startDate.getText().toString().trim());
-        sharedPrefsEditable.putString("endDateText", endDate.getText().toString().trim());
-        sharedPrefsEditable.putString("startDateWorkExpText", startDateWorkExp.getText().toString().trim());
-        sharedPrefsEditable.putString("endDateWorkExpText", endDateWorkExp.getText().toString().trim());
-        sharedPrefsEditable.putString("degreeNameText", degreeName.getText().toString().trim());
-        sharedPrefsEditable.putString("universityNameText", universityName.getText().toString().trim());
-        sharedPrefsEditable.putString("fieldOfStudyText", fieldOfStudy.getText().toString().trim());
-        sharedPrefsEditable.putString("locationText", location.getText().toString().trim());
-        sharedPrefsEditable.putString("companyNameText", companyName.getText().toString().trim());
-        sharedPrefsEditable.putString("jobTitleText", jobTitle.getText().toString().trim());
-        sharedPrefsEditable.putString("locationWorkExpText", locationWorkExp.getText().toString().trim());
-        sharedPrefsEditable.putString("jobDescriptionText", jobDescription.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.startDateText), startDate.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.endDateText), endDate.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.startDateWorkExpText), startDateWorkExp.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.endDateWorkExpText), endDateWorkExp.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.degreeNameText), degreeName.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.universityNameText), universityName.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.fieldOfStudyText), fieldOfStudy.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.locationText), location.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.companyNameText), companyName.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.jobTitleText), jobTitle.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.locationWorkExpText), locationWorkExp.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.jobDescriptionText), jobDescription.getText().toString().trim());
 
         sharedPrefsEditable.commit();
     }
@@ -112,7 +116,7 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
     private void fragmentReplaceMethod() {
         fragmentMngr = getFragmentManager();
         fragmentTransaction = fragmentMngr.beginTransaction();
-        fragmentTransaction.addToBackStack("Category");
+        fragmentTransaction.addToBackStack(getActivity().getString(R.string.Category));
         fragmentTransaction.replace(R.id.main_view, new SubmitFragment());
         fragmentTransaction.commit();
     }
@@ -141,7 +145,7 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
 
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
-        actionBar.setTitle("Work Experience");
+        actionBar.setTitle(getActivity().getString(R.string.work_experience_title));
     }
 
     @Override
@@ -177,144 +181,9 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private boolean doValidation() {
-        String degreeName = this.degreeName.getText().toString().trim();
-        String universityName = this.universityName.getText().toString().trim();
-        String startDate = this.startDate.getText().toString().trim();
-        String endDate = this.endDate.getText().toString().trim();
-        String fieldOfStudy = this.fieldOfStudy.getText().toString().trim();
-        String location = this.location.getText().toString().trim();
-
-        String companyName = this.companyName.getText().toString().trim();
-        String jobTitle = this.jobTitle.getText().toString().trim();
-        String startDateWorkExp = this.startDateWorkExp.getText().toString().trim();
-        String endDateWorkExp = this.endDateWorkExp.getText().toString().trim();
-        String locationWorkExp = this.locationWorkExp.getText().toString().trim();
-        String jobDescription = this.jobDescription.getText().toString().trim();
-
-        if (degreeName.equalsIgnoreCase("")) {
-            this.degreeName.setError("Required Degree Name!");
-            this.degreeName.requestFocus();
-            return false;
-        } else {
-            this.degreeName.setError(null);
-        }
-        if (degreeName.length() > 20) {
-            this.degreeName.setError("Degree name should not exceed 20 characters!");
-            this.degreeName.requestFocus();
-            return false;
-        } else {
-            this.degreeName.setError(null);
-        }
-        if (universityName.equalsIgnoreCase("")) {
-            this.universityName.setError("Required University Name!");
-            this.universityName.requestFocus();
-            return false;
-        } else {
-            this.universityName.setError(null);
-        }
-
-        if (universityName.length() > 20) {
-            this.universityName.setError("University Name should not exceed 20 characters!");
-            this.universityName.requestFocus();
-            return false;
-        } else {
-            this.universityName.setError(null);
-        }
-
-        if (startDate.equalsIgnoreCase("")) {
-            this.startDate.setError("Required Start Date!");
-            this.startDate.requestFocus();
-            return false;
-        } else {
-            this.startDate.setError(null);
-        }
-
-        if (endDate.equalsIgnoreCase("")) {
-            this.endDate.setError("Required End Date!");
-            this.endDate.requestFocus();
-            return false;
-        } else {
-            this.endDate.setError(null);
-        }
-
-        if (fieldOfStudy.equalsIgnoreCase("")) {
-            this.fieldOfStudy.setError("Required Field of Study!");
-            this.fieldOfStudy.requestFocus();
-            return false;
-        } else {
-            this.fieldOfStudy.setError(null);
-        }
-
-        if (location.equalsIgnoreCase("")) {
-            this.location.setError("Required Location!");
-            this.location.requestFocus();
-            return false;
-        } else {
-            this.location.setError(null);
-        }
-
-        if (companyName.equalsIgnoreCase("")) {
-            this.companyName.setError("Required Company Name!");
-            this.companyName.requestFocus();
-            return false;
-        } else {
-            this.companyName.setError(null);
-        }
-
-        if (companyName.length() > 20) {
-            this.companyName.setError("Company Name should not exceed 20 characters!");
-            this.companyName.requestFocus();
-            return false;
-        } else {
-            this.companyName.setError(null);
-        }
-
-        if (jobTitle.equalsIgnoreCase("")) {
-            this.jobTitle.setError("Required Job Title!");
-            this.jobTitle.requestFocus();
-            return false;
-        } else {
-            this.jobTitle.setError(null);
-        }
-
-        if (startDateWorkExp.equalsIgnoreCase("")) {
-            this.startDateWorkExp.setError("Required Start Date!");
-            this.startDateWorkExp.requestFocus();
-            return false;
-        } else {
-            this.startDateWorkExp.setError(null);
-        }
-
-        if (endDateWorkExp.equalsIgnoreCase("")) {
-            this.endDateWorkExp.setError("Required End Date!");
-            this.endDateWorkExp.requestFocus();
-            return false;
-        } else {
-            this.endDateWorkExp.setError(null);
-        }
-
-        if (locationWorkExp.equalsIgnoreCase("")) {
-            this.locationWorkExp.setError("Required Location!");
-            this.locationWorkExp.requestFocus();
-            return false;
-        } else {
-            this.locationWorkExp.setError(null);
-        }
-
-        if (jobDescription.equalsIgnoreCase("")) {
-            this.jobDescription.setError("Required Job Description!");
-            this.jobDescription.requestFocus();
-            return false;
-        } else {
-            this.jobDescription.setError(null);
-        }
-        return true;
-    }
-
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
+        newFragment.show(getFragmentManager(), getActivity().getString(R.string.datePicker));
     }
 
     public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
@@ -360,7 +229,8 @@ public class WorkExpFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        workExpPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        workExpPhase.setBackgroundColor(getResources().getColor(R.color.ireg_grey));
+//        workExpPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
         workExpPhase.setClickable(true);
     }
 

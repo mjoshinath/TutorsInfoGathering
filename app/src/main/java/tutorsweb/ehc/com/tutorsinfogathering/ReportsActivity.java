@@ -52,10 +52,10 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
 
-        sharedPreferences = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
+        sharedPreferences = getSharedPreferences(getString(R.string.signInCredentials), MODE_MULTI_PROCESS);
         sharedPreferencesEdit = sharedPreferences.edit();
 
-        id = sharedPreferences.getInt("userId", 0);
+        id = sharedPreferences.getInt(getString(R.string.userId), 0);
 
         getWidgets();
 
@@ -93,24 +93,21 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
         tutorCircularProgressBar.setMax(tutorTarget);
         tutorTargetTextView.setText("Target : " + tutorTarget);
         tutorProgress.setText("" + tutorAchieved);
-        Log.d("test111", "tutor" + tutorAchieved + "" + tutorTarget);
 
         instituteCircularProgressBar.setProgress(instituteAchieved);
         instituteCircularProgressBar.setMax(instituteTarget);
         instituteTargetTextView.setText("Target : " + instituteTarget);
         instituteProgress.setText("" + instituteAchieved);
-        Log.d("test111", "institute" + instituteAchieved + "" + instituteTarget);
 
         leadCircularProgressBar.setProgress(leadAchieved);
         leadCircularProgressBar.setMax(leadTarget);
         leadTargetTextView.setText("Target : " + leadTarget);
         leadProgress.setText("" + leadAchieved);
-        Log.d("test111", "lead" + leadAchieved + "" + leadTarget);
     }
 
     private void setActionBarProperties() {
         actionBar = getActionBar();
-        actionBar.setTitle("Reports");
+        actionBar.setTitle(getString(R.string.reports_title));
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -133,14 +130,13 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
 
         i = 0;
         while (i < reports.getData().size()) {
-            if (reports.getData().get(i).getTargetType().toString().equalsIgnoreCase("tutor")) {
+            if (reports.getData().get(i).getTargetType().toString().equalsIgnoreCase(getString(R.string.tutor))) {
                 tutorAchieved = reports.getData().get(i).getAchieved();
                 tutorTarget = reports.getData().get(i).getTarget();
-                Log.d("test111", "lead" + leadAchieved + "" + leadTarget);
-            } else if (reports.getData().get(i).getTargetType().toString().equalsIgnoreCase("lead")) {
+            } else if (reports.getData().get(i).getTargetType().toString().equalsIgnoreCase(getString(R.string.lead))) {
                 leadAchieved = reports.getData().get(i).getAchieved();
                 leadTarget = reports.getData().get(i).getTarget();
-            } else if (reports.getData().get(i).getTargetType().toString().equalsIgnoreCase("company")) {
+            } else if (reports.getData().get(i).getTargetType().toString().equalsIgnoreCase(getString(R.string.company))) {
                 instituteAchieved = reports.getData().get(i).getAchieved();
                 instituteTarget = reports.getData().get(i).getTarget();
             }

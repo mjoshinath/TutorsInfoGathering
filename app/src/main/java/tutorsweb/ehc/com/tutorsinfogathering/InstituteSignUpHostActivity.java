@@ -22,11 +22,11 @@ public class InstituteSignUpHostActivity extends Activity {
         fragmentTransaction.addToBackStack("");
         fragmentTransaction.add(R.id.main_view, new InstituteInfoFragment()).commit();
 
-        sharedPrefs = getSharedPreferences("session", MODE_MULTI_PROCESS);
+        sharedPrefs = getSharedPreferences(getString(R.string.session), MODE_MULTI_PROCESS);
         sharedPrefEdit = sharedPrefs.edit();
 
-        sharedPrefEdit.putBoolean("instituteInfo", false);
-        sharedPrefEdit.putBoolean("addMember", false);
+        sharedPrefEdit.putBoolean(getString(R.string.instituteInfo), false);
+        sharedPrefEdit.putBoolean(getString(R.string.addMember), false);
     }
 
 }

@@ -47,19 +47,12 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        categorySharedPref = getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
-        categoryEditor = categorySharedPref.edit();
+        getSharedPreferences();
 
-        signInCredentialsPrefs = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
-        signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
-
-        if (signInCredentialsPrefs.contains("email") && !signInCredentialsPrefs.getString("email", "").equals("")) {
+        if (signInCredentialsPrefs.contains(getString(R.string.email)) && !signInCredentialsPrefs.getString(getString(R.string.email), "").equals("")) {
             Intent intent = new Intent(this, HomePage.class);
             startActivity(intent);
         }
-
-        sharedPrefs = getSharedPreferences("session", MODE_MULTI_PROCESS);
-        sharedPrefsEdit = sharedPrefs.edit();
 
         getWidgets();
         updateUi();
@@ -67,9 +60,20 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
 
         applyActions();
 
-        new WebserviceHelper(getApplicationContext()).getData(this, "categories");
+        new WebserviceHelper(getApplicationContext()).getData(this, getString(R.string.categories));
 
         setActionBarProperties();
+    }
+
+    private void getSharedPreferences() {
+        categorySharedPref = getSharedPreferences(getString(R.string.categories), Context.MODE_MULTI_PROCESS);
+        categoryEditor = categorySharedPref.edit();
+
+        signInCredentialsPrefs = getSharedPreferences(getString(R.string.signInCredentials), MODE_MULTI_PROCESS);
+        signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
+
+        sharedPrefs = getSharedPreferences(getString(R.string.session), MODE_MULTI_PROCESS);
+        sharedPrefsEdit = sharedPrefs.edit();
     }
 
     private void applyActions() {
@@ -87,15 +91,15 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
     }
 
     private void updateUi() {
-        emailId.setText(signInCredentialsPrefs.getString("email", ""));
-        password.setText(signInCredentialsPrefs.getString("password", ""));
+        emailId.setText(signInCredentialsPrefs.getString(getString(R.string.email), ""));
+        password.setText(signInCredentialsPrefs.getString(getString(R.string.password), ""));
     }
 
     @Override
     public void populateData(String jsonResponse) {
-        if (jsonResponse.contains("target_person_id"))
-            sharedPrefsEdit.putString("reports", jsonResponse).commit();
-        categoryEditor.putString("categories", jsonResponse).commit();
+        if (jsonResponse.contains(getString(R.string.target_person_id)))
+            sharedPrefsEdit.putString(getString(R.string.reports), jsonResponse).commit();
+        categoryEditor.putString(getString(R.string.categories), jsonResponse).commit();
     }
 
     @Override
@@ -112,24 +116,24 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
         String password = this.password.getText().toString().trim();
         String email = this.emailId.getText().toString().trim();
         if (email.equalsIgnoreCase("")) {
-            emailId.setError("Email field cannot be empty!");
+            emailId.setError(getString(R.string.email_required_msg));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() && !TextUtils.isEmpty(email)) {
-            emailId.setError("Invalid Email");
+            emailId.setError(getString(R.string.invalid_email_msg));
             emailId.requestFocus();
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
         if (password.equalsIgnoreCase("")) {
-            this.password.setError("Password field cannot be empty!");
+            this.password.setError(getString(R.string.password_required_msg));
             this.password.requestFocus();
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
         if (password.length() < 6) {
-            this.password.setError("Password length must be greater than 6");
+            this.password.setError(getString(R.string.password_length_suggest_msg));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
@@ -158,23 +162,22 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
             cursorObject = databaseHelper.getAuthentication(emailId.getText().toString(), password.getText().toString());
             if (cursorObject.moveToFirst()) {
                 do {
-                    id = Integer.parseInt(cursorObject.getString(cursorObject.getColumnIndex("userId")));
-                    Log.d("test143", "id-->" + id);
+                    id = Integer.parseInt(cursorObject.getString(cursorObject.getColumnIndex(getString(R.string.userId))));
                 } while (cursorObject.moveToNext());
             }
             if (cursorObject.getCount() == 1) {
                 cursorObject.close();
 
-                signInCredentialsPrefsEdit.putInt("userId", id);
+                signInCredentialsPrefsEdit.putInt(getString(R.string.userId), id);
                 signInCredentialsPrefsEdit.commit();
 
                 progressBar.setVisibility(View.INVISIBLE);
 
-                signInCredentialsPrefsEdit.putString("email", emailId.getText().toString());
-                signInCredentialsPrefsEdit.putString("password", password.getText().toString());
+                signInCredentialsPrefsEdit.putString(getString(R.string.email), emailId.getText().toString());
+                signInCredentialsPrefsEdit.putString(getString(R.string.password), password.getText().toString());
                 signInCredentialsPrefsEdit.commit();
 
-                categoryEditor.putBoolean("logDetect", true);
+                categoryEditor.putBoolean(getString(R.string.logDetect), true);
                 categoryEditor.commit();
 
                 Intent intent = new Intent(this, HomePage.class);
@@ -194,16 +197,16 @@ public class SignInActivity extends Activity implements View.OnClickListener, We
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Exit Confirmation");
-        builder.setMessage("Do you want to Exit?");
+        builder.setTitle(getString(R.string.exit_confirmation_title));
+        builder.setMessage(getString(R.string.exit_confirmation_msg));
         builder.setCancelable(true);
-        builder.setPositiveButton("Yes",
+        builder.setPositiveButton(getString(R.string.yes),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         applicationExit();
                     }
                 });
-        builder.setNegativeButton("No",
+        builder.setNegativeButton(getString(R.string.no),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

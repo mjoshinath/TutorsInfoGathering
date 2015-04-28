@@ -83,10 +83,10 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lead_capture_layout);
 
-        sharedPreferences = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
+        sharedPreferences = getSharedPreferences(getString(R.string.signInCredentials), MODE_MULTI_PROCESS);
         sharedPreferencesEdit = sharedPreferences.edit();
 
-        id = sharedPreferences.getInt("userId", 0);
+        id = sharedPreferences.getInt(getString(R.string.userId), 0);
 
         getWidgets();
 
@@ -152,7 +152,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
     private void setActionBarProperties() {
         actionBar = getActionBar();
-        actionBar.setTitle("Lead Capture");
+        actionBar.setTitle(getString(R.string.lead_capture_title));
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -176,14 +176,11 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("test888", "onItemSelected");
         switch (parent.getId()) {
             case R.id.type_of_client:
-                Log.d("test888", "type_of_client");
                 typeOfClientSelected = parent.getItemAtPosition(position).toString();
                 break;
             case R.id.type_of_interaction:
-                Log.d("test888", "type_of_interaction:");
                 typeOfInteractionSelected = parent.getItemAtPosition(position).toString();
                 break;
         }
@@ -211,7 +208,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         String mobileNumber = contactNumber.getText().toString().trim();
 
         if (mobileNumber.equalsIgnoreCase("")) {
-            contactNumber.setError("Mobile Number Required!");
+            contactNumber.setError(getString(R.string.mobile_number_required_msg));
             contactNumber.requestFocus();
             return false;
         } else {
@@ -219,7 +216,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         }
 
         if (!Patterns.PHONE.matcher(mobileNumber).matches() && !TextUtils.isEmpty(mobileNumber)) {
-            contactNumber.setError("Invalid Mobile Number");
+            contactNumber.setError(getString(R.string.invalid_mobile_number_msg));
             contactNumber.requestFocus();
             return false;
         } else {
@@ -227,7 +224,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         }
 
         if (emailId.equalsIgnoreCase("")) {
-            emailLead.setError("Email Required!");
+            emailLead.setError(getString(R.string.email_required_msg));
             emailLead.requestFocus();
             return false;
         } else {
@@ -235,7 +232,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         }
 
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches() && !TextUtils.isEmpty(emailId)) {
-            emailLead.setError("Invalid Email");
+            emailLead.setError(getString(R.string.invalid_email_msg));
             emailLead.requestFocus();
             return false;
         } else {
@@ -243,7 +240,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         }
 
         if (!(yes.isChecked() || no.isChecked())) {
-            Toast.makeText(getApplicationContext(), "Need Followup must be Checked!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.need_followup_must_be_checked_msg), Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -251,10 +248,9 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     }
 
     private void postingLeadCaptureData() {
-        sharedPreferencesEdit.putBoolean("process", true);
+        sharedPreferencesEdit.putBoolean(getString(R.string.process), true);
         sharedPreferencesEdit.commit();
         json = createJsonObject();
-        Log.d("test999", "json--->" + json);
         if (Network.isConnected(getApplicationContext())) {
             try {
                 entity = new StringEntity(json);
@@ -280,7 +276,6 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
         leadCaptureDetails.setNotes(notesText);
         leadCaptureDetails.setClientType(typeOfClientSelected);
         leadCaptureDetails.setInteractionType(typeOfInteractionSelected);
-        Log.d("test999", typeOfClientSelected + " and " + typeOfInteractionSelected);
         leadCaptureDetails.setFollowUp(selectedOptionIdValue);
 
         LeadCaptureModel leadCaptureModel = new LeadCaptureModel();
@@ -298,13 +293,12 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
         needFollowupSelection = needFollowup.getCheckedRadioButtonId();
         selectedOptionId = (RadioButton) findViewById(needFollowupSelection);
-        Log.d("test777", "selectedOptionId-->" + selectedOptionId + ",selectedOptionIdText-->" + selectedOptionIdText);
         if (selectedOptionId != null)
             selectedOptionIdText = selectedOptionId.getText().toString();
-        if (selectedOptionIdText.equalsIgnoreCase("yes"))
-            selectedOptionIdValue = "true";
+        if (selectedOptionIdText.equalsIgnoreCase(getString(R.string.yes)))
+            selectedOptionIdValue = getString(R.string.boolean_value_true);
         else
-            selectedOptionIdValue = "false";
+            selectedOptionIdValue = getString(R.string.boolean_value_false);
     }
 
     @Override

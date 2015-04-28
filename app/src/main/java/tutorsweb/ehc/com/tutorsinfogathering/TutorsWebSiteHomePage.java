@@ -24,7 +24,7 @@ public class TutorsWebSiteHomePage extends Activity {
 
     private void setActionBarProperties() {
         actionBar = getActionBar();
-        actionBar.setTitle("TutorsWeb Site");
+        actionBar.setTitle(getString(R.string.tutorsweb_site_title));
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }

@@ -47,7 +47,7 @@ public class DocumentationActivity extends Activity implements View.OnClickListe
 
     private void setActionBarProperties() {
         actionBar = getActionBar();
-        actionBar.setTitle("Documentation");
+        actionBar.setTitle(getString(R.string.documentation_title));
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }

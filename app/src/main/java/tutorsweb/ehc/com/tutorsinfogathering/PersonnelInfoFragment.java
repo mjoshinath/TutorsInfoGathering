@@ -16,7 +16,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -83,10 +82,10 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(layout.activity_personnel_info, null);
 
-        userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        userSharedPreference = getActivity().getSharedPreferences(getActivity().getString(string.session), Context.MODE_MULTI_PROCESS);
         sharedPrefsEditable = userSharedPreference.edit();
 
-        sharedPrefsEditable.putBoolean("personnel", true);
+        sharedPrefsEditable.putBoolean(getActivity().getString(string.personnel), true);
         sharedPrefsEditable.commit();
 
         getWidgetsFromActivity();
@@ -100,7 +99,8 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
 
         personnelPhase = getActivity().findViewById(id.phase_personnel);
         personnelPhase.setClickable(false);
-        personnelPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        personnelPhase.setBackgroundColor(getResources().getColor(color.ireg_yellow));
+//        personnelPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         previous.setVisibility(View.INVISIBLE);
         return view;
     }
@@ -128,17 +128,17 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     }
 
     private void updateUi() {
-        firstName.setText(userSharedPreference.getString("firstNameText", ""));
-        lastName.setText(userSharedPreference.getString("lastNameText", ""));
-        address.setText(userSharedPreference.getString("addressText", ""));
-        city.setText(userSharedPreference.getString("cityText", ""));
-        state.setText(userSharedPreference.getString("stateText", ""));
-        dateOfBirth.setText(userSharedPreference.getString("dateOfBirthText", ""));
-        zipCode.setText(userSharedPreference.getString("zipCodeText", ""));
-        country.setText(userSharedPreference.getString("countryText", ""));
-        userName.setText(userSharedPreference.getString("userNameText", ""));
-        emailId.setText(userSharedPreference.getString("emailIdText", ""));
-        mobileNumber.setText(userSharedPreference.getString("mobileNumberText", ""));
+        firstName.setText(userSharedPreference.getString(getActivity().getString(string.firstNameText), ""));
+        lastName.setText(userSharedPreference.getString(getActivity().getString(string.lastNameText), ""));
+        address.setText(userSharedPreference.getString(getActivity().getString(string.addressText), ""));
+        city.setText(userSharedPreference.getString(getActivity().getString(string.cityText), ""));
+        state.setText(userSharedPreference.getString(getActivity().getString(string.stateText), ""));
+        dateOfBirth.setText(userSharedPreference.getString(getActivity().getString(string.dateOfBirthText), ""));
+        zipCode.setText(userSharedPreference.getString(getActivity().getString(string.zipCodeText), ""));
+        country.setText(userSharedPreference.getString(getActivity().getString(string.countryText), ""));
+        userName.setText(userSharedPreference.getString(getActivity().getString(string.usernameText), ""));
+        emailId.setText(userSharedPreference.getString(getActivity().getString(string.emailIdText), ""));
+        mobileNumber.setText(userSharedPreference.getString(getActivity().getString(string.mobileNumberText), ""));
     }
 
     private void saveFieldsDataInSharedPrefs() {
@@ -155,18 +155,18 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         emailIdText = emailId.getText().toString().trim();
         mobileNumberText = mobileNumber.getText().toString().trim();
 
-        sharedPrefsEditable.putString("firstNameText", firstNameText);
-        sharedPrefsEditable.putString("lastNameText", lastNameText);
-        sharedPrefsEditable.putString("dateOfBirthText", dateOfBirthText);
-        sharedPrefsEditable.putString("addressText", addressText);
-        sharedPrefsEditable.putString("cityText", cityText);
-        sharedPrefsEditable.putString("stateText", stateText);
-        sharedPrefsEditable.putString("zipCodeText", zipCodeText);
-        sharedPrefsEditable.putString("countryText", countryText);
-        sharedPrefsEditable.putString("userNameText", userNameText);
-        sharedPrefsEditable.putString("emailIdText", emailIdText);
-        sharedPrefsEditable.putString("mobileNumberText", mobileNumberText);
-        sharedPrefsEditable.putString("genderSelectedText", genderSelected);
+        sharedPrefsEditable.putString(getActivity().getString(string.firstNameText), firstNameText);
+        sharedPrefsEditable.putString(getActivity().getString(string.lastNameText), lastNameText);
+        sharedPrefsEditable.putString(getActivity().getString(string.dateOfBirthText), dateOfBirthText);
+        sharedPrefsEditable.putString(getActivity().getString(string.addressText), addressText);
+        sharedPrefsEditable.putString(getActivity().getString(string.cityText), cityText);
+        sharedPrefsEditable.putString(getActivity().getString(string.stateText), stateText);
+        sharedPrefsEditable.putString(getActivity().getString(string.zipCodeText), zipCodeText);
+        sharedPrefsEditable.putString(getActivity().getString(string.countryText), countryText);
+        sharedPrefsEditable.putString(getActivity().getString(string.usernameText), userNameText);
+        sharedPrefsEditable.putString(getActivity().getString(string.emailIdText), emailIdText);
+        sharedPrefsEditable.putString(getActivity().getString(string.mobileNumberText), mobileNumberText);
+        sharedPrefsEditable.putString(getActivity().getString(string.genderSelectedText), genderSelected);
 
         sharedPrefsEditable.commit();
     }
@@ -221,7 +221,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
 
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
-        actionBar.setTitle("Personal Information");
+        actionBar.setTitle(getActivity().getString(string.personal_information_title));
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -234,7 +234,6 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
                 break;
             case android.R.id.home:
                 getActivity().onBackPressed();
-                Log.d("test18", "home");
                 break;
             case id.next:
                 if (doValidation()) {
@@ -248,26 +247,17 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     private void fragmentReplaceMethod() {
         fragmentMngr = getFragmentManager();
         fragmentTransaction = fragmentMngr.beginTransaction();
-        fragmentTransaction.addToBackStack("Personnel");
+        fragmentTransaction.addToBackStack(getActivity().getString(string.personnel));
         fragmentTransaction.replace(id.main_view, new CaptureUserImageFragment());
         fragmentTransaction.commit();
     }
 
     private boolean doValidation() {
-        String firstName = this.firstName.getText().toString().trim();
-        String lastName = this.lastName.getText().toString().trim();
-        String dateOfBirth = this.dateOfBirth.getText().toString().trim();
-        String address = this.address.getText().toString().trim();
-        String city = this.city.getText().toString().trim();
-        String state = this.state.getText().toString().trim();
-        String zipCode = this.zipCode.getText().toString().trim();
-        String country = this.country.getText().toString().trim();
-        String userName = this.userName.getText().toString().trim();
         String emailId = this.emailId.getText().toString().trim();
         String mobileNumber = this.mobileNumber.getText().toString().trim();
 
         if (emailId.equalsIgnoreCase("")) {
-            this.emailId.setError("Email Required!");
+            this.emailId.setError(getActivity().getString(string.email_required_msg));
             this.emailId.requestFocus();
             return false;
         } else {
@@ -275,7 +265,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         }
 
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches() && !TextUtils.isEmpty(emailId)) {
-            this.emailId.setError("Invalid Email");
+            this.emailId.setError(getActivity().getString(string.invalid_email_msg));
             this.emailId.requestFocus();
             return false;
         } else {
@@ -283,7 +273,7 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         }
 
         if (mobileNumber.equalsIgnoreCase("")) {
-            this.mobileNumber.setError("Mobile Number Required!");
+            this.mobileNumber.setError(getActivity().getString(string.mobile_number_required_msg));
             this.mobileNumber.requestFocus();
             return false;
         } else {
@@ -291,113 +281,16 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
         }
 
         if (!Patterns.PHONE.matcher(mobileNumber).matches() && !TextUtils.isEmpty(mobileNumber)) {
-            this.mobileNumber.setError("Invalid Mobile Number");
+            this.mobileNumber.setError(getActivity().getString(string.invalid_mobile_number_msg));
             this.mobileNumber.requestFocus();
             return false;
         }
-
-        /*
-        if (firstName.equalsIgnoreCase("")) {
-            this.firstName.setError("Required First Name!");
-            this.firstName.requestFocus();
-            return false;
-        } else {
-            this.firstName.setError(null);
-        }
-
-        if (firstName.length() > 20) {
-            this.firstName.setError("First Name should not exceed 20 characters!");
-            this.firstName.requestFocus();
-            return false;
-        } else {
-            this.firstName.setError(null);
-        }
-
-        if (lastName.equalsIgnoreCase("")) {
-            this.lastName.setError("Required Last Name!");
-            this.lastName.requestFocus();
-            return false;
-        } else {
-            this.lastName.setError(null);
-        }
-
-        if (lastName.length() > 20) {
-            this.lastName.setError("Last Name should not exceed 20 characters!");
-            this.lastName.requestFocus();
-            return false;
-        } else {
-            this.lastName.setError(null);
-        }
-
-        if (dateOfBirth.equalsIgnoreCase("")) {
-            this.dateOfBirth.setError("Required Date of Birth!");
-            this.dateOfBirth.requestFocus();
-            return false;
-        } else {
-            this.dateOfBirth.setError(null);
-        }
-
-        if (address.equalsIgnoreCase("")) {
-            this.address.setError("Required Address!");
-            this.address.requestFocus();
-            return false;
-        } else {
-            this.address.setError(null);
-        }
-
-        if (city.equalsIgnoreCase("")) {
-            this.city.setError("Required City!");
-            this.city.requestFocus();
-            return false;
-        } else {
-            this.city.setError(null);
-        }
-
-        if (state.equalsIgnoreCase("")) {
-            this.state.setError("Required State!");
-            this.state.requestFocus();
-            return false;
-        } else {
-            this.state.setError(null);
-        }
-
-        if (zipCode.equalsIgnoreCase("")) {
-            this.zipCode.setError("Required Zip Code!");
-            this.zipCode.requestFocus();
-            return false;
-        } else {
-            this.zipCode.setError(null);
-        }
-
-        if (zipCode.length() != 6) {
-            this.zipCode.setError("Invalid Zip Code!");
-            this.zipCode.requestFocus();
-            return false;
-        } else {
-            this.zipCode.setError(null);
-        }
-
-        if (country.equalsIgnoreCase("")) {
-            this.country.setError("Required Country!");
-            this.country.requestFocus();
-            return false;
-        } else {
-            this.country.setError(null);
-        }
-
-        if (userName.equalsIgnoreCase("")) {
-            this.userName.setError("Required Username!");
-            this.userName.requestFocus();
-            return false;
-        } else {
-            this.userName.setError(null);
-        }*/
         return true;
     }
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
+        newFragment.show(getFragmentManager(), getActivity().getString(string.datePicker));
     }
 
     public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
@@ -427,16 +320,17 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        personnelPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        personnelPhase.setBackgroundColor(getResources().getColor(color.ireg_grey));
+//        personnelPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
         personnelPhase.setClickable(true);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Intent intent1 = new Intent(getActivity(), HomePage.class);
-        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent1);
+        Intent homeIntent = new Intent(getActivity(), HomePage.class);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
 
 }

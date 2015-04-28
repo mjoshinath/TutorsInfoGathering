@@ -6,14 +6,10 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,17 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
-import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -42,12 +31,13 @@ import java.util.Set;
 import helper.Network;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
+
 import model.categories.AcademicDegreesAttribute;
 import model.categories.Address;
 import model.categories.Tutor;
 import model.categories.TutorModel;
-import model.categories.WorkExperiences;
 import model.categories.WorkExperiencesAttribute;
+
 import support.DataBaseHelper;
 
 public class SubmitFragment extends Fragment implements View.OnClickListener, WebServiceCallBack {
@@ -143,15 +133,15 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
 //           context=getActivity();
         getWidgets(view);
 
-        sharedPrefs = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        sharedPrefs = getActivity().getSharedPreferences(getActivity().getString(R.string.session), Context.MODE_MULTI_PROCESS);
         sharedPrefsEdit = sharedPrefs.edit();
 
-        sharedPreferences = getActivity().getSharedPreferences("signInCredentials", getActivity().MODE_MULTI_PROCESS);
+        sharedPreferences = getActivity().getSharedPreferences(getActivity().getString(R.string.signInCredentials), getActivity().MODE_MULTI_PROCESS);
         sharedPreferencesEdit = sharedPreferences.edit();
 
-        id = sharedPreferences.getInt("userId", 0);
+        id = sharedPreferences.getInt(getActivity().getString(R.string.userId), 0);
 
-        sharedPrefsEdit.putBoolean("submit", true);
+        sharedPrefsEdit.putBoolean(getActivity().getString(R.string.submit), true);
         sharedPrefsEdit.commit();
 
         getSharedPrefsData();
@@ -162,11 +152,12 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
 
         getActivityWidgets();
 
-        submit.setText("Submit");
+        submit.setText(getActivity().getString(R.string.submit));
         submit.setOnClickListener(this);
         previous.setOnClickListener(this);
 
-        submitPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        submitPhase.setBackgroundColor(getResources().getColor(R.color.ireg_yellow));
+//        submitPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         submitPhase.setClickable(false);
         return view;
     }
@@ -178,38 +169,38 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     }
 
     private void getSharedPrefsData() {
-        firstNameText = sharedPrefs.getString("firstNameText", "");
-        lastNameText = sharedPrefs.getString("lastNameText", "");
-        dateOfBirthText = sharedPrefs.getString("dateOfBirthText", "");
-        addressText = sharedPrefs.getString("addressText", "");
-        stateText = sharedPrefs.getString("stateText", "");
-        cityText = sharedPrefs.getString("cityText", "");
-        zipCodeText = sharedPrefs.getString("zipCodeText", "");
-        countryText = sharedPrefs.getString("countryText", "");
-        userNameText = sharedPrefs.getString("userNameText", "");
-        emailIdText = sharedPrefs.getString("emailIdText", "");
-        mobileNumberText = sharedPrefs.getString("mobileNumberText", "");
-        genderSelectedText = sharedPrefs.getString("genderSelectedText", "");
+        firstNameText = sharedPrefs.getString(getActivity().getString(R.string.firstNameText), "");
+        lastNameText = sharedPrefs.getString(getActivity().getString(R.string.lastNameText), "");
+        dateOfBirthText = sharedPrefs.getString(getActivity().getString(R.string.dateOfBirthText), "");
+        addressText = sharedPrefs.getString(getActivity().getString(R.string.addressText), "");
+        stateText = sharedPrefs.getString(getActivity().getString(R.string.stateText), "");
+        cityText = sharedPrefs.getString(getActivity().getString(R.string.cityText), "");
+        zipCodeText = sharedPrefs.getString(getActivity().getString(R.string.zipCodeText), "");
+        countryText = sharedPrefs.getString(getActivity().getString(R.string.countryText), "");
+        userNameText = sharedPrefs.getString(getActivity().getString(R.string.usernameText), "");
+        emailIdText = sharedPrefs.getString(getActivity().getString(R.string.emailIdText), "");
+        mobileNumberText = sharedPrefs.getString(getActivity().getString(R.string.mobileNumberText), "");
+        genderSelectedText = sharedPrefs.getString(getActivity().getString(R.string.genderSelectedText), "");
 
-        userImageString = sharedPrefs.getString("userImageString", "");
+        userImageString = sharedPrefs.getString(getActivity().getString(R.string.userImageString), "");
 
-        yrsOfTeachingExpText = sharedPrefs.getString("yrsOfTeachingExpText", "");
-        tutoringExpText = sharedPrefs.getString("tutoringExpText", "");
-        languagesText = sharedPrefs.getString("languagesText", "");
-        interestsText = sharedPrefs.getString("interestsText", "");
+        yrsOfTeachingExpText = sharedPrefs.getString(getActivity().getString(R.string.yrsOfTeachingExpText), "");
+        tutoringExpText = sharedPrefs.getString(getActivity().getString(R.string.tutoringExpText), "");
+        languagesText = sharedPrefs.getString(getActivity().getString(R.string.languagesText), "");
+        interestsText = sharedPrefs.getString(getActivity().getString(R.string.interestsText), "");
 
-        degreeNameText = sharedPrefs.getString("degreeNameText", "");
-        universityNameText = sharedPrefs.getString("universityNameText", "");
-        startDateText = sharedPrefs.getString("startDateText", "");
-        endDateText = sharedPrefs.getString("endDateText", "");
-        startDateWorkExpText = sharedPrefs.getString("startDateWorkExpText", "");
-        endDateWorkExpText = sharedPrefs.getString("endDateWorkExpText", "");
-        locationText = sharedPrefs.getString("locationText", "");
-        locationWorkExpText = sharedPrefs.getString("locationWorkExpText", "");
-        jobTitleText = sharedPrefs.getString("jobTitleText", "");
-        jobDescriptionText = sharedPrefs.getString("jobDescriptionText", "");
-        fieldOfStudyText = sharedPrefs.getString("fieldOfStudyText", "");
-        companyNameText = sharedPrefs.getString("companyNameText", "");
+        degreeNameText = sharedPrefs.getString(getActivity().getString(R.string.degreeNameText), "");
+        universityNameText = sharedPrefs.getString(getActivity().getString(R.string.universityNameText), "");
+        startDateText = sharedPrefs.getString(getActivity().getString(R.string.startDateText), "");
+        endDateText = sharedPrefs.getString(getActivity().getString(R.string.endDateText), "");
+        startDateWorkExpText = sharedPrefs.getString(getActivity().getString(R.string.startDateWorkExpText), "");
+        endDateWorkExpText = sharedPrefs.getString(getActivity().getString(R.string.endDateWorkExpText), "");
+        locationText = sharedPrefs.getString(getActivity().getString(R.string.locationText), "");
+        locationWorkExpText = sharedPrefs.getString(getActivity().getString(R.string.locationWorkExpText), "");
+        jobTitleText = sharedPrefs.getString(getActivity().getString(R.string.jobTitleText), "");
+        jobDescriptionText = sharedPrefs.getString(getActivity().getString(R.string.jobDescriptionText), "");
+        fieldOfStudyText = sharedPrefs.getString(getActivity().getString(R.string.fieldOfStudyText), "");
+        companyNameText = sharedPrefs.getString(getActivity().getString(R.string.companyNameText), "");
     }
 
     private void getWidgets(View view) {
@@ -262,11 +253,10 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
         mobileNumber.setText(mobileNumberText);
         gender.setText(genderSelectedText);
 
-        Log.d("test18", "image in string->" + userImageString);
         userImageInBitFormat = stringToBitMap(userImageString);
         userImage.setImageBitmap(userImageInBitFormat);
 
-        categoriesSet = sharedPrefs.getStringSet("checkedCategories", null);
+        categoriesSet = sharedPrefs.getStringSet(getActivity().getString(R.string.checkedCategories), null);
         if (categoriesSet != null) {
             iterator = categoriesSet.iterator();
             while (iterator.hasNext()) {
@@ -307,7 +297,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
 
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
-        actionBar.setTitle("Review / Submit");
+        actionBar.setTitle(context.getString(R.string.review_or_submit_title));
     }
 
     @Override
@@ -327,13 +317,11 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.previous:
-                Log.d("test18", "previous called");
                 getActivity().onBackPressed();
                 break;
             case R.id.next:
-                sharedPreferencesEdit.putBoolean("process", true);
+                sharedPreferencesEdit.putBoolean(getActivity().getString(R.string.process), true);
                 sharedPreferencesEdit.commit();
-                Log.d("test18", "called");
                 json = createJSONObject();
                 if (Network.isConnected(getActivity())) {
                     StringEntity entity = null;
@@ -410,8 +398,9 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        submit.setText("Next");
-        submitPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        submit.setText(getActivity().getString(R.string.next));
+        submitPhase.setBackgroundColor(getResources().getColor(R.color.ireg_grey));
+//        submitPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
         submitPhase.setClickable(true);
     }
 

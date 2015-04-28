@@ -46,10 +46,10 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_professional_info, null);
 
-        userSharedPreference = getActivity().getSharedPreferences("session", Context.MODE_MULTI_PROCESS);
+        userSharedPreference = getActivity().getSharedPreferences(getActivity().getString(R.string.session), Context.MODE_MULTI_PROCESS);
         sharedPrefsEditable = userSharedPreference.edit();
 
-        sharedPrefsEditable.putBoolean("professional", true);
+        sharedPrefsEditable.putBoolean(getActivity().getString(R.string.professional), true);
         sharedPrefsEditable.commit();
 
         setProfExpAdapter();
@@ -68,7 +68,8 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
 
         setActionBarProperties();
         professionalPhase = getActivity().findViewById(R.id.phase_professional);
-        professionalPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        professionalPhase.setBackgroundColor(getResources().getColor(R.color.ireg_yellow));
+//        professionalPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         professionalPhase.setClickable(false);
         return view;
     }
@@ -95,9 +96,9 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     }
 
     private void updateUi() {
-        tutoringExp.setText(userSharedPreference.getString("tutoringExpText", ""));
-        languages.setText(userSharedPreference.getString("languagesText", ""));
-        interests.setText(userSharedPreference.getString("interestsText", ""));
+        tutoringExp.setText(userSharedPreference.getString(getActivity().getString(R.string.tutoringExpText), ""));
+        languages.setText(userSharedPreference.getString(getActivity().getString(R.string.languagesText), ""));
+        interests.setText(userSharedPreference.getString(getActivity().getString(R.string.interestsText), ""));
     }
 
     private void getWidgets() {
@@ -108,10 +109,10 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     }
 
     private void saveFilledDataInSharedPrefs() {
-        sharedPrefsEditable.putString("yrsOfTeachingExpText", yrsOfTeachingExpText);
-        sharedPrefsEditable.putString("tutoringExpText", tutoringExp.getText().toString().trim());
-        sharedPrefsEditable.putString("languagesText", languages.getText().toString().trim());
-        sharedPrefsEditable.putString("interestsText", interests.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.yrsOfTeachingExpText), yrsOfTeachingExpText);
+        sharedPrefsEditable.putString(getActivity().getString(R.string.tutoringExpText), tutoringExp.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.languagesText), languages.getText().toString().trim());
+        sharedPrefsEditable.putString(getActivity().getString(R.string.interestsText), interests.getText().toString().trim());
 
         sharedPrefsEditable.commit();
     }
@@ -131,7 +132,7 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
 
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
-        actionBar.setTitle("Professional Information");
+        actionBar.setTitle(getActivity().getString(R.string.professional_information_title));
     }
 
     @Override
@@ -152,7 +153,7 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     private void fragmentReplaceMethod() {
         fragmentMngr = getFragmentManager();
         fragmentTransaction = fragmentMngr.beginTransaction();
-        fragmentTransaction.addToBackStack("Professional");
+        fragmentTransaction.addToBackStack(getActivity().getString(R.string.professional));
         fragmentTransaction.replace(R.id.main_view, new WorkExpFragment());
         fragmentTransaction.commit();
     }
@@ -181,7 +182,8 @@ public class ProfessionalInfoFragment extends Fragment implements View.OnClickLi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        professionalPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        professionalPhase.setBackgroundColor(getResources().getColor(R.color.ireg_grey));
+//        professionalPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
         professionalPhase.setClickable(true);
     }
 

@@ -32,7 +32,7 @@ public class DemonstrationActivity extends Activity {
 
         @Override
         public int getCount() {
-            return getIntent().getIntExtra("size", 0);
+            return getIntent().getIntExtra(getString(R.string.size), 0);
         }
     }
 }

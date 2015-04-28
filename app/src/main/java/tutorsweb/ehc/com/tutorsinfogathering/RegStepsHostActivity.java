@@ -6,7 +6,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -42,15 +41,15 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
         phaseCaptureImage.setOnClickListener(this);
         previousButton.setOnClickListener(this);*/
 
-        sharedPrefs = getSharedPreferences("session", MODE_MULTI_PROCESS);
+        sharedPrefs = getSharedPreferences(getString(R.string.session), MODE_MULTI_PROCESS);
         sharedPrefEdit = sharedPrefs.edit();
 
-        sharedPrefEdit.putBoolean("personnel", false);
-        sharedPrefEdit.putBoolean("captureImage", false);
-        sharedPrefEdit.putBoolean("categories", false);
-        sharedPrefEdit.putBoolean("professional", false);
-        sharedPrefEdit.putBoolean("workExp", false);
-        sharedPrefEdit.putBoolean("submit", false);
+        sharedPrefEdit.putBoolean(getString(R.string.personnel), false);
+        sharedPrefEdit.putBoolean(getString(R.string.captureImage), false);
+        sharedPrefEdit.putBoolean(getString(R.string.categories), false);
+        sharedPrefEdit.putBoolean(getString(R.string.professional), false);
+        sharedPrefEdit.putBoolean(getString(R.string.workExp), false);
+        sharedPrefEdit.putBoolean(getString(R.string.submit), false);
 
         getActionBarProperties();
 
@@ -58,7 +57,7 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
         fragmentTransaction = fragmentMngr.beginTransaction();
         fragmentTransaction.addToBackStack("");
 
-        sharedPrefEdit.putInt("mainView", R.id.main_view);
+        sharedPrefEdit.putInt(getString(R.string.mainView), R.id.main_view);
         sharedPrefEdit.commit();
 
         fragmentTransaction.add(R.id.main_view, new PersonnelInfoFragment()).commit();
@@ -76,14 +75,13 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
 
     private void getActionBarProperties() {
         actionBar = getActionBar();
-        actionBar.setTitle("RegEzee");
+//        actionBar.setTitle("RegEzee");
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void onBackPressed() {
-        Log.d("test333", "onBackPressed");
         super.onBackPressed();
     }
 
@@ -94,27 +92,27 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
         fragmentTransaction.addToBackStack("");
         switch (v.getId()) {
             case R.id.phase_personnel:
-                if (sharedPrefs.getBoolean("personnel", false))
+                if (sharedPrefs.getBoolean(getString(R.string.personnel), false))
                     fragmentTransaction.replace(R.id.main_view, new PersonnelInfoFragment());
                 break;
             case R.id.phase_capture_image:
-                if (sharedPrefs.getBoolean("captureImage", false))
+                if (sharedPrefs.getBoolean(getString(R.string.captureImage), false))
                     fragmentTransaction.replace(R.id.main_view, new CaptureUserImageFragment());
                 break;
             case R.id.phase_categories:
-                if (sharedPrefs.getBoolean("categories", false))
+                if (sharedPrefs.getBoolean(getString(R.string.categories), false))
                     fragmentTransaction.replace(R.id.main_view, new CategoriesFragment());
                 break;
             case R.id.phase_professional:
-                if (sharedPrefs.getBoolean("professional", false))
+                if (sharedPrefs.getBoolean(getString(R.string.professional), false))
                     fragmentTransaction.replace(R.id.main_view, new ProfessionalInfoFragment());
                 break;
             case R.id.phase_work_exp:
-                if (sharedPrefs.getBoolean("workExp", false))
+                if (sharedPrefs.getBoolean(getString(R.string.workExp), false))
                     fragmentTransaction.replace(R.id.main_view, new WorkExpFragment());
                 break;
             case R.id.phase_submit:
-                if (sharedPrefs.getBoolean("submit", false))
+                if (sharedPrefs.getBoolean(getString(R.string.submit), false))
                     fragmentTransaction.replace(R.id.main_view, new SubmitFragment());
                 break;
             case R.id.previous:

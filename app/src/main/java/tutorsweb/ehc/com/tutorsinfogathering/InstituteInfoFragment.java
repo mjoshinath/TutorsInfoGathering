@@ -97,7 +97,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_institute_info, container, false);
 
-        instituteSharedPrefs = getActivity().getSharedPreferences("instituteSession", Context.MODE_MULTI_PROCESS);
+        instituteSharedPrefs = getActivity().getSharedPreferences(getString(R.string.instituteSession), Context.MODE_MULTI_PROCESS);
         instituteSharedPrefsEdit = instituteSharedPrefs.edit();
 
         getWidgets();
@@ -107,7 +107,8 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
 
         applyActions();
 
-        institutePhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        institutePhase.setBackgroundColor(getResources().getColor(R.color.ireg_yellow));
+//        institutePhase.setBackgroundColor(Color.parseColor("#FFCB04"));
         previous.setVisibility(View.INVISIBLE);
 
         setHasOptionsMenu(true);
@@ -140,32 +141,30 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         instituteDescription.setText(instituteSharedPrefs.getString(instituteDescriptionText, ""));
         username.setText(instituteSharedPrefs.getString(usernameText, ""));
         website.setText(instituteSharedPrefs.getString(websiteText, ""));
-        Log.d("testp", "instituteSharedPrefs" + instituteSharedPrefs.getString(websiteText, ""));
-
         mobileNumber.setText(instituteSharedPrefs.getString(mobileNumberText, ""));
         instituteImage.setImageBitmap(stringToBitMap(instituteSharedPrefs.getString(instituteImageString, "")));
     }
 
     private void maintainSharedPrefs() {
-        instituteSharedPrefsEdit.putString("instituteNameText", instituteNameText);
-        instituteSharedPrefsEdit.putString("address1Text", address1Text);
-        instituteSharedPrefsEdit.putString("address2Text", address2Text);
-        instituteSharedPrefsEdit.putString("cityText", cityText);
-        instituteSharedPrefsEdit.putString("stateText", stateText);
-        instituteSharedPrefsEdit.putString("zipCodeText", zipCodeText);
-        instituteSharedPrefsEdit.putString("countryText", countryText);
-        instituteSharedPrefsEdit.putString("dateOfEstablishmentText", dateOfEstablishmentText);
-        instituteSharedPrefsEdit.putString("instituteDescriptionText", instituteDescriptionText);
-        instituteSharedPrefsEdit.putString("usernameText", usernameText);
-        instituteSharedPrefsEdit.putString("websiteText", websiteText);
-        instituteSharedPrefsEdit.putString("mobileNumberText", mobileNumberText);
-        instituteSharedPrefsEdit.putString("instituteImageString", instituteImageString);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.instituteNameText), instituteNameText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.address1Text), address1Text);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.address2Text), address2Text);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.cityText), cityText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.stateText), stateText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.zipCodeText), zipCodeText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.countryText), countryText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.dateOfEstablishmentText), dateOfEstablishmentText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.instituteDescriptionText), instituteDescriptionText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.usernameText), usernameText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.websiteText), websiteText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.mobileNumberText), mobileNumberText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.instituteImageString), instituteImageString);
 
-        instituteSharedPrefsEdit.putString("employeeFirstNameText", employeeFirstNameText);
-        instituteSharedPrefsEdit.putString("employeeLastNameText", employeeLastNameText);
-        instituteSharedPrefsEdit.putString("employeeUsernameText", employeeUsernameText);
-        instituteSharedPrefsEdit.putString("employeeEmailText", employeeEmailText);
-        instituteSharedPrefsEdit.putString("employeeContactNumberText", employeeContactNumberText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.employeeFirstNameText), employeeFirstNameText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.employeeLastNameText), employeeLastNameText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.employeeUsernameText), employeeUsernameText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.employeeEmailText), employeeEmailText);
+        instituteSharedPrefsEdit.putString(getActivity().getString(R.string.employeeContactNumberText), employeeContactNumberText);
 
         instituteSharedPrefsEdit.commit();
     }
@@ -182,7 +181,6 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         instituteDescriptionText = instituteDescription.getText().toString();
         usernameText = username.getText().toString();
         websiteText = website.getText().toString();
-        Log.d("testp", "websiteText" + websiteText);
         mobileNumberText = mobileNumber.getText().toString();
 
         employeeFirstNameText = employeeFirstName.getText().toString();
@@ -240,7 +238,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
 
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
-        actionBar.setTitle("Institute Information");
+        actionBar.setTitle(getActivity().getString(R.string.institute_information_title));
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -271,7 +269,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         String websiteName = website.getText().toString().trim();
 
         if (instituteName.equalsIgnoreCase("")) {
-            this.instituteName.setError("Institute Name Required!");
+            this.instituteName.setError(getActivity().getString(R.string.institute_name_required_msg));
             this.instituteName.requestFocus();
             return false;
         } else {
@@ -279,7 +277,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         }
 
         if (websiteName.equalsIgnoreCase("")) {
-            website.setError("Website URL Required!");
+            website.setError(getActivity().getString(R.string.website_url_required_msg));
             website.requestFocus();
             return false;
         } else {
@@ -287,7 +285,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         }
 
         if (!Patterns.WEB_URL.matcher(websiteName).matches() && !TextUtils.isEmpty(websiteName)) {
-            website.setError("Invalid Website URL!");
+            website.setError(getActivity().getString(R.string.invalid_website_url));
             website.requestFocus();
             return false;
         } else {
@@ -295,7 +293,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         }
 
         if (emailId.equalsIgnoreCase("")) {
-            employeeEmail.setError("Email Required!");
+            employeeEmail.setError(getActivity().getString(R.string.email_required_msg));
             employeeEmail.requestFocus();
             return false;
         } else {
@@ -303,7 +301,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
         }
 
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches() && !TextUtils.isEmpty(emailId)) {
-            employeeEmail.setError("Invalid Email");
+            employeeEmail.setError(getActivity().getString(R.string.invalid_email_msg));
             employeeEmail.requestFocus();
             return false;
         } else {
@@ -314,10 +312,9 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
+            photo = (Bitmap) data.getExtras().get(getString(R.string.data));
             instituteImage.setImageBitmap(photo);
             instituteImageString = BitMapToString(photo);
-            Log.d("test18", "on capture" + instituteImageString);
         }
     }
 
@@ -356,7 +353,7 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     private void fragmentReplaceMethod() {
         fragmentMngr = getFragmentManager();
         fragmentTransaction = fragmentMngr.beginTransaction();
-        fragmentTransaction.addToBackStack("Institute");
+        fragmentTransaction.addToBackStack(getActivity().getString(R.string.Institute));
         fragmentTransaction.replace(R.id.main_view, new AddMemberFragment());
         fragmentTransaction.commit();
     }
@@ -372,12 +369,13 @@ public class InstituteInfoFragment extends Fragment implements View.OnClickListe
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        institutePhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        institutePhase.setBackgroundColor(getResources().getColor(R.color.ireg_grey));
+//        institutePhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
     }
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
+        newFragment.show(getFragmentManager(), getActivity().getString(R.string.datePicker));
     }
 
     public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {

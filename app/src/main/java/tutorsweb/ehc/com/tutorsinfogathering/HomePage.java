@@ -80,15 +80,11 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page_common);
 
-        categorySharedPref = getSharedPreferences("categories", Context.MODE_MULTI_PROCESS);
-        categoryEditor = categorySharedPref.edit();
-
-        signInCredentialsPrefs = getSharedPreferences("signInCredentials", MODE_MULTI_PROCESS);
-        signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
+        getSharedPreferences();
 
         toastView = setToastLayout();
 
-        id = signInCredentialsPrefs.getInt("userId", 0);
+        id = signInCredentialsPrefs.getInt(getString(R.string.userId), 0);
 
         getWidgets();
 
@@ -103,6 +99,14 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         new UpdateUi().execute("");
 
         setActionBarProperties();
+    }
+
+    private void getSharedPreferences() {
+        categorySharedPref = getSharedPreferences(getString(R.string.categories), Context.MODE_MULTI_PROCESS);
+        categoryEditor = categorySharedPref.edit();
+
+        signInCredentialsPrefs = getSharedPreferences(getString(R.string.signInCredentials), MODE_MULTI_PROCESS);
+        signInCredentialsPrefsEdit = signInCredentialsPrefs.edit();
     }
 
     private void getLocalStorageData() {
@@ -148,7 +152,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
     private void setActionBarProperties() {
         actionBar = getActionBar();
-        actionBar.setTitle("IReg");
+        actionBar.setTitle(getString(R.string.ireg_title));
     }
 
     @Override
@@ -163,7 +167,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         if (id == R.id.logout) {
             signInCredentialsPrefsEdit.clear();
             signInCredentialsPrefsEdit.commit();
-            categoryEditor.putBoolean("logDetect", false);
+            categoryEditor.putBoolean(getString(R.string.logDetect), false);
             categoryEditor.commit();
             Intent intent = new Intent(this, SignInActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -213,22 +217,20 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             intent = new Intent(this, ReportsActivity.class);
             startActivity(intent);
         } else {
-            toastTextView.setText("Network not Connected!");
+            toastTextView.setText(getString(R.string.network_not_connected_msg));
             toastMessageProperties(toastView);
         }
     }
 
     private void syncLocalStorageDataToServer() {
-        Log.d("test1234", "noOfUnSyncRecords-->" + noOfUnSyncRecords);
         if (noOfUnSyncRecords == 0) {
-            toastTextView.setText("No Data available to Sync!");
+            toastTextView.setText(getString(R.string.no_data_available_to_sync_msg));
             toastMessageProperties(toastView);
         } else if (Network.isConnected(getApplicationContext())) {
             new BackgroundOperation().execute("");
-            signInCredentialsPrefsEdit.putBoolean("process", false);
+            signInCredentialsPrefsEdit.putBoolean(getString(R.string.process), false);
             signInCredentialsPrefsEdit.commit();
 
-            Log.d("test08", "multipleTutorDetails-" + multipleTutorDetails);
             if (multipleTutorDetails != null)
                 syncDataForTutor();
             if (multipleInstituteDetails != null)
@@ -236,7 +238,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             if (multipleLeadCaptureDetails != null)
                 syncDataForLeadCapture();
         } else {
-            toastTextView.setText("Network not Connected!");
+            toastTextView.setText(getString(R.string.network_not_connected_msg));
             toastMessageProperties(toastView);
         }
     }
@@ -245,12 +247,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         Iterator<InstituteDetails> instituteIterator = multipleInstituteDetails.iterator();
         while (instituteIterator.hasNext()) {
             InstituteDetails eachInstituteDetails = instituteIterator.next();
-            Log.d("test111", "eachInstituteDetails>----->" + eachInstituteDetails);
             try {
                 JSONObject eachInstituteDetailsInJsonFormat = new JSONObject(eachInstituteDetails.getDetails());
                 StringEntity entity = null;
                 entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
-                Log.d("test08", "entity-" + entity);
                 new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/" + id);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -268,7 +268,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 JSONObject eachTutorDetailsInJsonFormat = new JSONObject(eachTutorDetails.getDetails());
                 StringEntity entity = null;
                 entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
-                Log.d("test08", "entity-" + entity);
                 new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/" + id);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -286,7 +285,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 JSONObject eachLeadCaptureDetailsInJsonFormat = new JSONObject(eachLeadCaptureDetails.getDetails());
                 StringEntity entity = null;
                 entity = new StringEntity(eachLeadCaptureDetailsInJsonFormat.toString());
-                Log.d("test888", "eachLeadCaptureDetails.getId()-" + eachLeadCaptureDetails.getId());
                 new WebserviceHelper(getApplicationContext()).postData(this, entity, eachLeadCaptureDetails.getId(), "lead_capture/staff/" + id);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -328,10 +326,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Exit Confirmation");
-        builder.setMessage("Do you want to Exit?");
+        builder.setTitle(getString(R.string.exit_confirmation_title));
+        builder.setMessage(getString(R.string.exit_confirmation_msg));
         builder.setCancelable(true);
-        builder.setPositiveButton("Yes",
+        builder.setPositiveButton(getString(R.string.yes),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -340,7 +338,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                         startActivity(startMain);
                     }
                 });
-        builder.setNegativeButton("No",
+        builder.setNegativeButton(getString(R.string.no),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -360,7 +358,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
         @Override
         protected String doInBackground(String... params) {
-            Log.d("test321", "doInBackground");
             while (syncDataCount != 0) {
             }
             return "";
@@ -377,24 +374,22 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             dataSyncAlert.dismiss();
             if (count > 0) {
                 syncDataButton.setText("Sync Data ( " + count + " Unsync Record(s) )");
-                toastTextView.setText("Processed Incompletely!");
+                toastTextView.setText(getString(R.string.processed_incompletely_msg));
                 toastMessageProperties(toastView);
             } else {
-                syncDataButton.setText("Sync Data");
-                toastTextView.setText("Process Completed Successfully!");
+                syncDataButton.setText(getString(R.string.sync_data));
+                toastTextView.setText(getString(R.string.process_completed_successfully_msg));
                 toastMessageProperties(toastView);
             }
             noOfUnSyncRecords = (int) count;
-
-            Log.d("test321", "onPostExecute");
         }
 
         @Override
         protected void onPreExecute() {
             builder = new AlertDialog.Builder(HomePage.this);
 //            builder.setMessage("Processing...");
-            builder.setTitle("Processing...");
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            builder.setTitle(getString(R.string.processing_msg));
+            builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.cancel();
                 }
@@ -402,7 +397,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             builder.setCancelable(false);
             dataSyncAlert = builder.create();
             dataSyncAlert.show();
-            Log.d("test321", "onPreExecute");
         }
     }
 
@@ -410,7 +404,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
         @Override
         protected String doInBackground(String... params) {
-            Log.d("test12345", "doback");
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
@@ -423,11 +416,10 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("test12345", "" + s);
             if (count > 0)
                 syncDataButton.setText("Sync Data ( " + s + " Unsync Record(s) )");
             else
-                syncDataButton.setText("Sync Data");
+                syncDataButton.setText(getString(R.string.sync_data));
         }
     }
 }

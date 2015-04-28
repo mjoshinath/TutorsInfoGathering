@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import helper.Network;
 import helper.WebServiceCallBack;
 import helper.WebserviceHelper;
-import model.categories.MemberInfo;
 import model.categories.company.Company;
 import model.categories.company.CompanyModel;
 import model.categories.company.EmployeesAttribute;
@@ -71,7 +70,6 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     private SharedPreferences.Editor instituteSharedPrefsEdit;
     private StringEntity entity;
     private String json;
-    private JSONObject jsonObject;
     private ArrayList<EmployeesAttribute> listOfEmployeeAttributes;
     private DataBaseHelper dataBaseHelper;
     private Context context;
@@ -89,7 +87,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 
         getSharedPreferences();
 
-        id = sharedPreferences.getInt("userId", 0);
+        id = sharedPreferences.getInt(context.getString(R.string.userId), 0);
         toastView = setToastLayout();
 
         getWidgetsFromCurrentActivity();
@@ -100,9 +98,10 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 
         membersList = new ArrayList<Member>();
 
-        addMemberPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+//        addMemberPhase.setBackgroundColor(Color.parseColor("#FFCB04"));
+        addMemberPhase.setBackgroundColor(getResources().getColor(R.color.ireg_yellow));
 
-        nextButton.setText("Submit");
+        nextButton.setText(context.getString(R.string.submit));
 
         previousButton.setVisibility(View.VISIBLE);
         applyActions();
@@ -116,10 +115,10 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     }
 
     private void getSharedPreferences() {
-        instituteSharedPrefs = getActivity().getSharedPreferences("instituteSession", Context.MODE_MULTI_PROCESS);
+        instituteSharedPrefs = getActivity().getSharedPreferences(context.getString(R.string.instituteSession), Context.MODE_MULTI_PROCESS);
         instituteSharedPrefsEdit = instituteSharedPrefs.edit();
 
-        sharedPreferences = context.getSharedPreferences("signInCredentials", context.MODE_MULTI_PROCESS);
+        sharedPreferences = context.getSharedPreferences(context.getString(R.string.signInCredentials), context.MODE_MULTI_PROCESS);
         sharedPreferencesEdit = sharedPreferences.edit();
     }
 
@@ -157,17 +156,17 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     }
 
     private void maintainSharedPrefs() {
-        instituteSharedPrefsEdit.putString("firstNameText", firstNameText);
-        instituteSharedPrefsEdit.putString("lastNameText", lastNameText);
-        instituteSharedPrefsEdit.putString("emailIdText", emailIdText);
+        instituteSharedPrefsEdit.putString(context.getString(R.string.firstNameText), firstNameText);
+        instituteSharedPrefsEdit.putString(context.getString(R.string.lastNameText), lastNameText);
+        instituteSharedPrefsEdit.putString(context.getString(R.string.emailIdText), emailIdText);
 
         instituteSharedPrefsEdit.commit();
     }
 
     private void updateUi() {
-        firstName.setText(instituteSharedPrefs.getString("firstNameText", ""));
-        lastName.setText(instituteSharedPrefs.getString("lastNameText", ""));
-        emailId.setText(instituteSharedPrefs.getString("emailIdText", ""));
+        firstName.setText(instituteSharedPrefs.getString(context.getString(R.string.firstNameText), ""));
+        lastName.setText(instituteSharedPrefs.getString(context.getString(R.string.lastNameText), ""));
+        emailId.setText(instituteSharedPrefs.getString(context.getString(R.string.emailIdText), ""));
         saveButton.setEnabled(false);
         addMemberButton.setEnabled(false);
     }
@@ -188,7 +187,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
 
     private void setActionBarProperties() {
         actionBar = getActivity().getActionBar();
-        actionBar.setTitle("Add Member");
+        actionBar.setTitle(context.getString(R.string.add_member_title));
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -197,7 +196,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                sharedPreferencesEdit.putBoolean("process", true);
+                sharedPreferencesEdit.putBoolean(context.getString(R.string.process), true);
                 sharedPreferencesEdit.commit();
                 getFieldsData();
                 maintainSharedPrefs();
@@ -241,27 +240,27 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     private String createJSONObject() {
         EmployeesAttribute employeesAttribute = new EmployeesAttribute();
 
-        employeesAttribute.setFirstName(instituteSharedPrefs.getString("employeeFirstNameText", ""));
-        employeesAttribute.setLastName(instituteSharedPrefs.getString("employeeLastNameText", ""));
-        employeesAttribute.setEmail(instituteSharedPrefs.getString("employeeEmailText", ""));
-        employeesAttribute.setPrimaryContactNumber(instituteSharedPrefs.getString("employeeContactNumberText", ""));
-        employeesAttribute.setDisplayName(instituteSharedPrefs.getString("employeeUsernameText", ""));
-        employeesAttribute.setIsAdmin("true");
-        employeesAttribute.setIsMobileSignup("true");
+        employeesAttribute.setFirstName(instituteSharedPrefs.getString(context.getString(R.string.employeeFirstNameText), ""));
+        employeesAttribute.setLastName(instituteSharedPrefs.getString(context.getString(R.string.employeeLastNameText), ""));
+        employeesAttribute.setEmail(instituteSharedPrefs.getString(context.getString(R.string.employeeEmailText), ""));
+        employeesAttribute.setPrimaryContactNumber(instituteSharedPrefs.getString(context.getString(R.string.employeeContactNumberText), ""));
+        employeesAttribute.setDisplayName(instituteSharedPrefs.getString(context.getString(R.string.employeeUsernameText), ""));
+        employeesAttribute.setIsAdmin(context.getString(R.string.boolean_value_true));
+        employeesAttribute.setIsMobileSignup(context.getString(R.string.boolean_value_true));
 
         Company company = new Company();
 
-        company.setName(instituteSharedPrefs.getString("instituteNameText", ""));
-        company.setBanner(instituteSharedPrefs.getString("instituteImageString", ""));
-        company.setDescription(instituteSharedPrefs.getString("instituteDescriptionText", ""));
-        company.setEstablishedOn(instituteSharedPrefs.getString("dateOfEstablishmentText", ""));
-        company.setWebsite(instituteSharedPrefs.getString("websiteText", ""));
+        company.setName(instituteSharedPrefs.getString(context.getString(R.string.instituteNameText), ""));
+        company.setBanner(instituteSharedPrefs.getString(context.getString(R.string.instituteImageString), ""));
+        company.setDescription(instituteSharedPrefs.getString(context.getString(R.string.instituteDescriptionText), ""));
+        company.setEstablishedOn(instituteSharedPrefs.getString(context.getString(R.string.dateOfEstablishmentText), ""));
+        company.setWebsite(instituteSharedPrefs.getString(context.getString(R.string.websiteText), ""));
 //        company.setSubdomain();
-        company.setStreet1(instituteSharedPrefs.getString("address1Text", ""));
-        company.setCity(instituteSharedPrefs.getString("cityText", ""));
+        company.setStreet1(instituteSharedPrefs.getString(context.getString(R.string.address1Text), ""));
+        company.setCity(instituteSharedPrefs.getString(context.getString(R.string.cityText), ""));
 //        company.setState();
-        company.setZipCode(instituteSharedPrefs.getString("zipCodeText", ""));
-        company.setCountry(instituteSharedPrefs.getString("countryText", ""));
+        company.setZipCode(instituteSharedPrefs.getString(context.getString(R.string.zipCodeText), ""));
+        company.setCountry(instituteSharedPrefs.getString(context.getString(R.string.countryText), ""));
         company.setMembers(membersList);
 
         listOfEmployeeAttributes = new ArrayList<EmployeesAttribute>();
@@ -286,7 +285,7 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
         if (!(emailId.getText().toString().equals(""))) {
             membersList.add(member);
 //            Toast.makeText(getActivity(), "Member Saved", Toast.LENGTH_SHORT).show();
-            toastTextView.setText("Member Saved!");
+            toastTextView.setText(context.getString(R.string.member_saved_msg));
             toastMessageProperties(toastView);
             isDataSaved = true;
         }
@@ -322,8 +321,9 @@ public class AddMemberFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        nextButton.setText("Next");
-        addMemberPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
+        nextButton.setText(context.getString(R.string.next));
+        addMemberPhase.setBackgroundColor(getResources().getColor(R.color.ireg_grey));
+//        addMemberPhase.setBackgroundColor(Color.parseColor("#B0B6BC"));
     }
 
     @Override
