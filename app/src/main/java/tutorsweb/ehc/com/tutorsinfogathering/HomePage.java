@@ -224,6 +224,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             toastTextView.setText("No Data available to Sync!");
             toastMessageProperties(toastView);
         } else if (Network.isConnected(getApplicationContext())) {
+            new BackgroundOperation().execute("");
             signInCredentialsPrefsEdit.putBoolean("process", false);
             signInCredentialsPrefsEdit.commit();
 
@@ -234,8 +235,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 syncDataForInstitute();
             if (multipleLeadCaptureDetails != null)
                 syncDataForLeadCapture();
-
-            new BackgroundOperation().execute("");
         } else {
             toastTextView.setText("Network not Connected!");
             toastMessageProperties(toastView);
@@ -393,7 +392,13 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         @Override
         protected void onPreExecute() {
             builder = new AlertDialog.Builder(HomePage.this);
-            builder.setMessage("Processing...");
+//            builder.setMessage("Processing...");
+            builder.setTitle("Processing...");
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
             builder.setCancelable(false);
             dataSyncAlert = builder.create();
             dataSyncAlert.show();
