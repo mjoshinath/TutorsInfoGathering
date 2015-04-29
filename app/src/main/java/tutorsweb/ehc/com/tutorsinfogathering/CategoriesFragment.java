@@ -219,8 +219,8 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             Category category = getGroup(groupPosition);
             if (convertView == null) {
-                LayoutInflater infalInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.list_group, null);
+                LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = layoutInflater.inflate(R.layout.list_group, null);
             }
             lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
             lblListHeader.setText(category.getName());
@@ -236,8 +236,8 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             final SubCategory subCategory = getChild(groupPosition, childPosition);
             if (convertView == null) {
-                LayoutInflater infalInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.list_item, null);
+                LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = layoutInflater.inflate(R.layout.list_item, null);
             }
             CheckBox txtListChild = (CheckBox) convertView.findViewById(R.id.lblListItem);
 

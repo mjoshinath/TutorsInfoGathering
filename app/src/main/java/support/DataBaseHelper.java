@@ -61,7 +61,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             values.put("email", emailIdResource[i]);
             values.put("password", passwordResource[i]);
             values.put("userId", userIdResource[i]);
-            Log.d("test143", "userId :" + userIdResource[i]);
             tutorsWebDataBase.insert(MARKETING_CREDENTIALS_TABLE_NAME, null, values);
         }
     }
@@ -75,17 +74,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + MARKETING_CREDENTIALS_TABLE_NAME + " where email='" + email + "' and password='" + password + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        Log.d("test143", "cursor : " + cursor);
-        Log.d("test143", "columnNames : " + cursor.getColumnNames());
 
         if (cursor.moveToFirst()) {
             do {
-                Log.d("test143", "0: " + cursor.getInt(0));
-                Log.d("test143", "1: " + cursor.getString(1));
-                Log.d("test143", "2: " + cursor.getString(2));
-                Log.d("test143", "3: " + cursor.getString(3));
                 id = Integer.parseInt(cursor.getString(3));
-                Log.d("test123", "id-->" + id);
             } while (cursor.moveToNext());
         }
 
@@ -106,31 +98,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        int count = cursor.getCount();
-        Log.d("test08", "count-" + count);
         if (cursor.moveToFirst()) {
             do {
                 TutorDetails tutorDetail = new TutorDetails();
                 tutorDetail.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 tutorDetail.setDetails(cursor.getString(cursor.getColumnIndex("tutorCredentials")));
                 tutorDetails.add(tutorDetail);
-                Log.d("test08", "tutorDetail-" + tutorDetail);
             } while (cursor.moveToNext());
         }
         cursor.close();
-        Log.d("test08", "tutorDetails-" + tutorDetails);
         return tutorDetails;
     }
 
     public void deleteTutor(long id) {
-        Log.d("test08", "delete-" + id);
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TUTOR_DETAILS_TABLE_NAME + " WHERE id=" + id);
         db.close();
     }
 
     public void deleteInstitute(long id) {
-        Log.d("test08", "delete-" + id);
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + INSTITUTE_DETAILS_TABLE_NAME + " WHERE id=" + id);
         db.close();
@@ -151,23 +137,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         int count = cursor.getCount();
-        Log.d("test08", "count-" + count);
         if (cursor.moveToFirst()) {
             do {
                 InstituteDetails instituteDetail = new InstituteDetails();
                 instituteDetail.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 instituteDetail.setDetails(cursor.getString(cursor.getColumnIndex("instituteCredentials")));
                 instituteDetails.add(instituteDetail);
-                Log.d("test08", "tutorDetail-" + instituteDetail);
             } while (cursor.moveToNext());
         }
         cursor.close();
-        Log.d("test08", "tutorDetails-" + tutorDetails);
         return instituteDetails;
     }
 
     public void deleteLeadCapture(long id) {
-        Log.d("test08", "delete-" + id);
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + LEAD_CAPTURE_DETAILS_TABLE_NAME + " WHERE id=" + id);
         db.close();
@@ -188,41 +170,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         int count = cursor.getCount();
-        Log.d("test08", "count-" + count);
         if (cursor.moveToFirst()) {
             do {
                 LeadCaptureDetailsDBModel leadCaptureDetailsDBModel = new LeadCaptureDetailsDBModel();
                 leadCaptureDetailsDBModel.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 leadCaptureDetailsDBModel.setDetails(cursor.getString(cursor.getColumnIndex("leadCaptureCredentials")));
                 leadCaptureDetails.add(leadCaptureDetailsDBModel);
-                Log.d("test08", "leadCaptureDetails-" + leadCaptureDetails);
             } while (cursor.moveToNext());
         }
         cursor.close();
-        Log.d("test08", "leadCaptureDetails--->" + leadCaptureDetails);
         return leadCaptureDetails;
     }
 
-    /*public int getRecordsCountFromDB() {
-        int tutorDetailsCount = getTutorDetails().size();
-        int instituteDetailsCount = getInstituteDetails().size();
-        int leadCaptureDetailsCount = getLeadCaptureDetails().size();
-
-        Log.d("test08", "delete-" + id);
-        return tutorDetailsCount + instituteDetailsCount + leadCaptureDetailsCount;
-    }*/
-
     public long getRecordsCountFromDB() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT COUNT(*) FROM " + TUTOR_DETAILS_TABLE_NAME;
-        String sql1 = "SELECT COUNT(*) FROM " + INSTITUTE_DETAILS_TABLE_NAME;
-        String sql2 = "SELECT COUNT(*) FROM " + LEAD_CAPTURE_DETAILS_TABLE_NAME;
-        SQLiteStatement statement = db.compileStatement(sql);
-        SQLiteStatement statement1 = db.compileStatement(sql1);
-        SQLiteStatement statement2 = db.compileStatement(sql2);
-        long count = statement.simpleQueryForLong();
-        long count1 = statement1.simpleQueryForLong();
-        long count2 = statement2.simpleQueryForLong();
-        return count + count1 + count2;
+
+        String tutorRecordsCountSql = "SELECT COUNT(*) FROM " + TUTOR_DETAILS_TABLE_NAME;
+        String instituteRecordsCountSql = "SELECT COUNT(*) FROM " + INSTITUTE_DETAILS_TABLE_NAME;
+        String leadCaptureRecordsCountSql = "SELECT COUNT(*) FROM " + LEAD_CAPTURE_DETAILS_TABLE_NAME;
+
+        SQLiteStatement tutorSqlStatement = db.compileStatement(tutorRecordsCountSql);
+        SQLiteStatement instituteSqlStatement = db.compileStatement(instituteRecordsCountSql);
+        SQLiteStatement leadCaptureSqlStatement = db.compileStatement(leadCaptureRecordsCountSql);
+
+        long tutorsDetailsCount = tutorSqlStatement.simpleQueryForLong();
+        long institutesDetailsCount = instituteSqlStatement.simpleQueryForLong();
+        long leadCaptureDetailsCount = leadCaptureSqlStatement.simpleQueryForLong();
+
+        return tutorsDetailsCount + institutesDetailsCount + leadCaptureDetailsCount;
     }
 }
