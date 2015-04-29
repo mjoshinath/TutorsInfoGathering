@@ -4,9 +4,11 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -75,6 +77,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private AlertDialog dataSyncAlert;
     private AlertDialog.Builder builder;
 
+    private ResponseReceiver receiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,9 +100,14 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
         setUnSyncDataNotification();
 
-        new UpdateUi().execute("");
+//        new UpdateUi().execute("");
 
         setActionBarProperties();
+
+        IntentFilter filter = new IntentFilter(ResponseReceiver.ACTION_RESP);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new ResponseReceiver();
+        registerReceiver(receiver, filter);
     }
 
     private void getSharedPreferences() {
@@ -196,7 +205,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 startActivity(intent);
                 break;
             case R.id.sync_data:
-                syncLocalStorageDataToServer();
+                startService(new Intent(this, SyncDataService.class));
+//                syncLocalStorageDataToServer();
                 break;
             case R.id.reports:
                 callForReportsActivity();
@@ -222,7 +232,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         }
     }
 
-    private void syncLocalStorageDataToServer() {
+    /*private void syncLocalStorageDataToServer() {
         if (noOfUnSyncRecords == 0) {
             toastTextView.setText(getString(R.string.no_data_available_to_sync_msg));
             toastMessageProperties(toastView);
@@ -241,9 +251,9 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             toastTextView.setText(getString(R.string.network_not_connected_msg));
             toastMessageProperties(toastView);
         }
-    }
+    }*/
 
-    private void syncDataForInstitute() {
+    /*private void syncDataForInstitute() {
         Iterator<InstituteDetails> instituteIterator = multipleInstituteDetails.iterator();
         while (instituteIterator.hasNext()) {
             InstituteDetails eachInstituteDetails = instituteIterator.next();
@@ -292,7 +302,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 
     @Override
     public void populateData(String jsonResponse) {
@@ -400,7 +410,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         }
     }
 
-    private class UpdateUi extends AsyncTask<String, Long, String> {
+    /*private class UpdateUi extends AsyncTask<String, Long, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -421,5 +431,28 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             else
                 syncDataButton.setText(getString(R.string.sync_data));
         }
+    }*/
+
+    public class ResponseReceiver extends BroadcastReceiver {
+        public static final String ACTION_RESP =
+                "intent.action.MESSAGE_PROCESSED";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("test111", "ResponseReceiver");
+            int count = intent.getIntExtra("count", 0);
+            Log.d("test111", "count"+count);
+
+            if (count > 0)
+                syncDataButton.setText("Sync Data ( " + count + " Unsync Record(s) )");
+            else
+                syncDataButton.setText(getString(R.string.sync_data));
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(receiver);
+        super.onStop();
     }
 }
