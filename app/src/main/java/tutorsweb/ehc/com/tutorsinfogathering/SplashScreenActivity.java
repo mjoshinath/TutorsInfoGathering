@@ -34,6 +34,7 @@ public class SplashScreenActivity extends Activity {
                     intent = new Intent(getApplicationContext(), SignInActivity.class);
                     startActivity(intent);
                 }
+                finish();
             }
         }, 2000);
 
@@ -44,4 +45,8 @@ public class SplashScreenActivity extends Activity {
         getActionBar().hide();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

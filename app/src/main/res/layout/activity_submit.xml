@@ -340,29 +340,6 @@
                 android:textSize="@dimen/text_size" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                style="@style/TextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Photo"
-                android:textSize="@dimen/text_size" />
-
-            <ImageView
-                android:id="@+id/photo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="@dimen/text_size" />
-        </LinearLayout>
-
         <TextView
             style="@style/TextStyle"
             android:layout_width="match_parent"

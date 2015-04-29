@@ -328,9 +328,9 @@ public class PersonnelInfoFragment extends Fragment implements View.OnClickListe
     @Override
     public void onDestroy() {
         super.onDestroy();
+        getActivity().finish();
         Intent homeIntent = new Intent(getActivity(), HomePage.class);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);
     }
-
 }
