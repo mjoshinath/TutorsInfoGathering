@@ -17,7 +17,16 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import tutorsweb.ehc.com.tutorsinfogathering.R;
 
@@ -31,6 +40,7 @@ public class WebserviceHelper {
     SharedPreferences preferences;
 
     private TextView toastTextView;
+    private String result;
 
     public WebserviceHelper(Context context) {
         this.context = context;
@@ -109,6 +119,30 @@ public class WebserviceHelper {
                 });
     }
 
+    public void postSyncData(final WebServiceCallBack callBack, final long dataBaseId, String requestType, StringEntity entity, int id) {
+        HttpPost post = new HttpPost("http://192.168.1.104:5000/api/v1/" + requestType + id);
+        post.setHeader("Accept", "application/json");
+        post.setHeader("Content-Type", "application/json");
+        post.setEntity(entity);
+        DefaultHttpClient client = new DefaultHttpClient();
+        try {
+            HttpResponse httpresponse = client.execute(post);
+
+            HttpEntity entityResult = httpresponse.getEntity();
+            InputStream stream = entityResult.getContent();
+            result = convertStreamToString(stream);
+
+            if (result.contains("success"))
+                callBack.populateData("" + dataBaseId);
+            else
+                callBack.hideProgressBarOnFailure("" + dataBaseId);
+
+            Log.d("test18", "result" + result);
+        } catch (IOException e) {
+            result = "cancel";
+        }
+    }
+
     private View setToastLayout() {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View layout = inflater.inflate(R.layout.toast_view, null);
@@ -123,4 +157,26 @@ public class WebserviceHelper {
         toast.setGravity(Gravity.BOTTOM, 0, 36);
         toast.show();
     }
+
+    public String convertStreamToString(InputStream is) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuffer stringBuffer = new StringBuffer();
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                stringBuffer.append(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return stringBuffer.toString();
+        }
+    }
+
+
 }

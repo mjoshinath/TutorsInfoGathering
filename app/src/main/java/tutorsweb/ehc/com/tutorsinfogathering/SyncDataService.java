@@ -4,16 +4,21 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,6 +57,7 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
 
         id = signInCredentialsPrefs.getInt(getString(R.string.userId), 0);
+        Log.d("test111", "id" + id);
 
         toastView = setToastLayout();
 
@@ -60,11 +66,11 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
         syncLocalStorageDataToServer();
 //        new HomePage().callForUpdateUiAsyncTask();
 
-        Intent broadcastIntent = new Intent();
+        /*Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(HomePage.ResponseReceiver.ACTION_RESP);
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         broadcastIntent.putExtra("count", (int) dataBaseHelper.getRecordsCountFromDB());
-        sendBroadcast(broadcastIntent);
+        sendBroadcast(broadcastIntent);*/
     }
 
 
@@ -72,6 +78,7 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
         multipleTutorDetails = dataBaseHelper.getTutorDetails();
         multipleInstituteDetails = dataBaseHelper.getInstituteDetails();
         multipleLeadCaptureDetails = dataBaseHelper.getLeadCaptureDetails();
+        Log.d("test111", "data" + multipleTutorDetails + "/" + multipleInstituteDetails + "/" + multipleLeadCaptureDetails);
     }
 
     private void setUnSyncDataNotification() {
@@ -86,10 +93,13 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
     }
 
     private void syncLocalStorageDataToServer() {
+        Log.d("test111", "syncLocalStorageDataToServer");
         if (noOfUnSyncRecords == 0) {
             toastTextView.setText(getString(R.string.no_data_available_to_sync_msg));
             toastMessageProperties(toastView);
         } else if (Network.isConnected(getApplicationContext())) {
+            Log.d("test111", "syncLocalStorageDataToServer1");
+
             signInCredentialsPrefsEdit.putBoolean(getString(R.string.process), false);
             signInCredentialsPrefsEdit.commit();
 
@@ -99,6 +109,8 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
                 syncDataForInstitute();
             if (multipleLeadCaptureDetails != null)
                 syncDataForLeadCapture();
+            Log.d("test111", "syncLocalStorageDataToServer2");
+
         } else {
             toastTextView.setText(getString(R.string.network_not_connected_msg));
             toastMessageProperties(toastView);
@@ -106,6 +118,8 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
     }
 
     private void syncDataForInstitute() {
+        Log.d("test111", "syncDataForInstitute1");
+
         Iterator<InstituteDetails> instituteIterator = multipleInstituteDetails.iterator();
         while (instituteIterator.hasNext()) {
             InstituteDetails eachInstituteDetails = instituteIterator.next();
@@ -113,7 +127,10 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
                 JSONObject eachInstituteDetailsInJsonFormat = new JSONObject(eachInstituteDetails.getDetails());
                 StringEntity entity = null;
                 entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/" + id);
+//                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/" + id);
+                new WebserviceHelper(getApplicationContext()).postSyncData(this, eachInstituteDetails.getId(), "institutes/staff/", entity, id);
+                Log.d("test111", "syncDataForInstitute2");
+
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -123,6 +140,7 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
     }
 
     private void syncDataForTutor() {
+        Log.d("test111", "syncDataForTutor1");
         Iterator<TutorDetails> iterator = multipleTutorDetails.iterator();
         while (iterator.hasNext()) {
             TutorDetails eachTutorDetails = iterator.next();
@@ -130,7 +148,9 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
                 JSONObject eachTutorDetailsInJsonFormat = new JSONObject(eachTutorDetails.getDetails());
                 StringEntity entity = null;
                 entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/" + id);
+//                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/" + id);
+                new WebserviceHelper(getApplicationContext()).postSyncData(this, eachTutorDetails.getId(), "tutors/staff/", entity, id);
+                Log.d("test111", "syncDataForTutor2");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -140,6 +160,7 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
     }
 
     private void syncDataForLeadCapture() {
+        Log.d("test111", "syncDataForLeadCapture1");
         Iterator<LeadCaptureDetailsDBModel> iterator = multipleLeadCaptureDetails.iterator();
         while (iterator.hasNext()) {
             LeadCaptureDetailsDBModel eachLeadCaptureDetails = iterator.next();
@@ -147,7 +168,9 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
                 JSONObject eachLeadCaptureDetailsInJsonFormat = new JSONObject(eachLeadCaptureDetails.getDetails());
                 StringEntity entity = null;
                 entity = new StringEntity(eachLeadCaptureDetailsInJsonFormat.toString());
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachLeadCaptureDetails.getId(), "lead_capture/staff/" + id);
+//                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachLeadCaptureDetails.getId(), "lead_capture/staff/" + id);
+                new WebserviceHelper(getApplicationContext()).postSyncData(this, eachLeadCaptureDetails.getId(), "lead_capture/staff/", entity, id);
+                Log.d("test111", "syncDataForLeadCapture2");
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -173,14 +196,17 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
 
     @Override
     public void populateData(String jsonResponse) {
+        Log.d("test111", "populateData1");
         dataBaseHelper.deleteTutor(Long.parseLong(jsonResponse));
         dataBaseHelper.deleteInstitute(Long.parseLong(jsonResponse));
         dataBaseHelper.deleteLeadCapture(Long.parseLong(jsonResponse));
         syncDataCount = syncDataCount - 1;
+        Log.d("test111", "populateData2");
     }
 
     @Override
     public void hideProgressBarOnFailure(String response) {
         syncDataCount = syncDataCount - 1;
+        Log.d("test111", "hideProgressBarOnFailure");
     }
 }

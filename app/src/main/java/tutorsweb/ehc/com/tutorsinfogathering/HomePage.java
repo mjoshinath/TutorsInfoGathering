@@ -364,7 +364,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         super.onDestroy();
     }
 
-    private class BackgroundOperation extends AsyncTask<String, Long, String> {
+    /*private class BackgroundOperation extends AsyncTask<String, Long, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -408,7 +408,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             dataSyncAlert = builder.create();
             dataSyncAlert.show();
         }
-    }
+    }*/
 
     /*private class UpdateUi extends AsyncTask<String, Long, String> {
 
@@ -450,9 +450,9 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         }
     }
 
-    @Override
+    /*@Override
     protected void onStop() {
         unregisterReceiver(receiver);
         super.onStop();
-    }
+    }*/
 }
