@@ -169,9 +169,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, HomePage.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -310,4 +308,11 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     public void hideProgressBarOnFailure(String response) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
+
 }

@@ -83,6 +83,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page_common);
+        Log.d("test888","oncreate");
+
 
         getSharedPreferences();
 
@@ -191,17 +193,14 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         switch (view.getId()) {
             case R.id.signup_tutor:
                 intent = new Intent(this, RegStepsHostActivity.class);
-                finish();
                 startActivity(intent);
                 break;
             case R.id.signup_institute:
                 intent = new Intent(this, InstituteSignUpHostActivity.class);
-                finish();
                 startActivity(intent);
                 break;
             case R.id.lead_capture:
                 intent = new Intent(this, LeadCapture.class);
-                finish();
                 startActivity(intent);
                 break;
             case R.id.sync_data:
@@ -441,18 +440,23 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         public void onReceive(Context context, Intent intent) {
             Log.d("test111", "ResponseReceiver");
             int count = intent.getIntExtra("count", 0);
-            Log.d("test111", "count"+count);
+            Log.d("test111", "count" + count);
 
-            if (count > 0)
+            if (count > 0) {
                 syncDataButton.setText("Sync Data ( " + count + " Unsync Record(s) )");
-            else
+            } else {
                 syncDataButton.setText(getString(R.string.sync_data));
+            }
         }
     }
 
-    /*@Override
+    @Override
     protected void onStop() {
-        unregisterReceiver(receiver);
+        try {
+            unregisterReceiver(receiver);
+        } catch (IllegalArgumentException i) {
+            i.printStackTrace();
+        }
         super.onStop();
-    }*/
+    }
 }

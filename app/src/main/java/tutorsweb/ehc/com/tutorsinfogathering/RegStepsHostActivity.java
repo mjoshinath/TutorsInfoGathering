@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -82,6 +83,7 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
+        finish();
         super.onBackPressed();
     }
 
@@ -121,4 +123,15 @@ public class RegStepsHostActivity extends Activity implements View.OnClickListen
         }
         fragmentTransaction.commit();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return (super.onOptionsItemSelected(menuItem));
+    }
+
 }

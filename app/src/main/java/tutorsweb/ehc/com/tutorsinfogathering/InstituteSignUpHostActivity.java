@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 public class InstituteSignUpHostActivity extends Activity {
 
@@ -29,4 +30,19 @@ public class InstituteSignUpHostActivity extends Activity {
         sharedPrefEdit.putBoolean(getString(R.string.addMember), false);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return (super.onOptionsItemSelected(menuItem));
+    }
 }
