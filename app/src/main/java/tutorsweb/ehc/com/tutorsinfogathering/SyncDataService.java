@@ -202,6 +202,12 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
         dataBaseHelper.deleteLeadCapture(Long.parseLong(jsonResponse));
         syncDataCount = syncDataCount - 1;
         Log.d("test111", "populateData2");
+
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(HomePage.ResponseReceiver.ACTION_RESP);
+        broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        broadcastIntent.putExtra("count", (int) dataBaseHelper.getRecordsCountFromDB());
+        sendBroadcast(broadcastIntent);
     }
 
     @Override
