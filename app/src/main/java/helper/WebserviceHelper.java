@@ -45,7 +45,7 @@ public class WebserviceHelper {
         final SharedPreferences.Editor categoryEditor = categorySharedPref.edit();
         if (type.equalsIgnoreCase("categories"))
             client.addHeader("If-None-Match", categorySharedPref.getString("etag", ""));
-        client.get("http://192.168.1.114:5000/api/v1/" + type, new AsyncHttpResponseHandler() {
+        client.get("http://192.168.1.104:5000/api/v1/" + type, new AsyncHttpResponseHandler() {
             //            192.168.1.132:5000/api/v1/staff_targets/staff/id
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
@@ -70,7 +70,7 @@ public class WebserviceHelper {
 
     public void postData(final WebServiceCallBack callBack, StringEntity entity, final long id, String requestType) {
         final View layout = setToastLayout();
-        client.post(context, "http://192.168.1.114:5000/api/v1/" + requestType, entity, "application/json",
+        client.post(context, "http://192.168.1.104:5000/api/v1/" + requestType, entity, "application/json",
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {

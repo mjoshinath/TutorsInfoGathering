@@ -53,7 +53,7 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
 
         id = signInCredentialsPrefs.getInt(getString(R.string.userId), 0);
 
-//        toastView = setToastLayout();
+        toastView = setToastLayout();
 
         getLocalStorageData();
         setUnSyncDataNotification();
