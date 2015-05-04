@@ -117,8 +117,6 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                /*Intent intent1 = new Intent(this, HomePage.class);
-                startActivity(intent1);*/
                 break;
         }
         return (super.onOptionsItemSelected(menuItem));

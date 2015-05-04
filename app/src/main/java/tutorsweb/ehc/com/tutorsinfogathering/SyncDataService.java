@@ -64,15 +64,7 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
         getLocalStorageData();
         setUnSyncDataNotification();
         syncLocalStorageDataToServer();
-//        new HomePage().callForUpdateUiAsyncTask();
-
-        /*Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction(HomePage.ResponseReceiver.ACTION_RESP);
-        broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        broadcastIntent.putExtra("count", (int) dataBaseHelper.getRecordsCountFromDB());
-        sendBroadcast(broadcastIntent);*/
     }
-
 
     private void getLocalStorageData() {
         multipleTutorDetails = dataBaseHelper.getTutorDetails();
@@ -94,27 +86,27 @@ public class SyncDataService extends IntentService implements WebServiceCallBack
 
     private void syncLocalStorageDataToServer() {
         Log.d("test111", "syncLocalStorageDataToServer");
-        if (noOfUnSyncRecords == 0) {
+        /*if (noOfUnSyncRecords == 0) {
             toastTextView.setText(getString(R.string.no_data_available_to_sync_msg));
             toastMessageProperties(toastView);
-        } else if (Network.isConnected(getApplicationContext())) {
-            Log.d("test111", "syncLocalStorageDataToServer1");
+        } else if (Network.isConnected(getApplicationContext())) {*/
+        Log.d("test111", "syncLocalStorageDataToServer1");
 
-            signInCredentialsPrefsEdit.putBoolean(getString(R.string.process), false);
-            signInCredentialsPrefsEdit.commit();
+        signInCredentialsPrefsEdit.putBoolean(getString(R.string.process), false);
+        signInCredentialsPrefsEdit.commit();
 
-            if (multipleTutorDetails != null)
-                syncDataForTutor();
-            if (multipleInstituteDetails != null)
-                syncDataForInstitute();
-            if (multipleLeadCaptureDetails != null)
-                syncDataForLeadCapture();
-            Log.d("test111", "syncLocalStorageDataToServer2");
+        if (multipleTutorDetails != null)
+            syncDataForTutor();
+        if (multipleInstituteDetails != null)
+            syncDataForInstitute();
+        if (multipleLeadCaptureDetails != null)
+            syncDataForLeadCapture();
+        Log.d("test111", "syncLocalStorageDataToServer2");
 
-        } else {
+        /*} else {
             toastTextView.setText(getString(R.string.network_not_connected_msg));
             toastMessageProperties(toastView);
-        }
+        }*/
     }
 
     private void syncDataForInstitute() {

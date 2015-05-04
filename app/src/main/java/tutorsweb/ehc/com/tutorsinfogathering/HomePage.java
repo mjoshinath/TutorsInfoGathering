@@ -3,38 +3,34 @@ package tutorsweb.ehc.com.tutorsinfogathering;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
+
 import android.util.Log;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.entity.StringEntity;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import helper.Network;
 import helper.WebServiceCallBack;
-import helper.WebserviceHelper;
 
 import model.categories.InstituteDetails;
 import model.categories.LeadCaptureDetailsDBModel;
@@ -101,8 +97,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         getLocalStorageData();
 
         setUnSyncDataNotification();
-
-//        new UpdateUi().execute("");
 
         setActionBarProperties();
 
@@ -204,8 +198,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 startActivity(intent);
                 break;
             case R.id.sync_data:
-                startService(new Intent(this, SyncDataService.class));
-//                syncLocalStorageDataToServer();
+                intentCallForSyncDataService();
                 break;
             case R.id.reports:
                 callForReportsActivity();
@@ -221,6 +214,18 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         }
     }
 
+    private void intentCallForSyncDataService() {
+        if (noOfUnSyncRecords == 0) {
+            toastTextView.setText(getString(R.string.no_data_available_to_sync_msg));
+            toastMessageProperties(toastView);
+        } else if (Network.isConnected(getApplicationContext())) {
+            startService(new Intent(this, SyncDataService.class));
+        } else {
+            toastTextView.setText(getString(R.string.network_not_connected_msg));
+            toastMessageProperties(toastView);
+        }
+    }
+
     private void callForReportsActivity() {
         if (Network.isConnected(getApplicationContext())) {
             intent = new Intent(this, ReportsActivity.class);
@@ -230,78 +235,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
             toastMessageProperties(toastView);
         }
     }
-
-    /*private void syncLocalStorageDataToServer() {
-        if (noOfUnSyncRecords == 0) {
-            toastTextView.setText(getString(R.string.no_data_available_to_sync_msg));
-            toastMessageProperties(toastView);
-        } else if (Network.isConnected(getApplicationContext())) {
-            new BackgroundOperation().execute("");
-            signInCredentialsPrefsEdit.putBoolean(getString(R.string.process), false);
-            signInCredentialsPrefsEdit.commit();
-
-            if (multipleTutorDetails != null)
-                syncDataForTutor();
-            if (multipleInstituteDetails != null)
-                syncDataForInstitute();
-            if (multipleLeadCaptureDetails != null)
-                syncDataForLeadCapture();
-        } else {
-            toastTextView.setText(getString(R.string.network_not_connected_msg));
-            toastMessageProperties(toastView);
-        }
-    }*/
-
-    /*private void syncDataForInstitute() {
-        Iterator<InstituteDetails> instituteIterator = multipleInstituteDetails.iterator();
-        while (instituteIterator.hasNext()) {
-            InstituteDetails eachInstituteDetails = instituteIterator.next();
-            try {
-                JSONObject eachInstituteDetailsInJsonFormat = new JSONObject(eachInstituteDetails.getDetails());
-                StringEntity entity = null;
-                entity = new StringEntity(eachInstituteDetailsInJsonFormat.toString());
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachInstituteDetails.getId(), "institutes/staff/" + id);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void syncDataForTutor() {
-        Iterator<TutorDetails> iterator = multipleTutorDetails.iterator();
-        while (iterator.hasNext()) {
-            TutorDetails eachTutorDetails = iterator.next();
-            try {
-                JSONObject eachTutorDetailsInJsonFormat = new JSONObject(eachTutorDetails.getDetails());
-                StringEntity entity = null;
-                entity = new StringEntity(eachTutorDetailsInJsonFormat.toString());
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachTutorDetails.getId(), "tutors/staff/" + id);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void syncDataForLeadCapture() {
-        Iterator<LeadCaptureDetailsDBModel> iterator = multipleLeadCaptureDetails.iterator();
-        while (iterator.hasNext()) {
-            LeadCaptureDetailsDBModel eachLeadCaptureDetails = iterator.next();
-            try {
-                JSONObject eachLeadCaptureDetailsInJsonFormat = new JSONObject(eachLeadCaptureDetails.getDetails());
-                StringEntity entity = null;
-                entity = new StringEntity(eachLeadCaptureDetailsInJsonFormat.toString());
-                new WebserviceHelper(getApplicationContext()).postData(this, entity, eachLeadCaptureDetails.getId(), "lead_capture/staff/" + id);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
 
     @Override
     public void populateData(String jsonResponse) {
@@ -362,75 +295,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     protected void onDestroy() {
         super.onDestroy();
     }
-
-    /*private class BackgroundOperation extends AsyncTask<String, Long, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            while (syncDataCount != 0) {
-            }
-            return "";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            count = dataBaseHelper.getRecordsCountFromDB();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            dataSyncAlert.dismiss();
-            if (count > 0) {
-                syncDataButton.setText("Sync Data ( " + count + " Unsync Record(s) )");
-                toastTextView.setText(getString(R.string.processed_incompletely_msg));
-                toastMessageProperties(toastView);
-            } else {
-                syncDataButton.setText(getString(R.string.sync_data));
-                toastTextView.setText(getString(R.string.process_completed_successfully_msg));
-                toastMessageProperties(toastView);
-            }
-            noOfUnSyncRecords = (int) count;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            builder = new AlertDialog.Builder(HomePage.this);
-//            builder.setMessage("Processing...");
-            builder.setTitle(getString(R.string.processing_msg));
-            builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
-            builder.setCancelable(false);
-            dataSyncAlert = builder.create();
-            dataSyncAlert.show();
-        }
-    }*/
-
-    /*private class UpdateUi extends AsyncTask<String, Long, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            count = dataBaseHelper.getRecordsCountFromDB();
-            return "" + count;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (count > 0)
-                syncDataButton.setText("Sync Data ( " + s + " Unsync Record(s) )");
-            else
-                syncDataButton.setText(getString(R.string.sync_data));
-        }
-    }*/
 
     public class ResponseReceiver extends BroadcastReceiver {
         public static final String ACTION_RESP =
