@@ -43,6 +43,7 @@ public class TutorsWebSiteHomePage extends Activity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 }

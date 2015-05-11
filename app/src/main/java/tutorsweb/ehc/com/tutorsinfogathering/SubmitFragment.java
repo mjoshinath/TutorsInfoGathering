@@ -340,6 +340,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, We
 
                 Intent intent = new Intent(getActivity(), HomePage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                getActivity().finish();
                 startActivity(intent);
                 break;
         }

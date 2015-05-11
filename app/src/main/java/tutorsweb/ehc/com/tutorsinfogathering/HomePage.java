@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -79,8 +80,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page_common);
-        Log.d("test888","oncreate");
-
 
         getSharedPreferences();
 
@@ -97,6 +96,8 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         getLocalStorageData();
 
         setUnSyncDataNotification();
+
+        new UpdateUi().execute("");
 
         setActionBarProperties();
 
@@ -160,6 +161,29 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         actionBar.setTitle(getString(R.string.ireg_title));
     }
 
+    private class UpdateUi extends AsyncTask<String, Long, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            count = dataBaseHelper.getRecordsCountFromDB();
+
+            return "" + count;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (count > 0)
+                syncDataButton.setText("Sync Data ( " + s + " Unsync Record(s) )");
+            else
+                syncDataButton.setText(getString(R.string.sync_data));
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_page, menu);
@@ -187,14 +211,17 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
         switch (view.getId()) {
             case R.id.signup_tutor:
                 intent = new Intent(this, RegStepsHostActivity.class);
+                finish();
                 startActivity(intent);
                 break;
             case R.id.signup_institute:
                 intent = new Intent(this, InstituteSignUpHostActivity.class);
+                finish();
                 startActivity(intent);
                 break;
             case R.id.lead_capture:
                 intent = new Intent(this, LeadCapture.class);
+                finish();
                 startActivity(intent);
                 break;
             case R.id.sync_data:
@@ -229,6 +256,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
     private void callForReportsActivity() {
         if (Network.isConnected(getApplicationContext())) {
             intent = new Intent(this, ReportsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else {
             toastTextView.setText(getString(R.string.network_not_connected_msg));
@@ -293,6 +321,7 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
 
     @Override
     protected void onDestroy() {
+        finish();
         super.onDestroy();
     }
 

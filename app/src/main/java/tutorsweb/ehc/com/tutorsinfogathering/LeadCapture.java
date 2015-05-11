@@ -169,6 +169,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 
@@ -197,6 +198,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
                     getFieldsData();
                     postingLeadCaptureData();
                 }
+                finish();
                 break;
         }
     }
@@ -312,7 +314,7 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        finish();
+//        finish();
     }
 
 }

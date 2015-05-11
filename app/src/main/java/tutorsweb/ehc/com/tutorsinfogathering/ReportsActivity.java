@@ -151,6 +151,7 @@ public class ReportsActivity extends Activity implements WebServiceCallBack {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 }
