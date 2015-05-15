@@ -170,7 +170,6 @@ public class LeadCapture extends Activity implements View.OnClickListener, Adapt
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
     }
 
     @Override

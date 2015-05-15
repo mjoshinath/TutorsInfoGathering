@@ -221,7 +221,6 @@ public class HomePage extends Activity implements View.OnClickListener, WebServi
                 break;
             case R.id.lead_capture:
                 intent = new Intent(this, LeadCapture.class);
-                finish();
                 startActivity(intent);
                 break;
             case R.id.sync_data:
